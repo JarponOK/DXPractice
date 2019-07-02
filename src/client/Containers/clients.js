@@ -3,13 +3,15 @@ import Paper from '@material-ui/core/Paper';
 import {
   PagingState,
   IntegratedPaging,
+  SortingState,
+  IntegratedSorting,
 } from '@devexpress/dx-react-grid';
 import {
   Grid,
   Table,
   TableHeaderRow,
 } from '@devexpress/dx-react-grid-material-ui';
-import {dataClient as data} from '../../data';
+import { dataClient as data } from '../../data';
 
 const getCellValue = data => {
   return `${data.name} ${data.lastname}`;
@@ -26,11 +28,11 @@ export default class Clients extends React.PureComponent {
         { name: 'phone', title: 'Phone' },
         { name: 'dateApt', title: 'Last appt' },
       ],
-      rows: data
+      rows: data,
     };
   }
 
-  render(){
+  render() {
     const { rows, columns } = this.state;
     console.log(data);
     return (
@@ -40,13 +42,17 @@ export default class Clients extends React.PureComponent {
             rows={rows}
             columns={columns}
           >
+            <SortingState
+              defaultSorting={[{ columnName: 'name', direction: 'asc' }]}
+            />
+            <IntegratedSorting />
             <PagingState
               defaultCurrentPage={0}
               pageSize={6}
             />
             <IntegratedPaging />
             <Table />
-            <TableHeaderRow />
+            <TableHeaderRow showSortingControls />
           </Grid>
         </Paper>
       </div>
