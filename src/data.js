@@ -2,30 +2,14 @@ export const dataClient = [{
   name: 'Deric',
   lastname: 'Lawson',
   phone: '765-052-5230',
-  birthday: {
-    years: 1983,
-    mouth: 3,
-    day: 19
-  },
-  dateApt: {
-    years: 2019,
-    mouth: 5,
-    day: 24
-  }
+  birthday: '1983/3/19',
+  dateApt: '2019/5/24'
 }, {
   name: 'Eric',
   lastname: 'Garis',
   phone: '765-352-5430',
-  birthday: {
-    years: 1983,
-    mouth: 5,
-    day: 28
-  },
-  dateApt: {
-    years: 2019,
-    mouth: 4,
-    day: 12
-  }
+  birthday: '1983/5/28',
+  dateApt: '2019/4/12'
 }];
 
 export const dataScheduler = [{
