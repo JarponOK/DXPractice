@@ -12,12 +12,24 @@ export const dataClient = [{
   dateApt: '2019-04-12T02:09:00.000+00:00'
 }];
 
-export const dataSheduler = [{
+export const dataScheduler = [{
   name: 'Deric',
   lastname: 'Lawson',
   phone: '765-052-5230',
-  start_time: '2019-05-03T09:00:00.000+00:00',
-  end_time: '2019-05-03T11:00:00.000+00:00',
+  start_time: {
+    years: 2019,
+    mouth: 5,
+    day: 3,
+    hour: 9,
+    minute: 0
+  },
+  end_time: {
+    years: 2019,
+    mouth: 5,
+    day: 3,
+    hour: 11,
+    minute: 0
+  },
   operation: 'Cosmetic Composite resin restoration',
   location: 'Room 24',
   note: '',
@@ -25,8 +37,20 @@ export const dataSheduler = [{
   name: 'Eric',
   lastname: 'Garis',
   phone: '765-352-5430',
-  start_time: '2019-05-04T02:12:00.000+00:00',
-  end_time: '2019-05-04T21:13:00.000+00:00',
+  start_time: {
+    years: 2019,
+    mouth: 5,
+    day: 4,
+    hour: 12,
+    minute: 0
+  },
+  end_time: {
+    years: 2019,
+    mouth: 5,
+    day: 4,
+    hour: 13,
+    minute: 0
+  },
   operation: 'Cosmetic Composite resin restoration',
   location: 'Room 26',
   note: '',
