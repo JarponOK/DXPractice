@@ -2,14 +2,30 @@ export const dataClient = [{
   name: 'Deric',
   lastname: 'Lawson',
   phone: '765-052-5230',
-  birthday: '1983-04-19T20:00:00.000+00:00',
-  dateApt: '2019-05-24T02:09:00.000+00:00'
+  birthday: {
+    years: 1983,
+    mouth: 3,
+    day: 19
+  },
+  dateApt: {
+    years: 2019,
+    mouth: 5,
+    day: 24
+  }
 }, {
   name: 'Eric',
   lastname: 'Garis',
   phone: '765-352-5430',
-  birthday: '1983-05-28T20:00:00.000+00:00',
-  dateApt: '2019-04-12T02:09:00.000+00:00'
+  birthday: {
+    years: 1983,
+    mouth: 5,
+    day: 28
+  },
+  dateApt: {
+    years: 2019,
+    mouth: 4,
+    day: 12
+  }
 }];
 
 export const dataScheduler = [{
@@ -33,6 +49,7 @@ export const dataScheduler = [{
   operation: 'Cosmetic Composite resin restoration',
   location: 'Room 24',
   note: '',
+  _id: '5d1b570e1490015f56fa1f51'
 }, {
   name: 'Eric',
   lastname: 'Garis',
