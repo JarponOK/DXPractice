@@ -13,6 +13,7 @@
   "author": "DX trainee",
   "license": "ISC",
   "dependencies": {
+<<<<<<< Updated upstream
     "@devexpress/dx-react-core": "^1.11.1",
     "@devexpress/dx-react-grid": "^1.11.1",
     "@devexpress/dx-react-grid-material-ui": "^1.11.1",
@@ -25,6 +26,21 @@
     "react": "^16.5.2",
     "react-addons-test-utils": "^15.6.2",
     "react-dom": "^16.5.2"
+=======
+    "@date-io/moment": "^1.3.8",
+    "@devexpress/dx-react-core": "^1.11.1",
+    "@devexpress/dx-react-scheduler": "^1.11.1",
+    "@devexpress/dx-react-scheduler-material-ui": "^1.11.1",
+    "@material-ui/core": "^4.1.3",
+    "@material-ui/icons": "^4.2.1",
+    "babel-polyfill": "^6.26.0",
+    "express": "^4.16.3",
+    "material-ui": "^0.20.2",
+    "material-ui-pickers": "^2.2.4",
+    "react": "^16.5.2",
+    "react-dom": "^16.5.2",
+    "react-router-dom": "^5.0.1"
+>>>>>>> Stashed changes
   },
   "devDependencies": {
     "@babel/core": "^7.0.0",
