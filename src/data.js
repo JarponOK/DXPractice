@@ -207,4 +207,83 @@ module.exports = {
     }]
   }],
 
+  dataAnalyticsNewMonth: [{
+    listWeek: [{
+      nameWeek: 'Sat1',
+      numClients: 12
+    }, {
+      nameMonth: 'Sat2',
+      numClients: 6
+    }]
+  }],
+
+  dataAnalyticsNewWeek: [{
+    listWeek: [{
+      nameWeek: 'Sat',
+      numClients: 5
+    }, {
+      nameMonth: 'Mon',
+      numClients: 7
+    }]
+  }],
+
+  dataAnalyticsHospitalYears: [{
+    listMonth: [{
+      nameMonth: 'Sep',
+      numClients: 30
+    }, {
+      nameMonth: 'Oct',
+      numClients: 42
+    }]
+  }],
+
+  dataAnalyticsHospitalMonth: [{
+    listWeek: [{
+      nameWeek: 'Sat1',
+      numClients: 12
+    }, {
+      nameMonth: 'Sat2',
+      numClients: 6
+    }]
+  }],
+
+  dataAnalyticsHospitalWeek: [{
+    listWeek: [{
+      nameWeek: 'Sat',
+      numClients: 5
+    }, {
+      nameMonth: 'Mon',
+      numClients: 7
+    }]
+  }],
+
+  dataAnalyticsVisitYears: [{
+    listMonth: [{
+      nameMonth: 'Sep',
+      numClients: 30
+    }, {
+      nameMonth: 'Oct',
+      numClients: 42
+    }]
+  }],
+
+  dataAnalyticsVisitMonth: [{
+    listWeek: [{
+      nameWeek: 'Sat1',
+      numClients: 12
+    }, {
+      nameMonth: 'Sat2',
+      numClients: 6
+    }]
+  }],
+
+  dataAnalyticsVisitWeek: [{
+    listWeek: [{
+      nameWeek: 'Sat',
+      numClients: 5
+    }, {
+      nameMonth: 'Mon',
+      numClients: 7
+    }]
+  }],
 };

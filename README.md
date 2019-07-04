@@ -85,7 +85,7 @@ GET
 ```
 * ## URL
 ```sh
-/api/scheduler/:firstDay:lastDay
+/api/scheduler/:firstDay&:lastDay
 ```
 * ## URL Params
 ```sh
@@ -360,7 +360,8 @@ GET
 ```sh
 type: string
 ```
-## Response array object
+# Response years
+## Response array object 
 | Parameter | Type  |
 |-----------|-------|
 | listMonth | array |
@@ -378,6 +379,228 @@ type: string
       "numClients": integer
     }, {
       "nameMonth": string,
+      "numClients": integer
+    }]
+  } 
+]
+```
+# Response month
+## Response array object 
+| Parameter | Type  |
+|-----------|-------|
+| listWeek  | array |
+* ## listMonth
+| Parameter  | Type    |
+|------------|---------|
+| nameWeek   | string  |
+| numClients | integer |
+## Response example
+```sh
+[
+  {
+    "listWeek": [{
+      "nameWeek": string,
+      "numClients": integer
+    }, {
+      "nameWeek": string,
+      "numClients": integer
+    }]
+  } 
+]
+```
+# Response week
+## Response array object 
+| Parameter | Type  |
+|-----------|-------|
+| listDay  | array |
+* ## listMonth
+| Parameter  | Type    |
+|------------|---------|
+| nameDay   | string  |
+| numClients | integer |
+## Response example
+```sh
+[
+  {
+    "listDay": [{
+      "nameDay": string,
+      "numClients": integer
+    }, {
+      "nameDay": string,
+      "numClients": integer
+    }]
+  } 
+]
+```
+#
+## Return "Hospital survey" dashboard
+## Request
+* ## Method
+```sh
+GET
+```
+* ## URL
+```sh
+/api/analytics/hospital/:type
+```
+* ## URL Params
+```sh
+type: string
+```
+# Response years
+## Response array object 
+| Parameter | Type  |
+|-----------|-------|
+| listMonth | array |
+* ## listMonth
+| Parameter  | Type    |
+|------------|---------|
+| nameMonth  | string  |
+| numClients | integer |
+## Response example
+```sh
+[
+  {
+    "listMonth": [{
+      "nameMonth": string,
+      "numClients": integer
+    }, {
+      "nameMonth": string,
+      "numClients": integer
+    }]
+  } 
+]
+```
+# Response month
+## Response array object 
+| Parameter | Type  |
+|-----------|-------|
+| listWeek  | array |
+* ## listMonth
+| Parameter  | Type    |
+|------------|---------|
+| nameWeek   | string  |
+| numClients | integer |
+## Response example
+```sh
+[
+  {
+    "listWeek": [{
+      "nameWeek": string,
+      "numClients": integer
+    }, {
+      "nameWeek": string,
+      "numClients": integer
+    }]
+  } 
+]
+```
+# Response week
+## Response array object 
+| Parameter | Type  |
+|-----------|-------|
+| listDay  | array |
+* ## listMonth
+| Parameter  | Type    |
+|------------|---------|
+| nameDay   | string  |
+| numClients | integer |
+## Response example
+```sh
+[
+  {
+    "listDay": [{
+      "nameDay": string,
+      "numClients": integer
+    }, {
+      "nameDay": string,
+      "numClients": integer
+    }]
+  } 
+]
+```
+#
+## Return "Visit patients" dashboard
+## Request
+* ## Method
+```sh
+GET
+```
+* ## URL
+```sh
+/api/analytics/visit/:type
+```
+* ## URL Params
+```sh
+type: string
+```
+# Response years
+## Response array object 
+| Parameter | Type  |
+|-----------|-------|
+| listMonth | array |
+* ## listMonth
+| Parameter  | Type    |
+|------------|---------|
+| nameMonth  | string  |
+| numClients | integer |
+## Response example
+```sh
+[
+  {
+    "listMonth": [{
+      "nameMonth": string,
+      "numClients": integer
+    }, {
+      "nameMonth": string,
+      "numClients": integer
+    }]
+  } 
+]
+```
+# Response month
+## Response array object 
+| Parameter | Type  |
+|-----------|-------|
+| listWeek  | array |
+* ## listMonth
+| Parameter  | Type    |
+|------------|---------|
+| nameWeek   | string  |
+| numClients | integer |
+## Response example
+```sh
+[
+  {
+    "listWeek": [{
+      "nameWeek": string,
+      "numClients": integer
+    }, {
+      "nameWeek": string,
+      "numClients": integer
+    }]
+  } 
+]
+```
+# Response week
+## Response array object 
+| Parameter | Type  |
+|-----------|-------|
+| listDay  | array |
+* ## listMonth
+| Parameter  | Type    |
+|------------|---------|
+| nameDay   | string  |
+| numClients | integer |
+## Response example
+```sh
+[
+  {
+    "listDay": [{
+      "nameDay": string,
+      "numClients": integer
+    }, {
+      "nameDay": string,
       "numClients": integer
     }]
   } 
