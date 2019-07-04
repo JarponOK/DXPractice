@@ -50,7 +50,7 @@ GET
 ```
 * ## URL Params
 ```sh
-id = string
+id: string
 ```
 ## Response array object
 | Parameter | Type   |
@@ -89,8 +89,8 @@ GET
 ```
 * ## URL Params
 ```sh
-firstDay = integer
-lastDay = integer
+firstDay: integer
+lastDay: integer
 ```
 ## Response array object
 | Parameter | Type   |
@@ -194,7 +194,7 @@ GET
 ```
 * ## URL Params
 ```sh
-id = string
+id: string
 ```
 ## Response array object
 | Parameter   | Type   |
@@ -225,7 +225,7 @@ GET
 ```
 * ## URL Params
 ```sh
-id = string
+id: string
 ```
 ## Response array object
 | Parameter        | Type        |
@@ -291,7 +291,7 @@ GET
 ```
 * ## URL Params
 ```sh
-id = string
+id: string
 ```
 ## Response array object
 | Parameter | Type   |
@@ -346,15 +346,19 @@ POST
 ]
 ```
 #
-## Return "New patient" dashboard of the years
+## Return "New patient" dashboard
 ## Request
 * ## Method
 ```sh
-POST
+GET
 ```
 * ## URL
 ```sh
-/api/analytics/new/years
+/api/analytics/new/:type
+```
+* ## URL Params
+```sh
+type: string
 ```
 ## Response array object
 | Parameter | Type  |
