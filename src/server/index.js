@@ -1,4 +1,3 @@
-
 const express = require('express');
 const { MongoClient, ObjectId } = require('mongodb');
 const dataServer = require('../data.js');
@@ -17,12 +16,54 @@ MongoClient.connect(mongodb.url, (err, client) => {
 });
 
 app.post('/api/clients', (req, res) => {
-  res.send(dataServer.dataClients);
+  const details = {
+    projection: {
+      _id: 1,
+      name: 1,
+      lastname: 1,
+      birthday: 1,
+      phone: 1,
+      historyTreatment: 1
+    }
+  };
+
+  db.collection('clients').find({}, details).toArray((err, result) => {
+    if (err) return res.send({ error: err });
+
+    result.forEach((element) => { /* eslint-disable */
+      element.lastAppt = element.historyTreatment.map(date => (date.startDate < new Date()) ? date.startDate : '' ).sort()[0];
+      delete element.historyTreatment;
+    });
+
+    return res.send(result);
+  });
 });
 
 app.get('/api/clients/:id', (req, res) => {
-  // const idClient = req.params.id;
-  res.send(dataServer.dataClientsId);
+  const idClient = req.params.id;
+
+  const finding = {
+    _id: new ObjectId(idClient)
+  };
+
+  const details = {
+    projection: {
+      _id: 0,
+      name: 1,
+      lastname: 1,
+      birthday: 1,
+      phone: 1,
+      email: 1,
+      city: 1,
+      address: 1,
+    }
+  };
+
+  db.collection('clients').find(finding, details).limit(1).toArray((err, result) => {
+    if (err) return res.send({ error: err });
+
+    return res.send(result);
+  });
 });
 
 app.get('/api/scheduler/:firstDay&:lastDay', (req, res) => {
@@ -34,16 +75,59 @@ app.get('/api/scheduler/:firstDay&:lastDay', (req, res) => {
 });
 
 app.post('/api/treatment', (req, res) => {
-  res.send(dataServer.dataTreatment);
+  const details = {
+    projection: {
+      _id: 0,
+    }
+  };
+
+  db.collection('treatment').find({}, details).toArray((err, result) => {
+    if (err) return res.send({ error: err });
+
+    return res.send(result);
+  });
 });
 
 app.get('/api/treatment/:id', (req, res) => {
-  res.send(dataServer.dataTreatmentHistory);
+  const idClient = req.params.id;
+
+  const finding = {
+    _id: new ObjectId(idClient)
+  };
+
+  const details = {
+    projection: {
+      _id: 0,
+      historyTreatment: 1
+    }
+  };
+
+  db.collection('clients').find(finding, details).toArray((err, result) => {
+    if (err) return res.send({ error: err });
+
+    return res.send(result);
+  });
 });
 
-app.get('/api/complaint/:id', (req, res) => {
-  // const idClient = req.params.id;
-  res.send(dataServer.dataComplaints);
+app.get('/api/complaints/:id', (req, res) => {
+  const idClient = req.params.id;
+
+  const finding = {
+    _id: new ObjectId(idClient)
+  };
+
+  const details = {
+    projection: {
+      _id: 0,
+      complaints: 1
+    }
+  };
+
+  db.collection('clients').find(finding, details).toArray((err, result) => {
+    if (err) return res.send({ error: err });
+
+    return res.send(result);
+  });
 });
 
 app.get('/api/doctors/:id', (req, res) => {
