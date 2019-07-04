@@ -1,141 +1,207 @@
-export const dataClient = [{
-  name: 'Deric',
+export const dataClients = [{
+  _id: '5d1b570e1490015f56fa1f51',
+  name: 'Derick',
   lastname: 'Lawson',
+  birthday: '1983-04-19T20:20:00.000+00:00',
   phone: '765-052-5230',
-  birthday: '1983/3/19',
-  dateApt: '2019/5/24'
+  lastAppt: '2003-03-02T21:00:00.000+00:00'
 }, {
+  _id: '5d1b570e1490015f56fa1f52',
   name: 'Eric',
   lastname: 'Garis',
+  birthday: '1992-05-28T00:00:30.000+00:00',
   phone: '765-352-5430',
-  birthday: '1983/5/28',
-  dateApt: '2019/4/12'
+  lastAppt: '2019-05-20T20:00:00.000+00:00'
+}];
+
+export const dataClientsId = [{
+  name: 'Derick',
+  lastname: 'Lawson',
+  birthday: '1983/3/19',
+  phone: '765-052-5230',
+  email: 'garrison@email.com',
+  city: 'Whitewall',
+  address: '7655 Newport'
 }];
 
 export const dataScheduler = [{
-  name: 'Deric',
+  statDate: '2019-05-03T09:00:00.000+00:00',
+  endDate: '2019-05-03T11:00:00.000+00:00',
+  name: 'Derick',
   lastname: 'Lawson',
   phone: '765-052-5230',
-  start_time: {
-    years: 2019,
-    mouth: 5,
-    day: 3,
-    hour: 9,
-    minute: 0
-  },
-  end_time: {
-    years: 2019,
-    mouth: 5,
-    day: 3,
-    hour: 11,
-    minute: 0
-  },
-  operation: 'Cosmetic Composite resin restoration',
-  location: 'Room 24',
-  note: '',
-  _id: '5d1b570e1490015f56fa1f51'
+  operation: 'Blood test',
+  note: 'Hello, Note!',
+  idClient: '5d1b570e1490015f56fa1f51'
 }, {
+  statDate: '2019-05-04T10:00:00.000+00:00',
+  endDate: '2019-05-04T11:10:00.000+00:00',
   name: 'Eric',
   lastname: 'Garis',
   phone: '765-352-5430',
-  start_time: {
-    years: 2019,
-    mouth: 5,
-    day: 4,
-    hour: 12,
-    minute: 0
-  },
-  end_time: {
-    years: 2019,
-    mouth: 5,
-    day: 4,
-    hour: 13,
-    minute: 0
-  },
-  operation: 'Cosmetic Composite resin restoration',
-  location: 'Room 26',
-  note: '',
+  operation: 'Invisalign',
+  note: 'Hello, Note!',
+  idClient: '5d1b570e1490015f56fa1f52'
 }];
 
 export const dataTreatment = [{
-  diagnosis: [{
-    operation: 'Blood test',
-    cost: '25'
+  typeName: 'diagnosis',
+  listProcedure: [{
+    name: 'Blood test',
+    cost: 25,
+    idProcedure: 'procedureD1'
   }, {
-    operation: 'Bitewing X-Ray',
-    cost: '0'
+    name: 'Bitewing X-Ray',
+    cost: 0,
+    idProcedure: 'procedureD2'
   }],
-  restoration: [{
-    operation: 'Dental dam',
-    cost: '15'
+}, {
+  typeName: 'restoration',
+  listProcedure: [{
+    name: 'Dental dam',
+    cost: 15,
+    idProcedure: 'procedureR1'
   }, {
-    operation: 'Sealant',
-    cost: '15'
+    name: 'Sealant',
+    cost: 15,
+    idProcedure: 'procedureR2'
   }],
-  root_canal: [{
-    operation: 'Direct pulp capping',
-    cost: '50'
+}, {
+  typeName: 'root_canal',
+  listProcedure: [{
+    name: 'Direct pulp capping',
+    cost: 50,
+    idProcedure: 'procedureRC1'
   }, {
-    operation: 'Root canal re-treatment (molar)',
-    cost: '250'
+    name: 'Root canal re-treatment (molar)',
+    cost: 250,
+    idProcedure: 'procedureRC2'
   }],
-  hygiene: [{
-    operation: 'Gum grafting',
-    cost: '300'
+}, {
+  typeName: 'hygiene',
+  listProcedure: [{
+    name: 'Gum grafting',
+    cost: 300,
+    idProcedure: 'procedureH1'
   }, {
-    operation: 'Operculectomy',
-    cost: '25'
+    name: 'Operculectomy',
+    cost: 25,
+    idProcedure: 'procedureH1'
   }],
-  whitening: [{
-    operation: 'Internal bleaching',
-    cost: '100'
+}, {
+  typeName: 'whitening',
+  listProcedure: [{
+    name: 'Internal bleaching',
+    cost: 100,
+    idProcedure: 'procedureW1'
   }, {
-    operation: 'At-home whitening kit (Zoom)',
-    cost: '100'
+    name: 'At-home whitening kit (Zoom)',
+    cost: 100,
+    idProcedure: 'procedureW2'
   }],
-  prosthetics: [{
-    operation: 'Composite onlay',
-    cost: '100'
+}, {
+  typeName: 'prosthetics',
+  listProcedure: [{
+    name: 'Composite onlay',
+    cost: 100,
+    idProcedure: 'procedureP1'
   }, {
-    operation: 'Crown removal',
-    cost: '15'
+    name: 'Crown removal',
+    cost: 15,
+    idProcedure: 'procedureP2'
   }],
-  implantation: [{
-    operation: 'Bone grafting',
-    cost: '600'
+}, {
+  typeName: 'implantation',
+  listProcedure: [{
+    name: 'Bone grafting',
+    cost: 600,
+    idProcedure: 'procedureI1'
   }, {
-    operation: 'Sinus augmentation (Closed)',
-    cost: '300'
+    name: 'Sinus augmentation (Closed)',
+    cost: 300,
+    idProcedure: 'procedureI2'
   }],
-  orthodontics: [{
-    operation: 'Functional appliance',
-    cost: '300'
+}, {
+  typeName: 'orthodontics',
+  listProcedure: [{
+    name: 'Functional appliance',
+    cost: 300,
+    idProcedure: 'procedureO1'
   }, {
-    operation: 'Invisalign',
-    cost: '4500'
+    name: 'Invisalign',
+    cost: 4500,
+    idProcedure: 'procedureO2'
   }],
-  surgery: [{
-    operation: 'Permanent tooth extraction',
-    cost: '80'
+}, {
+  typeName: 'surgery',
+  listProcedure: [{
+    name: 'Permanent tooth extraction',
+    cost: 80,
+    idProcedure: 'procedureS1'
   }, {
-    operation: 'Gum contouring surgery',
-    cost: '150'
+    name: 'Gum contouring surgery',
+    cost: 150,
+    idProcedure: 'procedureS2'
   }]
 }];
 
 export const dataTreatmentHistory = [{
-  start_time: '2019-06-05T12:00:00.000+00:00',
-  end_time: '2019-06-05T13:00:00.000+00:00',
-  nameTreatment: 'Consult',
-  cost: '0'
+  startDate: '2019-06-05T12:00:00.000+00:00',
+  endDate: '2019-06-05T13:00:00.000+00:00',
+  idProcedure: 'procedureS2'
 }, {
-  start_time: '2019-06-05T13:00:00.000+00:00',
-  end_time: '2019-06-05T14:00:00.000+00:00',
-  nameTreatment: 'Tooth gap filing',
-  cost: '50'
+  startDate: '2019-06-05T13:00:00.000+00:00',
+  endDate: '2019-06-05T14:00:00.000+00:00',
+  idProcedure: 'procedureO2'
 }, {
-  start_time: '2019-07-24T09:00:00.000+00:00',
-  end_time: '2019-07-24T11:00:00.000+00:00',
-  nameTreatment: 'Gum contouring surgery',
-  cost: '100'
+  startDate: '2019-07-24T09:00:00.000+00:00',
+  endDate: '2019-07-24T11:00:00.000+00:00',
+  idProcedure: 'procedureI1'
+}];
+
+export const dataComplaints = [{
+  listComplaints: ['Complaints 1', 'Complaints 2'],
+  listAllergies: ['Not allergies'],
+  listPreparations: ['Preparation'],
+  listNotes: [{
+    textNotes: 'Live',
+    dateNotes: '2019-05-18T20:00:00.000+00:00'
+  }, {
+    textNotes: 'Died',
+    dateNotes: '2019-05-19T20:00:00.000+00:00'
+  }],
+  listDocuments: [{
+    nameDocuments: 'file1.pdf',
+    URLDocuments: 'C:/users/desktop/fil1.pdf'
+  }, {
+    nameDocuments: 'file2.pdf',
+    URLDocuments: 'C:/users/desktop/fil2.pdf'
+  }]
+}];
+
+export const dataDoctor = [{
+  _id: 'doctor1',
+  name: 'Jack',
+  lastname: 'Gardner',
+  birthday: '1983-06-23T00:00:00.000+00:00',
+  phone: '765-052-5230',
+  email: 'gardner@email.com',
+  city: 'Whitter',
+  address: '6755 Newline Ave'
+}];
+
+export const dataAnalyticsAge = [{
+  ageJunior: 30,
+  ageMiddle: 83,
+  ageSenior: 24
+}];
+
+export const dataAnalyticsNewYears = [{
+  listMonth: [{
+    nameMonth: 'Sep',
+    numClients: 30
+  }, {
+    nameMonth: 'Oct',
+    numClients: 42
+  }]
 }];
