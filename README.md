@@ -224,22 +224,22 @@ lastDay: integer
     "nameType": string,
     "listOperation": [{
       "name": string,
-      "cost"; integer,
+      "cost": integer,
       "idProcedure": string
     }, {
       "name": string,
-      "cost"; integer,
+      "cost": integer,
       "idProcedure": string
     }]
   }, {
     "nameType": string,
     "listOperation": [{
       "name": string,
-      "cost"; integer,
+      "cost": integer,
       "idProcedure": string
     }, {
       "name": string,
-      "cost"; integer,
+      "cost": integer,
       "idProcedure": string
     }]
   }]
