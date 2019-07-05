@@ -1,12 +1,14 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-<<<<<<< Updated upstream
-import App from './App';
-import Patients from './patients';
-=======
+import { Provider } from 'react-redux'
+import {store} from "./Store/configureStore"
 import App from './Components/App';
-import Demo from './Containers/scheduler'
->>>>>>> Stashed changes
 
-//ReactDOM.render(<App />, document.getElementById('root'));
-ReactDOM.render(<Patients />, document.getElementById('root'));
+
+
+ReactDOM.render(
+<Provider store={store}>
+    <App /> 
+    </Provider>, 
+    document.getElementById('root'));
+
