@@ -26,7 +26,7 @@ module.exports = {
   }],
 
   dataScheduler: [{
-    statDate: '2019-05-03T09:00:00.000+00:00',
+    startDate: '2019-05-03T09:00:00.000+00:00',
     endDate: '2019-05-03T11:00:00.000+00:00',
     name: 'Derick',
     lastname: 'Lawson',
@@ -35,7 +35,7 @@ module.exports = {
     note: 'Hello, Note!',
     idClient: '5d1b570e1490015f56fa1f51'
   }, {
-    statDate: '2019-05-04T10:00:00.000+00:00',
+    startDate: '2019-05-04T10:00:00.000+00:00',
     endDate: '2019-05-04T11:10:00.000+00:00',
     name: 'Eric',
     lastname: 'Garis',

@@ -1,8 +1,17 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-
+import { request } from 'http';
+import dfs from '../../data.js'
+const url = 'http://832e3c54.ngrok.io';
 class Scheduler extends Component {
   render() {
+    var request = new XMLHttpRequest();
+
+    request.open("GET", url + "/api/treatment", false);
+    
+    request.send(null);
+    console.log(request.responseText); // responseText -- текст ответа.
+
     const { store } = this.props
     return (
       <div className="App">
@@ -17,9 +26,10 @@ class Scheduler extends Component {
 }
 
 const mapStateToProps = store => {
+
   console.log(store) // посмотрим, что же у нас в store?
   return {
-    store:store[0].user,
+    store
   }
 }
 
