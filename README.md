@@ -3,7 +3,7 @@
 ## Request
 * ## Method
 ```sh
-POST
+GET
 ```
 * ## URL
 ```sh
@@ -53,15 +53,46 @@ GET
 id: string
 ```
 ## Response array object
+| Parameter        | Type   |
+|------------------|--------|
+| name             | string |
+| lastname         | string |
+| birthday         | date   |
+| phone            | string |
+| email            | string |
+| city             | string |
+| address          | string |
+| historyTreatment | array  |
+| complaints       | array  |
+
+* ## historyTreatment
+| Parameter   | Type   |
+|-------------|--------|
+| startDate   | date   |
+| endDate     | date   |
+| idProcedure | string |
+
+* ## complaints
+| Parameter        | Type        |
+|------------------|-------------|
+| listComplaints   | arrayString |
+| listAllergies    | arraySting  |
+| listPreparations | arraySting  |
+| listNotes        | array       |
+| listDocuments    | array       |
+
+* ## listNotes
 | Parameter | Type   |
 |-----------|--------|
-| name      | string |
-| lastname  | string |
-| birthday  | date   |
-| phone     | string |
-| email     | string |
-| city      | string |
-| address   | string |
+| textNotes | string |
+| dateNotes | date   |
+
+* ## listDocuments
+| Parameter     | Type   |
+|---------------|--------|
+| nameDocuments | string |
+| URLDocuments  | string |
+
 ## Response example
 ```sh
 [
@@ -72,7 +103,41 @@ id: string
     "phone": string,
     "email": string,
     "city": string,
-    "address": string
+    "address": string,
+    "historyTreatment": [{
+      "startDate": date,
+      "endDate": date,
+      "idProcedure": string
+    }. {
+      "startDate": date,
+      "endDate": date,
+      "idProcedure": string
+    }],
+    "complaints": {
+      "listComplaints": [
+        string, string
+      ],
+      "listAllergies": [
+        string, string
+      ],
+      "listPreparations": [
+        string, string
+      ],
+      "listNotes": [{
+        "textNotes": string,
+        "dateNotes": date
+      }, {
+        "textNotes": string,
+        "dateNotes": date
+      }],
+      "listDocuments": [{
+        "nameDocuments": string,
+        "URLDocuments": string
+      }, {
+        "nameDocuments": string
+        "URLDocuments": string
+      }]
+    }
   } 
 ]
 ```
@@ -85,9 +150,9 @@ GET
 ```
 * ## URL
 ```sh
-/api/scheduler/:firstDay&:lastDay
+/api/scheduler/
 ```
-* ## URL Params
+* ## BODY Params
 ```sh
 firstDay: integer
 lastDay: integer
@@ -135,7 +200,7 @@ lastDay: integer
 ## Request
 * ## Method
 ```sh
- POST
+ GET
 ```
 * ## URL
 ```sh
@@ -182,116 +247,20 @@ lastDay: integer
 ]
 ```
 #
-## Return history treatment client
-## Request
-* ## Method
-```sh
-GET
-```
-* ## URL
-```sh
-/api/treatment/:id
-```
-* ## URL Params
-```sh
-id: string
-```
-## Response array object
-| Parameter   | Type   |
-|-------------|--------|
-| startDate   | date   |
-| endDate     | date   |
-| idProcedure | string |
-## Response example
-```sh
-[
-  {
-    "startDate": date,
-    "endDate": date,
-    "idProcedure": string
-  } 
-]
-```
-#
-## Return complaints
-## Request
-* ## Method
-```sh
-GET
-```
-* ## URL
-```sh
-/api/complaints/:id
-```
-* ## URL Params
-```sh
-id: string
-```
-## Response array object
-| Parameter        | Type        |
-|------------------|-------------|
-| listComplaints   | arrayString |
-| listAllergies    | arraySting  |
-| listPreparations | arraySting  |
-| listNotes        | array       |
-| listDocuments    | array       |
-
-* ## listNotes
-| Parameter | Type   |
-|-----------|--------|
-| textNotes | string |
-| dateNotes | date   |
-
-* ## listDocuments
-| Parameter     | Type   |
-|---------------|--------|
-| nameDocuments | string |
-| URLDocuments  | string |
-
-## Response example
-```sh
-[
-  {
-    "listComplaints": [
-      string, string
-    ],
-    "listAllergies": [
-      string, string
-    ],
-    "listPreparations": [
-      string, string
-    ],
-    "listNotes": [{
-      "textNotes": string,
-      "dateNotes": date
-    }, {
-      "textNotes": string,
-      "dateNotes": date
-    }],
-    "listDocuments": [{
-      "nameDocuments": string,
-      "URLDocuments": string
-    }, {
-      "nameDocuments": string
-      "URLDocuments": string
-    }]
-  }
-]
-```
-#
 ## Return doctor by id
 ## Request
 * ## Method
 ```sh
-GET
+POST
 ```
 * ## URL
 ```sh
-/api/doctors/:id
+/api/doctors/
 ```
-* ## URL Params
+* ## GET body Params
 ```sh
-id: string
+login: string
+password: string
 ```
 ## Response array object
 | Parameter | Type   |
@@ -323,7 +292,7 @@ id: string
 ## Request
 * ## Method
 ```sh
-POST
+GET
 ```
 * ## URL
 ```sh
@@ -412,11 +381,11 @@ type: string
 ## Response array object 
 | Parameter | Type  |
 |-----------|-------|
-| listDay  | array |
+| listDay   | array |
 * ## listMonth
 | Parameter  | Type    |
 |------------|---------|
-| nameDay   | string  |
+| nameDay    | string  |
 | numClients | integer |
 ## Response example
 ```sh
@@ -499,11 +468,11 @@ type: string
 ## Response array object 
 | Parameter | Type  |
 |-----------|-------|
-| listDay  | array |
+| listDay   | array |
 * ## listMonth
 | Parameter  | Type    |
 |------------|---------|
-| nameDay   | string  |
+| nameDay    | string  |
 | numClients | integer |
 ## Response example
 ```sh
@@ -586,11 +555,11 @@ type: string
 ## Response array object 
 | Parameter | Type  |
 |-----------|-------|
-| listDay  | array |
+| listDay   | array |
 * ## listMonth
 | Parameter  | Type    |
 |------------|---------|
-| nameDay   | string  |
+| nameDay    | string  |
 | numClients | integer |
 ## Response example
 ```sh

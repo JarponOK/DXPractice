@@ -1,9 +1,11 @@
 const express = require('express');
 const { MongoClient, ObjectId } = require('mongodb');
+const bodyParser = require('body-parser');
 const dataServer = require('../data.js');
 const mongodb = require('./config/db.js');
 
 const app = express();
+app.use(bodyParser.urlencoded({ extended: true }));
 
 let db;
 MongoClient.connect(mongodb.url, (err, client) => {
@@ -15,7 +17,7 @@ MongoClient.connect(mongodb.url, (err, client) => {
   return 0;
 });
 
-app.post('/api/clients', (req, res) => {
+app.get('/api/clients', (req, res) => {
   const details = {
     projection: {
       _id: 1,
@@ -31,7 +33,7 @@ app.post('/api/clients', (req, res) => {
     if (err) return res.send({ error: err });
 
     result.forEach((element) => { /* eslint-disable */
-      element.lastAppt = element.historyTreatment.map(date => (date.startDate < new Date()) ? date.startDate : '' ).sort()[0];
+      element.lastAppt = element.historyTreatment.map(date => (date.startDate < new Date()) ? date.startDate : '').sort()[0];
       delete element.historyTreatment;
     });
 
@@ -49,13 +51,13 @@ app.get('/api/clients/:id', (req, res) => {
   const details = {
     projection: {
       _id: 0,
-      name: 1,
-      lastname: 1,
-      birthday: 1,
-      phone: 1,
-      email: 1,
-      city: 1,
-      address: 1,
+      // name: 1,
+      // lastname: 1,
+      // birthday: 1,
+      // phone: 1,
+      // email: 1,
+      // city: 1,
+      // address: 1,
     }
   };
 
@@ -66,15 +68,15 @@ app.get('/api/clients/:id', (req, res) => {
   });
 });
 
-app.get('/api/scheduler/:firstDay&:lastDay', (req, res) => {
-  const { firstDay, lastDay } = req.params;
+app.get('/api/scheduler', (req, res) => {
+  const { firstDay, lastDay } = req.body;
   console.log(firstDay);
   console.log(lastDay);
 
   res.send(dataServer.dataScheduler);
 });
 
-app.post('/api/treatment', (req, res) => {
+app.get('/api/treatment', (req, res) => {
   const details = {
     projection: {
       _id: 0,
@@ -88,6 +90,7 @@ app.post('/api/treatment', (req, res) => {
   });
 });
 
+/*
 app.get('/api/treatment/:id', (req, res) => {
   const idClient = req.params.id;
 
@@ -129,14 +132,39 @@ app.get('/api/complaints/:id', (req, res) => {
     return res.send(result);
   });
 });
+*/
 
-app.get('/api/doctors/:id', (req, res) => {
-  // const idDoctor = req.params.id;
-  res.send(dataServer.dataDoctor);
+app.post('/api/doctors', (req, res) => {
+  const auth = req.body;
+  if (auth.login === 'doctor' && auth.password === 'doctor') {
+    details = {
+      projection: {
+        _id: 0
+      }
+    }
+    
+    db.collection('doctors').find({}, details).toArray((err, result) => {
+      if (err) return res.send({ error: err });
+
+      return res.send(result);
+    });
+  } else {
+    res.send({ error: 'Error auth' });
+  }
 });
 
-app.post('/api/analytics/age', (req, res) => {
-  res.send(dataServer.dataAnalyticsAge);
+app.get('/api/analytics/age', (req, res) => {
+  const details = {
+    projection: {
+      _id: 0
+    }
+  }
+
+  db.collection('analyticsAge').find({}, details).toArray((err, result) => {
+    if (err) return res.send({ error: err });
+
+    return res.send(result);
+  });
 });
 
 app.get('/api/analytics/new/:type', (req, res) => {
