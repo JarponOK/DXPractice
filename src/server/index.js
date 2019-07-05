@@ -90,50 +90,6 @@ app.get('/api/treatment', (req, res) => {
   });
 });
 
-/*
-app.get('/api/treatment/:id', (req, res) => {
-  const idClient = req.params.id;
-
-  const finding = {
-    _id: new ObjectId(idClient)
-  };
-
-  const details = {
-    projection: {
-      _id: 0,
-      historyTreatment: 1
-    }
-  };
-
-  db.collection('clients').find(finding, details).toArray((err, result) => {
-    if (err) return res.send({ error: err });
-
-    return res.send(result);
-  });
-});
-
-app.get('/api/complaints/:id', (req, res) => {
-  const idClient = req.params.id;
-
-  const finding = {
-    _id: new ObjectId(idClient)
-  };
-
-  const details = {
-    projection: {
-      _id: 0,
-      complaints: 1
-    }
-  };
-
-  db.collection('clients').find(finding, details).toArray((err, result) => {
-    if (err) return res.send({ error: err });
-
-    return res.send(result);
-  });
-});
-*/
-
 app.post('/api/doctors', (req, res) => {
   const auth = req.body;
   if (auth.login === 'doctor' && auth.password === 'doctor') {
