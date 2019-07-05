@@ -5,6 +5,11 @@ const dataServer = require('../data.js');
 const mongodb = require('./config/db.js');
 
 const app = express();
+app.use((req, res, next) => {
+  res.header('Access-Control-Allow-Origin', '*');
+  res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
+  next();
+});
 app.use(bodyParser.urlencoded({ extended: true }));
 
 let db;
@@ -17,6 +22,7 @@ MongoClient.connect(mongodb.url, (err, client) => {
   return 0;
 });
 
+// OK
 app.get('/api/clients', (req, res) => {
   const details = {
     projection: {
@@ -41,6 +47,7 @@ app.get('/api/clients', (req, res) => {
   });
 });
 
+// OK
 app.get('/api/clients/:id', (req, res) => {
   const idClient = req.params.id;
 
@@ -70,12 +77,13 @@ app.get('/api/clients/:id', (req, res) => {
 
 app.get('/api/scheduler', (req, res) => {
   const { firstDay, lastDay } = req.body;
-  console.log(firstDay);
-  console.log(lastDay);
+
+  console.log(req.body);
 
   res.send(dataServer.dataScheduler);
 });
 
+// OK
 app.get('/api/treatment', (req, res) => {
   const details = {
     projection: {
@@ -90,6 +98,7 @@ app.get('/api/treatment', (req, res) => {
   });
 });
 
+// OK
 app.post('/api/doctors', (req, res) => {
   const auth = req.body;
   if (auth.login === 'doctor' && auth.password === 'doctor') {
@@ -98,7 +107,7 @@ app.post('/api/doctors', (req, res) => {
         _id: 0
       }
     }
-    
+
     db.collection('doctors').find({}, details).toArray((err, result) => {
       if (err) return res.send({ error: err });
 
@@ -109,6 +118,7 @@ app.post('/api/doctors', (req, res) => {
   }
 });
 
+// OK
 app.get('/api/analytics/age', (req, res) => {
   const details = {
     projection: {
@@ -123,21 +133,54 @@ app.get('/api/analytics/age', (req, res) => {
   });
 });
 
-app.get('/api/analytics/new/:type', (req, res) => {
-  const { type } = req.params;
+// Need month
+app.get('/api/analytics/new/', (req, res) => {
+  const { type } = req.body;
+
+  const details = {
+    projection: {
+      _id: 0,
+      type: 0
+    }
+  };
+
+  const finding = {
+    type: type
+  };
+
   if (type === 'years') {
-    res.send(dataServer.dataAnalyticsNewYears);
+    db.collection('analyticsNew').find(finding, details).limit(1).toArray((err, result) => {
+      if (err) return res.send({ error: err });
+
+      return res.send(result);
+    });
   } else if (type === 'month') {
     res.send(dataServer.dataAnalyticsNewMonth);
   } else if (type === 'week') {
-    res.send(dataServer.dataAnalyticsNewWeek);
+    db.collection('analyticsNew').find(finding, details).limit(1).toArray((err, result) => {
+      if (err) return res.send({ error: err });
+
+      return res.send(result);
+    });
   } else {
-    res.send('Error type');
+    res.send({ error: 'Error type' });
   }
 });
 
-app.get('/api/analytics/hospital/:type', (req, res) => {
-  const { type } = req.params;
+app.get('/api/analytics/hospital/', (req, res) => {
+  const { type } = req.body;
+
+  const details = {
+    projection: {
+      _id: 0,
+      type: 0
+    }
+  };
+
+  const finding = {
+    type: type
+  };
+
   if (type === 'years') {
     res.send(dataServer.dataAnalyticsHospitalYears);
   } else if (type === 'month') {
@@ -149,8 +192,19 @@ app.get('/api/analytics/hospital/:type', (req, res) => {
   }
 });
 
-app.get('/api/analytics/visit/:type', (req, res) => {
-  const { type } = req.params;
+app.get('/api/analytics/visit/', (req, res) => {
+  const { type } = req.body;
+
+  const details = {
+    projection: {
+      _id: 0,
+      type: 0
+    }
+  };
+
+  const finding = {
+    type: type
+  };
   if (type === 'years') {
     res.send(dataServer.dataAnalyticsVisitYears);
   } else if (type === 'month') {

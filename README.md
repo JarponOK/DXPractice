@@ -108,7 +108,7 @@ id: string
       "startDate": date,
       "endDate": date,
       "idProcedure": string
-    }. {
+    }, {
       "startDate": date,
       "endDate": date,
       "idProcedure": string
@@ -134,7 +134,7 @@ id: string
         "nameDocuments": string,
         "URLDocuments": string
       }, {
-        "nameDocuments": string
+        "nameDocuments": string,
         "URLDocuments": string
       }]
     }
@@ -323,9 +323,9 @@ GET
 ```
 * ## URL
 ```sh
-/api/analytics/new/:type
+/api/analytics/new/
 ```
-* ## URL Params
+* ## BODY Params
 ```sh
 type: string
 ```
@@ -410,9 +410,9 @@ GET
 ```
 * ## URL
 ```sh
-/api/analytics/hospital/:type
+/api/analytics/hospital/
 ```
-* ## URL Params
+* ## BODY Params
 ```sh
 type: string
 ```
@@ -497,9 +497,9 @@ GET
 ```
 * ## URL
 ```sh
-/api/analytics/visit/:type
+/api/analytics/visit/
 ```
-* ## URL Params
+* ## BODY Params
 ```sh
 type: string
 ```
