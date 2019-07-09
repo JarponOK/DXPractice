@@ -1,6 +1,9 @@
 const express = require('express');
-const { MongoClient, ObjectId } = require('mongodb');
+const mongoose = require('mongoose');
+const { MongoClient } = require('mongodb');
 const bodyParser = require('body-parser');
+// eslint-disable-next-line object-curly-newline
+const { Clients, Schedulers, Complaints, ObjectId } = require('./config/schema');
 const dataServer = require('../data.js');
 const mongodb = require('./config/db.js');
 
@@ -13,77 +16,170 @@ app.use((req, res, next) => {
 app.use(bodyParser.urlencoded({ extended: true }));
 
 let db;
-MongoClient.connect(mongodb.url, (err, client) => {
-  if (err) return console.log(err);
-  db = client.db('DXPractice');
-  app.listen(8080, () => {
-    console.log('listen port 8080');
-  });
-  return 0;
-});
+mongoose.connect(mongodb.url, (err) => {
+  if (err) throw err;
 
-// OK
-app.get('/api/clients', (req, res) => {
-  const details = {
-    projection: {
-      _id: 1,
-      name: 1,
-      lastname: 1,
-      birthday: 1,
-      phone: 1,
-      historyTreatment: 1
-    }
-  };
-
-  db.collection('clients').find({}, details).toArray((err, result) => {
-    if (err) return res.send({ error: err });
-
-    result.forEach((element) => { /* eslint-disable */
-      element.lastAppt = element.historyTreatment.map(date => (date.startDate < new Date()) ? date.startDate : '').sort()[0];
-      delete element.historyTreatment;
+  MongoClient.connect(mongodb.url, (error, client) => {
+    if (error) return console.log(error);
+    db = client.db('DXPractice');
+    app.listen(8080, () => {
+      console.log('Successfully connected');
     });
-
-    return res.send(result);
+    return 0;
   });
 });
 
-// OK
+app.get('/api/clients', (req, res) => {
+  Clients
+    .aggregate([
+      {
+        $lookup: {
+          from: 'schedulers',
+          localField: '_id',
+          foreignField: 'idClient',
+          as: 'lastAppt'
+        }
+      },
+      {
+        $unwind: '$lastAppt'
+      },
+      {
+        $group: {
+          _id: '$_id',
+          name: { $first: '$name' },
+          lastname: { $first: '$lastname' },
+          birthday: { $first: '$birthday' },
+          lastAppt: { $push: '$lastAppt.startDate' }
+        }
+      }
+    ])
+    .exec((err, result) => {
+      if (err) throw err;
+
+      result.forEach((element) => { /* eslint-disable */
+        element.lastAppt = element.lastAppt.map(date => (date < new Date() ? date : '')).sort()[0];
+      });
+
+      res.status(200).send(result);
+    });
+});
+
 app.get('/api/clients/:id', (req, res) => {
-  const idClient = req.params.id;
+  const idClient = ObjectId(req.params.id);
 
-  const finding = {
-    _id: new ObjectId(idClient)
-  };
-
-  const details = {
-    projection: {
-      _id: 0,
-      // name: 1,
-      // lastname: 1,
-      // birthday: 1,
-      // phone: 1,
-      // email: 1,
-      // city: 1,
-      // address: 1,
+  Clients.aggregate([
+    {
+      $match: {
+        _id: idClient
+      }
+    }, {
+      $lookup: {
+        from: 'schedulers',
+        localField: '_id',
+        foreignField: 'idClient',
+        as: 'historyTreatment'
+      }
+    },
+    {
+      $lookup: {
+        from: 'complaints',
+        localField: '_id',
+        foreignField: 'idClient',
+        as: 'complaints'
+      }
+    },
+    {
+      $unwind: '$complaints'
+    },
+    {
+      $project: {
+        _id: 0,
+        __v: 0,
+        'historyTreatment._id': 0,
+        'historyTreatment.__v': 0,
+        'historyTreatment.location': 0,
+        'historyTreatment.note': 0,
+        'historyTreatment.idClient': 0,
+        'complaints._id': 0,
+        'complaints.__v': 0,
+        'complaints.idClient': 0,
+      }
     }
-  };
+  ])
+    .exec((err, result) => {
+      if (err) throw err;
 
-  db.collection('clients').find(finding, details).limit(1).toArray((err, result) => {
-    if (err) return res.send({ error: err });
-
-    return res.send(result);
-  });
+      res.status(200).send(result[0]);
+    });
 });
 
 app.get('/api/scheduler', (req, res) => {
   const { firstDay, lastDay } = req.body;
 
-  console.log(req.body);
+  const first = new Date(firstDay);
+  const last = new Date(lastDay);
 
-  res.send(dataServer.dataScheduler);
+  Schedulers.aggregate([
+    {
+      $match: {
+        startDate: { $gte: first },
+        endDate: { $lte: last }
+      }
+    },
+    {
+      $lookup: {
+        from: 'clients',
+        localField: 'idClient',
+        foreignField: '_id',
+        as: 'clients'
+      }
+    },
+    {
+      $unwind: '$clients'
+    },
+    {
+      $lookup: {
+        from: 'treatment',
+        localField: 'idTreatment',
+        foreignField: 'listProcedure.idProcedure',
+        as: 'treatment'
+      }
+    },
+    {
+      $unwind: '$treatment'
+    },
+    {
+      $group: {
+        _id: '$_id',
+        startDate: { $first: '$startDate' },
+        endDate: { $first: '$endDate' },
+        location: { $first: '$location' },
+        note: { $first: '$note' },
+        idClient: { $first: '$idClient' },
+        idTreatment: { $first: '$idTreatment' },
+        treatment: { $first: '$treatment.listProcedure' },
+        name: { $first: '$clients.name' },
+        lastname: { $first: '$clients.lastname' },
+        phone: { $first: '$clients.phone' },
+      }
+    }
+  ]).exec((err, result) => {
+    if (err) res.status(400).send(err);
+
+    result.forEach((element) => {
+      element.operation = element.treatment.map(data => {
+        if (toString(data.idProcedure) === toString(element.idTreatment)) return data.name;
+      }).sort()[0];
+
+      delete element.treatment;
+      delete element._id;
+      delete element.idTreatment;
+    });
+
+    res.status(200).send(result);
+  });
 });
 
-// OK
 app.get('/api/treatment', (req, res) => {
   const details = {
     projection: {
@@ -98,15 +194,14 @@ app.get('/api/treatment', (req, res) => {
   });
 });
 
-// OK
-app.post('/api/doctors', (req, res) => {
+app.get('/api/doctors', (req, res) => {
   const auth = req.body;
   if (auth.login === 'doctor' && auth.password === 'doctor') {
     details = {
       projection: {
         _id: 0
       }
-    }
+    };
 
     db.collection('doctors').find({}, details).toArray((err, result) => {
       if (err) return res.send({ error: err });
@@ -118,13 +213,12 @@ app.post('/api/doctors', (req, res) => {
   }
 });
 
-// OK
 app.get('/api/analytics/age', (req, res) => {
   const details = {
     projection: {
       _id: 0
     }
-  }
+  };
 
   db.collection('analyticsAge').find({}, details).toArray((err, result) => {
     if (err) return res.send({ error: err });
@@ -133,7 +227,6 @@ app.get('/api/analytics/age', (req, res) => {
   });
 });
 
-// Need month
 app.get('/api/analytics/new/', (req, res) => {
   const { type } = req.body;
 
@@ -145,7 +238,7 @@ app.get('/api/analytics/new/', (req, res) => {
   };
 
   const finding = {
-    type: type
+    type
   };
 
   if (type === 'years') {
@@ -178,7 +271,7 @@ app.get('/api/analytics/hospital/', (req, res) => {
   };
 
   const finding = {
-    type: type
+    type
   };
 
   if (type === 'years') {
@@ -203,15 +296,139 @@ app.get('/api/analytics/visit/', (req, res) => {
   };
 
   const finding = {
-    type: type
+    type
   };
+
   if (type === 'years') {
-    res.send(dataServer.dataAnalyticsVisitYears);
+    db.collection('analyticsVisit').find(finding, details).limit(1).toArray((err, result) => {
+      if (err) return res.send({ error: err });
+
+      return res.send(result);
+    });
   } else if (type === 'month') {
     res.send(dataServer.dataAnalyticsVisitMonth);
   } else if (type === 'week') {
-    res.send(dataServer.dataAnalyticsVisitWeek);
+    db.collection('analyticsVisit').find(finding, details).limit(1).toArray((err, result) => {
+      if (err) return res.send({ error: err });
+
+      return res.send(result);
+    });
   } else {
-    res.send('Error type');
+    res.send({ error: 'Error type' });
   }
+});
+
+app.post('/api/clients', (req, res) => {
+  let client = new Clients();
+
+  client.name = req.body.name;
+  client.lastname = req.body.lastname;
+  client.birthday = req.body.birthday;
+  client.phone = req.body.phone;
+  client.email = req.body.email;
+  client.city = req.body.city;
+  client.address = req.body.address;
+
+  client.save((err) => {
+    if (err) res.status(400).send(err);
+
+    let complaint = new Complaints();
+
+    complaint.idClient = client._id;
+    complaint.save((err) => {
+      if (err) res.status(400).send(err);
+    })
+
+    res.status(200).send({ type: 'OK' });
+  });
+});
+
+app.post('/api/scheduler', (req, res) => {
+  let scheduler = new Schedulers();
+
+  scheduler.startDate = req.body.startDate;
+  scheduler.endDate = req.body.endDate;
+  scheduler.location = req.body.location;
+  scheduler.note = req.body.note;
+  scheduler.idTreatment = ObjectId(req.body.idTreatment);
+  scheduler.idClient = ObjectId(req.body.idClient);
+
+  scheduler.save((err) => {
+    if (err) res.status(400).send(err);
+
+    res.status(200).send({ type: 'OK' });
+  });
+});
+
+app.patch('/api/complaint', (req, res) => {
+  id = req.body.idClient;
+  delete req.body.idClient;
+
+  const objUpdate = req.body;
+
+  Complaints.findOneAndUpdate(
+    { idClient: ObjectId(id) },
+    objUpdate, (err) => {
+      if (err) return res.status(400).send({ error: err });
+
+      res.status(200).send({ type: 'OK' });
+    })
+});
+
+app.patch('/api/clients', (req, res) => {
+  id = req.body._id
+  delete req.body._id;
+
+  const objUpdate = req.body;
+
+  Clients.findOneAndUpdate(
+    { _id: ObjectId(id) },
+    objUpdate, (err) => {
+      if (err) return res.status(400).send({ error: err });
+
+      res.status(200).send({ type: 'OK' });
+    })
+});
+
+app.patch('/api/scheduler', (req, res) => {
+  id = req.body._id
+  delete req.body._id;
+
+  const objUpdate = req.body;
+
+  Schedulers.findOneAndUpdate(
+    { _id: ObjectId(id) },
+    objUpdate, (err) => {
+      if (err) return res.status(400).send({ error: err });
+
+      res.status(200).send({ type: 'OK' });
+    })
+});
+
+app.delete('/api/clients', (req, res) => {
+  const id = req.body.id;
+
+  Clients.remove({ _id: id }, (err) => {
+    if (err) res.status(400).send(err);
+
+    Schedulers.remove({ idClient: id }, (error) => {
+      if (error) res.status(400).send(error);
+    })
+
+    Complaints.remove({ idClient: id }, (error) => {
+      if (error) res.status(400).send(error);
+    })
+
+    res.send({ type: 'OK' });
+  })
+});
+
+app.delete('/api/scheduler', (req, res) => {
+  const id = req.body.id;
+
+  Schedulers.remove({ _id: id }, (err) => {
+    if (err) res.status(400).send(err);
+
+    res.send({ type: 'OK' });
+  })
 });

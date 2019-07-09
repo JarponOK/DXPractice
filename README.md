@@ -52,7 +52,7 @@ GET
 ```sh
 id: string
 ```
-## Response array object
+## Response
 | Parameter        | Type   |
 |------------------|--------|
 | name             | string |
@@ -70,7 +70,7 @@ id: string
 |-------------|--------|
 | startDate   | date   |
 | endDate     | date   |
-| idProcedure | string |
+| idTreatment | string |
 
 * ## complaints
 | Parameter        | Type        |
@@ -95,51 +95,49 @@ id: string
 
 ## Response example
 ```sh
-[
-  {
-    "name": string,
-    "lastname": string,
-    "birthday": date,
-    "phone": string,
-    "email": string,
-    "city": string,
-    "address": string,
-    "historyTreatment": [{
-      "startDate": date,
-      "endDate": date,
-      "idProcedure": string
+{
+  "name": string,
+  "lastname": string,
+  "birthday": date,
+  "phone": string,
+  "email": string,
+  "city": string,
+  "address": string,
+  "historyTreatment": [{
+    "startDate": date,
+    "endDate": date,
+    "idTreatment": string
+  }, {
+    "startDate": date,
+    "endDate": date,
+    "idTreatment": string
+  }],
+  "complaints": {
+    "listComplaints": [
+      string, string
+    ],
+  "listAllergies": [
+      string, string
+    ],
+    "listPreparations": [
+      string, string
+    ],
+  "listNotes": [{
+      "textNotes": string,
+      "dateNotes": date
     }, {
-      "startDate": date,
-      "endDate": date,
-      "idProcedure": string
+      "textNotes": string,
+      "dateNotes": date
     }],
-    "complaints": {
-      "listComplaints": [
-        string, string
-      ],
-      "listAllergies": [
-        string, string
-      ],
-      "listPreparations": [
-        string, string
-      ],
-      "listNotes": [{
-        "textNotes": string,
-        "dateNotes": date
-      }, {
-        "textNotes": string,
-        "dateNotes": date
-      }],
-      "listDocuments": [{
-        "nameDocuments": string,
-        "URLDocuments": string
-      }, {
-        "nameDocuments": string,
-        "URLDocuments": string
-      }]
-    }
-  } 
-]
+  "listDocuments": [{
+      "nameDocuments": string,
+      "URLDocuments": string
+    }, {
+      "nameDocuments": string,
+      "URLDocuments": string
+    }]
+  }
+} 
 ```
 #
 ## Return list scheduler
@@ -251,7 +249,7 @@ lastDay: integer
 ## Request
 * ## Method
 ```sh
-POST
+GET
 ```
 * ## URL
 ```sh
@@ -574,4 +572,165 @@ type: string
     }]
   } 
 ]
+```
+#
+## Delete clients
+## Request
+* ## Method
+```sh
+DELETE
+```
+* ## URL
+```sh
+/api/clients
+```
+* ## BODY Params
+```sh
+id: string
+```
+## Response example
+```sh
+{
+  type: 'OK'
+}
+```
+#
+## Delete scheduler
+## Request
+* ## Method
+```sh
+DELETE
+```
+* ## URL
+```sh
+/api/scheduler
+```
+* ## BODY Params
+```sh
+id: string
+```
+## Response example
+```sh
+{
+  type: 'OK'
+}
+```
+#
+## Create clients
+## Request
+* ## Method
+```sh
+POST
+```
+* ## URL
+```sh
+/api/clients
+```
+* ## BODY Params
+```sh
+name: string
+lastname: string
+birthday: string
+phone: sting
+email: string
+city: string
+address: string
+```
+## Response example
+```sh
+{
+  type: 'OK'
+}
+```
+#
+## Create scheduler
+## Request
+* ## Method
+```sh
+POST
+```
+* ## URL
+```sh
+/api/scheduler
+```
+* ## BODY Params
+```sh
+idClient: string
+idTreatment: string
+startDate: string
+endDate: string
+location: string
+note: string
+```
+## Response example
+```sh
+{
+  type: 'OK'
+}
+```
+#
+## Update client
+## Request
+* ## Method
+```sh
+PATCH
+```
+* ## URL
+```sh
+/api/clients
+```
+* ## BODY Params
+```sh
+_id: string
+Any params clients
+```
+## Response example
+```sh
+{
+  type: 'OK'
+}
+```
+#
+## Update complaint
+## Request
+* ## Method
+```sh
+PATCH
+```
+* ## URL
+```sh
+/api/complaint
+```
+* ## BODY Params
+```sh
+idClient: string
+Any params complaint
+```
+## Response example
+```sh
+{
+  type: 'OK'
+}
+```
+#
+## Update scheduler
+## Request
+* ## Method
+```sh
+PATCH
+```
+* ## URL
+```sh
+/api/scheduler
+```
+* ## BODY Params
+```sh
+_id: string
+Any params scheduler
+```
+## Response example
+```sh
+{
+  type: 'OK'
+}
 ```
