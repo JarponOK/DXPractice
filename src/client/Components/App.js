@@ -1,19 +1,18 @@
-
-import React from "react";
+import React from 'react';
 import './app.css';
-import { BrowserRouter as Router, Route, Link } from "react-router-dom";
-import Clients from "../Containers/clients"
-import Analytics from "../Containers/analytics"
-import Lk from "../Containers/lk"
-import Settings from "../Containers/settings"
-import Scheduler_Page from '../Containers/scheduler'
+import { BrowserRouter as Router, Route, Link } from 'react-router-dom';
+import Clients from '../Containers/clients';
+import Analytics from '../Containers/analytics';
+import Lk from '../Containers/lk';
+import Settings from '../Containers/settings';
+import Scheduler from '../Containers/scheduler';
 function App() {
   return (
     <Router>
       <div>
         <Header />
 
-        <Route exact path="/" component={Scheduler_Page} />
+        <Route exact path="/" component={Scheduler} />
         <Route path="/clients" component={Clients} />
         <Route path="/analytics" component={Analytics} />
         <Route path="/settings" component={Settings} />

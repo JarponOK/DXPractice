@@ -248,7 +248,7 @@ app.get('/api/analytics/new/', (req, res) => {
       return res.send(result);
     });
   } else if (type === 'month') {
-    res.send(dataServer.dataAnalyticsNewMonth);
+    res.send(dataAnalyticsNewMonth);
   } else if (type === 'week') {
     db.collection('analyticsNew').find(finding, details).limit(1).toArray((err, result) => {
       if (err) return res.send({ error: err });
@@ -275,11 +275,11 @@ app.get('/api/analytics/hospital/', (req, res) => {
   };
 
   if (type === 'years') {
-    res.send(dataServer.dataAnalyticsHospitalYears);
+    res.send(dataAnalyticsHospitalYears);
   } else if (type === 'month') {
-    res.send(dataServer.dataAnalyticsHospitalMonth);
+    res.send(dataAnalyticsHospitalMonth);
   } else if (type === 'week') {
-    res.send(dataServer.dataAnalyticsHospitalWeek);
+    res.send(dataAnalyticsHospitalWeek);
   } else {
     res.send('Error type');
   }
@@ -306,7 +306,7 @@ app.get('/api/analytics/visit/', (req, res) => {
       return res.send(result);
     });
   } else if (type === 'month') {
-    res.send(dataServer.dataAnalyticsVisitMonth);
+    res.send(dataAnalyticsVisitMonth);
   } else if (type === 'week') {
     db.collection('analyticsVisit').find(finding, details).limit(1).toArray((err, result) => {
       if (err) return res.send({ error: err });
