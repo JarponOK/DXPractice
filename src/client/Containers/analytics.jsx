@@ -1,114 +1,90 @@
-/* eslint-disable no-use-before-define */
-import React, { Component } from 'react';
-import 'typeface-roboto';
+import React from 'react';
+import { makeStyles } from '@material-ui/core/styles';
+import Paper from '@material-ui/core/Paper';
+import Grid from '@material-ui/core/Grid';
 
-class Analytics extends Component {
-  constructor(props) {
-    super(props);
-    this.props = props;
-  }
+let useStyles;
 
-  render() {
-    return (
-      <div>
-        <div style={styles.headerArea}>
-          <p style={styles.headerText}>Analytics</p>
-        </div>
-        <div style={styles.workArea}>
-          <div style={styles.leftArea}>
-            <div style={styles.totalPatient} />
-            <div style={styles.agePatient} />
-          </div>
-          <div style={styles.rightArea}>
-            <div style={styles.topDashboard}>
-              <div style={styles.topPanel} />
-              <div style={styles.topPanel} />
-              <div style={styles.topPanel} />
-            </div>
-            <div style={styles.centreArea}>
-              <div style={styles.newPatient} />
-            </div>
-            <div style={styles.bottomArea}>
-              <div style={styles.bottomPanel} />
-              <div style={styles.bottomPanel} />
-            </div>
-          </div>
-        </div>
-      </div>
-    );
-  }
+export default function Analytics() {
+  const classes = useStyles();
+
+  return (
+    <div className={classes.root}>
+      <Grid container spacing={5}>
+        <Grid item xs={3}>
+          <Paper className={classes.totalPatient}>Total Patient</Paper>
+          <Paper className={classes.agePatient}>Age of Patient</Paper>
+        </Grid>
+
+        <Grid container xs={9} className={classes.rightArea}>
+
+          <Grid container direction="row" spacing={3} className={classes.topDashboard}>
+            <Grid item xs={4}>
+              <Paper className={classes.topBoard}>New Feedbacks</Paper>
+            </Grid>
+            <Grid item xs={4}>
+              <Paper className={classes.topBoard}>Happy Clients</Paper>
+            </Grid>
+            <Grid item xs={4}>
+              <Paper className={classes.topBoard}>New Patients</Paper>
+            </Grid>
+          </Grid>
+
+          <Grid item xs={12} className={classes.centreDashboard}>
+            <Paper className={classes.centreBoard}>New Patients</Paper>
+          </Grid>
+
+          <Grid container direction="row" justify="space-between" alignItems="flex-start" spacing={3}>
+            <Grid item xs={6}>
+              <Paper className={classes.bottomBoard}>Hospital Survey</Paper>
+            </Grid>
+            <Grid item xs={6}>
+              <Paper className={classes.bottomBoard}>Visit Patient</Paper>
+            </Grid>
+          </Grid>
+
+        </Grid>
+      </Grid>
+    </div>
+  );
 }
 
-export default Analytics;
-
-const styles = {
-  headerArea: {
-    width: '100%',
-    height: '60px'
-  },
-  headerText: {
-    textAlign: 'left',
-    color: '#597389',
-    paddingLeft: '20px',
-    fontSize: '20px',
-    fontStyle: 'typeface-roboto'
-  },
-  workArea: {
-    width: '100cw',
-    height: '100ch',
-    backgroundColor: '#E9ECF1',
-    boxSizing: 'border-box'
-  },
-  leftArea: {
-    float: 'left',
+useStyles = makeStyles(theme => ({
+  root: {
     paddingLeft: '25px',
+    paddingRight: '15px',
     paddingTop: '25px',
-    backgroundColor: '#E9ECF1',
+    backgroundColor: '#E9ECF1'
   },
   totalPatient: {
-    width: '200px',
-    height: '205px',
-    backgroundColor: '#FFF'
+    height: '200px',
+    textAlign: 'center',
+    color: theme.palette.text.secondary,
+    marginBottom: '25px'
   },
   agePatient: {
-    marginTop: '25px',
-    width: '200px',
     height: '475px',
-    backgroundColor: '#FFF',
+    color: theme.palette.text.secondary,
   },
   rightArea: {
-    float: 'left',
-    paddingLeft: '25px',
-    paddingTop: '25px',
-    backgroundColor: '#E9ECF1',
+    paddingTop: '20px',
+    paddingRight: '20px'
   },
   topDashboard: {
   },
-  topPanel: {
-    display: 'inline-block',
-    width: '300px',
+  topBoard: {
     height: '130px',
-    backgroundColor: '#FFF',
-    marginRight: '25px'
+    color: theme.palette.text.secondary,
   },
-  centreArea: {
-    paddingTop: '25px',
-    marginRight: '25px'
+  centreDashboard: {
   },
-  newPatient: {
-    display: 'inline-block',
-    width: '950px',
-    height: '300px',
-    backgroundColor: '#FFF',
+  centreBoard: {
+    paddingBottom: '20px',
+    height: '290px',
+    color: theme.palette.text.secondary
   },
-  bottomArea: {
-    paddingTop: '25px',
-  },
-  bottomPanel: {
-    display: 'inline-block',
-    width: '463px',
+  bottomBoard: {
     height: '220px',
-    backgroundColor: '#FFF',
-    marginRight: '25px'
+    color: theme.palette.text.secondary,
   }
-};
+}));
