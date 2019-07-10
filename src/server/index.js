@@ -3,8 +3,7 @@ const mongoose = require('mongoose');
 const { MongoClient } = require('mongodb');
 const bodyParser = require('body-parser');
 // eslint-disable-next-line object-curly-newline
-const { Clients, Schedulers, Complaints, ObjectId } = require('./config/schema');
-const dataServer = require('../data.js');
+const { Clients, Schedulers, Complaints, Treatments, ObjectId } = require('./config/schema');
 const mongodb = require('./config/db.js');
 
 const app = express();
@@ -54,7 +53,7 @@ app.get('/api/clients', (req, res) => {
       }
     ])
     .exec((err, result) => {
-      if (err) throw err;
+      if (err) res.status(400).send(err);
 
       result.forEach((element) => { /* eslint-disable */
         element.lastAppt = element.lastAppt.map(date => (date < new Date() ? date : '')).sort()[0];
@@ -107,7 +106,7 @@ app.get('/api/clients/:id', (req, res) => {
     }
   ])
     .exec((err, result) => {
-      if (err) throw err;
+      if (err) res.status(400).send(err);
 
       res.status(200).send(result[0]);
     });
@@ -181,17 +180,18 @@ app.get('/api/scheduler', (req, res) => {
 });
 
 app.get('/api/treatment', (req, res) => {
-  const details = {
-    projection: {
-      _id: 0,
-    }
-  };
+  Treatments
+    .find({},
+      {
+        $projection: {
+          _id: 0
+        }
+      })
+    .exec((err, result) => {
+      if (err) res.status(400).send(err);
 
-  db.collection('treatment').find({}, details).toArray((err, result) => {
-    if (err) return res.send({ error: err });
-
-    return res.send(result);
-  });
+      res.status(200).send(result);
+    })
 });
 
 app.get('/api/doctors', (req, res) => {
@@ -238,26 +238,14 @@ app.get('/api/analytics/new/', (req, res) => {
   };
 
   const finding = {
-    type
+    type: type
   };
 
-  if (type === 'years') {
-    db.collection('analyticsNew').find(finding, details).limit(1).toArray((err, result) => {
-      if (err) return res.send({ error: err });
+  db.collection('analyticsNew').find(finding, details).limit(1).toArray((err, result) => {
+    if (err) return res.send({ error: err });
 
-      return res.send(result);
-    });
-  } else if (type === 'month') {
-    res.send(dataAnalyticsNewMonth);
-  } else if (type === 'week') {
-    db.collection('analyticsNew').find(finding, details).limit(1).toArray((err, result) => {
-      if (err) return res.send({ error: err });
-
-      return res.send(result);
-    });
-  } else {
-    res.send({ error: 'Error type' });
-  }
+    return res.send(result);
+  });
 });
 
 app.get('/api/analytics/hospital/', (req, res) => {
@@ -271,18 +259,14 @@ app.get('/api/analytics/hospital/', (req, res) => {
   };
 
   const finding = {
-    type
+    type: type
   };
 
-  if (type === 'years') {
-    res.send(dataAnalyticsHospitalYears);
-  } else if (type === 'month') {
-    res.send(dataAnalyticsHospitalMonth);
-  } else if (type === 'week') {
-    res.send(dataAnalyticsHospitalWeek);
-  } else {
-    res.send('Error type');
-  }
+  db.collection('analyticsHospital').find(finding, details).limit(1).toArray((err, result) => {
+    if (err) return res.send({ error: err });
+
+    return res.send(result);
+  });
 });
 
 app.get('/api/analytics/visit/', (req, res) => {
@@ -296,26 +280,14 @@ app.get('/api/analytics/visit/', (req, res) => {
   };
 
   const finding = {
-    type
+    type: type
   };
 
-  if (type === 'years') {
-    db.collection('analyticsVisit').find(finding, details).limit(1).toArray((err, result) => {
-      if (err) return res.send({ error: err });
+  db.collection('analyticsVisit').find(finding, details).limit(1).toArray((err, result) => {
+    if (err) return res.send({ error: err });
 
-      return res.send(result);
-    });
-  } else if (type === 'month') {
-    res.send(dataAnalyticsVisitMonth);
-  } else if (type === 'week') {
-    db.collection('analyticsVisit').find(finding, details).limit(1).toArray((err, result) => {
-      if (err) return res.send({ error: err });
-
-      return res.send(result);
-    });
-  } else {
-    res.send({ error: 'Error type' });
-  }
+    return res.send(result);
+  });
 });
 
 app.post('/api/clients', (req, res) => {

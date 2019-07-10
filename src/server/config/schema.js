@@ -88,13 +88,42 @@ const complaintScheme = mongoose.Schema({
   }
 });
 
+const treatmentScheme = mongoose.Schema({
+  _id: ObjectId,
+  typeName: String,
+  listProcedure: [
+    {
+      name: String,
+      cost: Number,
+      idProcedure: ObjectId
+    }
+  ]
+});
+
+const analyticsSchema = mongoose.Schema({
+  _id: ObjectId,
+  typeDate: String,
+  list: [{
+    name: String,
+    num: Number
+  }]
+});
+
 const Clients = mongoose.model('clients', clientsSchema);
 const Schedulers = mongoose.model('schedulers', schedulerScheme);
 const Complaints = mongoose.model('complaints', complaintScheme);
+const Treatments = mongoose.model('treatments', treatmentScheme);
+const AnalyticsNew = mongoose.model('analyticsNew', analyticsSchema);
+// const AnalyticsVisit = mongoose.model('analyticsVisit', analyticsSchema);
+// const AnalyticsHospital = mongoose.model('analyticsHospital', analyticsSchema);
 
 module.exports = {
   Clients,
   Schedulers,
   Complaints,
+  Treatments,
+  AnalyticsNew,
+  // AnalyticsHospital,
+  // AnalyticsVisit,
   ObjectId
 };
