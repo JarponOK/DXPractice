@@ -1,6 +1,5 @@
-import { combineReducers } from 'redux'
-import {Clients} from "./index"
+import dataServer from "../../data"
 
-export function rootReducer(state =Clients) {
+export function rootReducer(state =dataServer) {
   return state;
 } 

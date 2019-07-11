@@ -52,7 +52,7 @@ GET
 ```sh
 id: string
 ```
-## Response
+## Response array object
 | Parameter        | Type   |
 |------------------|--------|
 | name             | string |
@@ -70,7 +70,7 @@ id: string
 |-------------|--------|
 | startDate   | date   |
 | endDate     | date   |
-| idTreatment | string |
+| idProcedure | string |
 
 * ## complaints
 | Parameter        | Type        |
@@ -95,49 +95,51 @@ id: string
 
 ## Response example
 ```sh
-{
-  "name": string,
-  "lastname": string,
-  "birthday": date,
-  "phone": string,
-  "email": string,
-  "city": string,
-  "address": string,
-  "historyTreatment": [{
-    "startDate": date,
-    "endDate": date,
-    "idTreatment": string
-  }, {
-    "startDate": date,
-    "endDate": date,
-    "idTreatment": string
-  }],
-  "complaints": {
-    "listComplaints": [
-      string, string
-    ],
-  "listAllergies": [
-      string, string
-    ],
-    "listPreparations": [
-      string, string
-    ],
-  "listNotes": [{
-      "textNotes": string,
-      "dateNotes": date
+[
+  {
+    "name": string,
+    "lastname": string,
+    "birthday": date,
+    "phone": string,
+    "email": string,
+    "city": string,
+    "address": string,
+    "historyTreatment": [{
+      "startDate": date,
+      "endDate": date,
+      "idProcedure": string
     }, {
-      "textNotes": string,
-      "dateNotes": date
+      "startDate": date,
+      "endDate": date,
+      "idProcedure": string
     }],
-  "listDocuments": [{
-      "nameDocuments": string,
-      "URLDocuments": string
-    }, {
-      "nameDocuments": string,
-      "URLDocuments": string
-    }]
-  }
-} 
+    "complaints": {
+      "listComplaints": [
+        string, string
+      ],
+      "listAllergies": [
+        string, string
+      ],
+      "listPreparations": [
+        string, string
+      ],
+      "listNotes": [{
+        "textNotes": string,
+        "dateNotes": date
+      }, {
+        "textNotes": string,
+        "dateNotes": date
+      }],
+      "listDocuments": [{
+        "nameDocuments": string,
+        "URLDocuments": string
+      }, {
+        "nameDocuments": string,
+        "URLDocuments": string
+      }]
+    }
+  } 
+]
 ```
 #
 ## Return list scheduler
@@ -148,12 +150,12 @@ GET
 ```
 * ## URL
 ```sh
-/api/scheduler/:firstDay&:lastDay
+/api/scheduler/
 ```
-* ## URL Params
+* ## BODY Params
 ```sh
-firstDay: date
-lastDay: date
+firstDay: integer
+lastDay: integer
 ```
 ## Response array object
 | Parameter | Type   |
@@ -219,8 +221,8 @@ lastDay: date
 ```sh
 [
   {
-    "typeName": string,
-    "listProcedure": [{
+    "nameType": string,
+    "listOperation": [{
       "name": string,
       "cost": integer,
       "idProcedure": string
@@ -230,8 +232,8 @@ lastDay: date
       "idProcedure": string
     }]
   }, {
-    "typeName": string,
-    "listProcedure": [{
+    "nameType": string,
+    "listOperation": [{
       "name": string,
       "cost": integer,
       "idProcedure": string
@@ -245,12 +247,11 @@ lastDay: date
 ]
 ```
 #
-## Пока его не вызывай, это надо будет обсудить потом вместе
 ## Return doctor by id
 ## Request
 * ## Method
 ```sh
-GET
+POST
 ```
 * ## URL
 ```sh
@@ -322,32 +323,80 @@ GET
 ```
 * ## URL
 ```sh
-/api/analytics/new/:type
+/api/analytics/new/
 ```
-* ## URL Params
+* ## BODY Params
 ```sh
 type: string
-type = ['years', 'month', 'week']
 ```
+# Response years
 ## Response array object 
 | Parameter | Type  |
 |-----------|-------|
-| list      | array |
+| listMonth | array |
 * ## listMonth
-| Parameter | Type    |
-|-----------|---------|
-| name      | string  |
-| num       | integer |
+| Parameter  | Type    |
+|------------|---------|
+| nameMonth  | string  |
+| numClients | integer |
 ## Response example
 ```sh
 [
   {
-    "list": [{
-      "name": string,
-      "num": integer
+    "listMonth": [{
+      "nameMonth": string,
+      "numClients": integer
     }, {
-      "name": string,
-      "num": integer
+      "nameMonth": string,
+      "numClients": integer
+    }]
+  } 
+]
+```
+# Response month
+## Response array object 
+| Parameter | Type  |
+|-----------|-------|
+| listWeek  | array |
+* ## listMonth
+| Parameter  | Type    |
+|------------|---------|
+| nameWeek   | string  |
+| numClients | integer |
+## Response example
+```sh
+[
+  {
+    "listWeek": [{
+      "nameWeek": string,
+      "numClients": integer
+    }, {
+      "nameWeek": string,
+      "numClients": integer
+    }]
+  } 
+]
+```
+# Response week
+## Response array object 
+| Parameter | Type  |
+|-----------|-------|
+| listDay   | array |
+* ## listMonth
+| Parameter  | Type    |
+|------------|---------|
+| nameDay    | string  |
+| numClients | integer |
+## Response example
+```sh
+[
+  {
+    "listDay": [{
+      "nameDay": string,
+      "numClients": integer
+    }, {
+      "nameDay": string,
+      "numClients": integer
     }]
   } 
 ]
@@ -361,32 +410,80 @@ GET
 ```
 * ## URL
 ```sh
-/api/analytics/hospital/:type
+/api/analytics/hospital/
 ```
-* ## URL Params
+* ## BODY Params
 ```sh
 type: string
-type = ['years', 'month', 'week']
 ```
+# Response years
 ## Response array object 
 | Parameter | Type  |
 |-----------|-------|
-| list      | array |
+| listMonth | array |
 * ## listMonth
-| Parameter | Type    |
-|-----------|---------|
-| name      | string  |
-| num       | integer |
+| Parameter  | Type    |
+|------------|---------|
+| nameMonth  | string  |
+| numClients | integer |
 ## Response example
 ```sh
 [
   {
-    "list": [{
-      "name": string,
-      "num": integer
+    "listMonth": [{
+      "nameMonth": string,
+      "numClients": integer
     }, {
-      "name": string,
-      "num": integer
+      "nameMonth": string,
+      "numClients": integer
+    }]
+  } 
+]
+```
+# Response month
+## Response array object 
+| Parameter | Type  |
+|-----------|-------|
+| listWeek  | array |
+* ## listMonth
+| Parameter  | Type    |
+|------------|---------|
+| nameWeek   | string  |
+| numClients | integer |
+## Response example
+```sh
+[
+  {
+    "listWeek": [{
+      "nameWeek": string,
+      "numClients": integer
+    }, {
+      "nameWeek": string,
+      "numClients": integer
+    }]
+  } 
+]
+```
+# Response week
+## Response array object 
+| Parameter | Type  |
+|-----------|-------|
+| listDay   | array |
+* ## listMonth
+| Parameter  | Type    |
+|------------|---------|
+| nameDay    | string  |
+| numClients | integer |
+## Response example
+```sh
+[
+  {
+    "listDay": [{
+      "nameDay": string,
+      "numClients": integer
+    }, {
+      "nameDay": string,
+      "numClients": integer
     }]
   } 
 ]
@@ -400,197 +497,81 @@ GET
 ```
 * ## URL
 ```sh
-/api/analytics/visit/:type
+/api/analytics/visit/
 ```
-* ## URL Params
+* ## BODY Params
 ```sh
 type: string
-type = ['years', 'month', 'week']
 ```
+# Response years
 ## Response array object 
 | Parameter | Type  |
 |-----------|-------|
-| list      | array |
+| listMonth | array |
 * ## listMonth
-| Parameter | Type    |
-|-----------|---------|
-| name      | string  |
-| num       | integer |
+| Parameter  | Type    |
+|------------|---------|
+| nameMonth  | string  |
+| numClients | integer |
 ## Response example
 ```sh
 [
   {
-    "list": [{
-      "name": string,
-      "num": integer
+    "listMonth": [{
+      "nameMonth": string,
+      "numClients": integer
     }, {
-      "name": string,
-      "num": integer
+      "nameMonth": string,
+      "numClients": integer
     }]
   } 
 ]
 ```
-#
-## Delete clients
-## Request
-* ## Method
-```sh
-DELETE
-```
-* ## URL
-```sh
-/api/clients
-```
-* ## BODY Params
-```sh
-id: string
-```
+# Response month
+## Response array object 
+| Parameter | Type  |
+|-----------|-------|
+| listWeek  | array |
+* ## listMonth
+| Parameter  | Type    |
+|------------|---------|
+| nameWeek   | string  |
+| numClients | integer |
 ## Response example
 ```sh
-{
-  type: 'OK'
-}
+[
+  {
+    "listWeek": [{
+      "nameWeek": string,
+      "numClients": integer
+    }, {
+      "nameWeek": string,
+      "numClients": integer
+    }]
+  } 
+]
 ```
-#
-## Delete scheduler
-## Request
-* ## Method
-```sh
-DELETE
-```
-* ## URL
-```sh
-/api/scheduler
-```
-* ## BODY Params
-```sh
-id: string
-```
+# Response week
+## Response array object 
+| Parameter | Type  |
+|-----------|-------|
+| listDay   | array |
+* ## listMonth
+| Parameter  | Type    |
+|------------|---------|
+| nameDay    | string  |
+| numClients | integer |
 ## Response example
 ```sh
-{
-  type: 'OK'
-}
+[
+  {
+    "listDay": [{
+      "nameDay": string,
+      "numClients": integer
+    }, {
+      "nameDay": string,
+      "numClients": integer
+    }]
+  } 
+]
 ```
-#
-## Create clients
-## Request
-* ## Method
-```sh
-POST
-```
-* ## URL
-```sh
-/api/clients
-```
-* ## BODY Params
-```sh
-name: string
-lastname: string
-birthday: string
-phone: sting
-email: string
-city: string
-address: string
-```
-## Response example
-```sh
-{
-  type: 'OK'
-}
-```
-#
-## Create scheduler
-## Request
-* ## Method
-```sh
-POST
-```
-* ## URL
-```sh
-/api/scheduler
-```
-* ## BODY Params
-```sh
-idClient: string
-idTreatment: string
-startDate: string
-endDate: string
-location: string
-note: string
-```
-## Response example
-```sh
-{
-  type: 'OK'
-}
-```
-#
-## Update client
-## Request
-* ## Method
-```sh
-PATCH
-```
-* ## URL
-```sh
-/api/clients
-```
-* ## BODY Params
-```sh
-_id: string
-Any params clients
-```
-## Response example
-```sh
-{
-  type: 'OK'
-}
-```
-#
-## Update complaint
-## Request
-* ## Method
-```sh
-PATCH
-```
-* ## URL
-```sh
-/api/complaint
-```
-* ## BODY Params
-```sh
-idClient: string
-Any params complaint
-```
-## Response example
-```sh
-{
-  type: 'OK'
-}
-```
-#
-## Update scheduler
-## Request
-* ## Method
-```sh
-PATCH
-```
-* ## URL
-```sh
-/api/scheduler
-```
-* ## BODY Params
-```sh
-_id: string
-Any params scheduler
-```
-## Response example
-```sh
-{
-  type: 'OK'
-}
-```
-
-Image Page Project
-![Project Page](./src/image/Pages.jpg)
