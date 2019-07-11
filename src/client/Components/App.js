@@ -25,7 +25,7 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-const headerStyles = {
+const headerStyles = theme => ({
   menu: {
     width: "58px",
     height: "100%",
@@ -42,14 +42,14 @@ const headerStyles = {
   },
   active: {
     '&>li>div>svg': {
-      color: "secondary",
+      color:theme.palette.secondary,
       fontSize: "2rem",
     }
   },
   li:{
     listStyleType:"none",
   }
-};
+});
 function App() {
   return (
     <Router >
