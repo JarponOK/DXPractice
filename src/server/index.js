@@ -112,8 +112,8 @@ app.get('/api/clients/:id', (req, res) => {
     });
 });
 
-app.get('/api/scheduler', (req, res) => {
-  const { firstDay, lastDay } = req.body;
+app.get('/api/scheduler/:firstDay&:lastDay', (req, res) => {
+  const { firstDay, lastDay } = req.params;
 
   const first = new Date(firstDay);
   const last = new Date(lastDay);
@@ -196,6 +196,7 @@ app.get('/api/treatment', (req, res) => {
 
 app.get('/api/doctors', (req, res) => {
   const auth = req.body;
+
   if (auth.login === 'doctor' && auth.password === 'doctor') {
     details = {
       projection: {
@@ -227,8 +228,8 @@ app.get('/api/analytics/age', (req, res) => {
   });
 });
 
-app.get('/api/analytics/new/', (req, res) => {
-  const { type } = req.body;
+app.get('/api/analytics/new/:type', (req, res) => {
+  const { type } = req.params;
 
   const details = {
     projection: {
@@ -248,8 +249,8 @@ app.get('/api/analytics/new/', (req, res) => {
   });
 });
 
-app.get('/api/analytics/hospital/', (req, res) => {
-  const { type } = req.body;
+app.get('/api/analytics/hospital/:type', (req, res) => {
+  const { type } = req.params;
 
   const details = {
     projection: {
@@ -269,8 +270,8 @@ app.get('/api/analytics/hospital/', (req, res) => {
   });
 });
 
-app.get('/api/analytics/visit/', (req, res) => {
-  const { type } = req.body;
+app.get('/api/analytics/visit/:type', (req, res) => {
+  const { type } = req.params;
 
   const details = {
     projection: {

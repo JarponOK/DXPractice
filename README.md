@@ -148,12 +148,12 @@ GET
 ```
 * ## URL
 ```sh
-/api/scheduler/
+/api/scheduler/:firstDay&:lastDay
 ```
-* ## BODY Params
+* ## URL Params
 ```sh
-firstDay: integer
-lastDay: integer
+firstDay: date
+lastDay: date
 ```
 ## Response array object
 | Parameter | Type   |
@@ -219,8 +219,8 @@ lastDay: integer
 ```sh
 [
   {
-    "nameType": string,
-    "listOperation": [{
+    "typeName": string,
+    "listProcedure": [{
       "name": string,
       "cost": integer,
       "idProcedure": string
@@ -230,8 +230,8 @@ lastDay: integer
       "idProcedure": string
     }]
   }, {
-    "nameType": string,
-    "listOperation": [{
+    "typeName": string,
+    "listProcedure": [{
       "name": string,
       "cost": integer,
       "idProcedure": string
@@ -245,6 +245,7 @@ lastDay: integer
 ]
 ```
 #
+## Пока его не вызывай, это надо будет обсудить потом вместе
 ## Return doctor by id
 ## Request
 * ## Method
@@ -321,80 +322,32 @@ GET
 ```
 * ## URL
 ```sh
-/api/analytics/new/
+/api/analytics/new/:type
 ```
-* ## BODY Params
+* ## URL Params
 ```sh
 type: string
+type = ['years', 'month', 'week']
 ```
-# Response years
 ## Response array object 
 | Parameter | Type  |
 |-----------|-------|
-| listMonth | array |
+| list      | array |
 * ## listMonth
-| Parameter  | Type    |
-|------------|---------|
-| nameMonth  | string  |
-| numClients | integer |
+| Parameter | Type    |
+|-----------|---------|
+| name      | string  |
+| num       | integer |
 ## Response example
 ```sh
 [
   {
-    "listMonth": [{
-      "nameMonth": string,
-      "numClients": integer
+    "list": [{
+      "name": string,
+      "num": integer
     }, {
-      "nameMonth": string,
-      "numClients": integer
-    }]
-  } 
-]
-```
-# Response month
-## Response array object 
-| Parameter | Type  |
-|-----------|-------|
-| listWeek  | array |
-* ## listMonth
-| Parameter  | Type    |
-|------------|---------|
-| nameWeek   | string  |
-| numClients | integer |
-## Response example
-```sh
-[
-  {
-    "listWeek": [{
-      "nameWeek": string,
-      "numClients": integer
-    }, {
-      "nameWeek": string,
-      "numClients": integer
-    }]
-  } 
-]
-```
-# Response week
-## Response array object 
-| Parameter | Type  |
-|-----------|-------|
-| listDay   | array |
-* ## listMonth
-| Parameter  | Type    |
-|------------|---------|
-| nameDay    | string  |
-| numClients | integer |
-## Response example
-```sh
-[
-  {
-    "listDay": [{
-      "nameDay": string,
-      "numClients": integer
-    }, {
-      "nameDay": string,
-      "numClients": integer
+      "name": string,
+      "num": integer
     }]
   } 
 ]
@@ -408,80 +361,32 @@ GET
 ```
 * ## URL
 ```sh
-/api/analytics/hospital/
+/api/analytics/hospital/:type
 ```
-* ## BODY Params
+* ## URL Params
 ```sh
 type: string
+type = ['years', 'month', 'week']
 ```
-# Response years
 ## Response array object 
 | Parameter | Type  |
 |-----------|-------|
-| listMonth | array |
+| list      | array |
 * ## listMonth
-| Parameter  | Type    |
-|------------|---------|
-| nameMonth  | string  |
-| numClients | integer |
+| Parameter | Type    |
+|-----------|---------|
+| name      | string  |
+| num       | integer |
 ## Response example
 ```sh
 [
   {
-    "listMonth": [{
-      "nameMonth": string,
-      "numClients": integer
+    "list": [{
+      "name": string,
+      "num": integer
     }, {
-      "nameMonth": string,
-      "numClients": integer
-    }]
-  } 
-]
-```
-# Response month
-## Response array object 
-| Parameter | Type  |
-|-----------|-------|
-| listWeek  | array |
-* ## listMonth
-| Parameter  | Type    |
-|------------|---------|
-| nameWeek   | string  |
-| numClients | integer |
-## Response example
-```sh
-[
-  {
-    "listWeek": [{
-      "nameWeek": string,
-      "numClients": integer
-    }, {
-      "nameWeek": string,
-      "numClients": integer
-    }]
-  } 
-]
-```
-# Response week
-## Response array object 
-| Parameter | Type  |
-|-----------|-------|
-| listDay   | array |
-* ## listMonth
-| Parameter  | Type    |
-|------------|---------|
-| nameDay    | string  |
-| numClients | integer |
-## Response example
-```sh
-[
-  {
-    "listDay": [{
-      "nameDay": string,
-      "numClients": integer
-    }, {
-      "nameDay": string,
-      "numClients": integer
+      "name": string,
+      "num": integer
     }]
   } 
 ]
@@ -495,80 +400,32 @@ GET
 ```
 * ## URL
 ```sh
-/api/analytics/visit/
+/api/analytics/visit/:type
 ```
-* ## BODY Params
+* ## URL Params
 ```sh
 type: string
+type = ['years', 'month', 'week']
 ```
-# Response years
 ## Response array object 
 | Parameter | Type  |
 |-----------|-------|
-| listMonth | array |
+| list      | array |
 * ## listMonth
-| Parameter  | Type    |
-|------------|---------|
-| nameMonth  | string  |
-| numClients | integer |
+| Parameter | Type    |
+|-----------|---------|
+| name      | string  |
+| num       | integer |
 ## Response example
 ```sh
 [
   {
-    "listMonth": [{
-      "nameMonth": string,
-      "numClients": integer
+    "list": [{
+      "name": string,
+      "num": integer
     }, {
-      "nameMonth": string,
-      "numClients": integer
-    }]
-  } 
-]
-```
-# Response month
-## Response array object 
-| Parameter | Type  |
-|-----------|-------|
-| listWeek  | array |
-* ## listMonth
-| Parameter  | Type    |
-|------------|---------|
-| nameWeek   | string  |
-| numClients | integer |
-## Response example
-```sh
-[
-  {
-    "listWeek": [{
-      "nameWeek": string,
-      "numClients": integer
-    }, {
-      "nameWeek": string,
-      "numClients": integer
-    }]
-  } 
-]
-```
-# Response week
-## Response array object 
-| Parameter | Type  |
-|-----------|-------|
-| listDay   | array |
-* ## listMonth
-| Parameter  | Type    |
-|------------|---------|
-| nameDay    | string  |
-| numClients | integer |
-## Response example
-```sh
-[
-  {
-    "listDay": [{
-      "nameDay": string,
-      "numClients": integer
-    }, {
-      "nameDay": string,
-      "numClients": integer
+      "name": string,
+      "num": integer
     }]
   } 
 ]
@@ -734,3 +591,6 @@ Any params scheduler
   type: 'OK'
 }
 ```
+
+Image Page Project
+![Project Page](./src/image/Pages.jpg)
