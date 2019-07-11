@@ -1,7 +1,7 @@
 import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
-import Paper from '@material-ui/core/Paper';
-import Grid from '@material-ui/core/Grid';
+import  { Paper, Grid, Typography } from '@material-ui/core';
+import 'typeface-roboto';
 
 let useStyles;
 
@@ -9,8 +9,8 @@ function TopMenu() {
   const classes = useStyles();
 
   return (
-    <Grid item xs={12} style={{ marginBottom: '25px' }}>
-      <Paper className={classes.header}>Analytics</Paper>
+    <Grid item xs={12} style={{ marginBottom: '25px', paddingLeft: '25px' }}>
+      <Typography className={classes.header}>Analytics</Typography>
     </Grid>
   );
 }

@@ -1,6 +1,6 @@
 import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
-import { Paper, Grid, Tabs, Tab } from '@material-ui/core/';
+import { Paper, Grid, Tabs, Tab, Typography } from '@material-ui/core/';
 
 let useStyles;
 
@@ -10,6 +10,13 @@ function TreatmentContainer() {
       <Tabs>
         <Tab label="Diagnosis" />
         <Tab label="Restoration" />
+        <Tab label="Root canal" />
+        <Tab label="Hygiene" />
+        <Tab label="Whitening" />
+        <Tab label="Prosthetics" />
+        <Tab label="Implantation" />
+        <Tab label="Orthodontics" />
+        <Tab label="Surgery" />
       </Tabs>
     </Grid>
   );
@@ -46,27 +53,27 @@ function PersonalData() {
   const classes = useStyles();
 
   return (
-    <Grid container direction="column" xs={3} style={{ backgroundColor: '#FFF' }}>
+    <Grid container direction="column" xs={2} style={{ backgroundColor: '#FFF' }}>
       <Paper>
         <div style={{ marginLeft: '10px' }}>
           <div style={{ marginBottom: '50px' }}>
-            <p className={classes.leftAreaText}>Name</p>
+            <Typography className={classes.leftAreaText}>Name</Typography>
             <Paper className={classes.leftAreaPaper}>Derick</Paper>
-            <p className={classes.leftAreaText}>Surname</p>
+            <Typography className={classes.leftAreaText}>Surname</Typography>
             <Paper className={classes.leftAreaPaper}>Lawson</Paper>
           </div>
           <div style={{ marginBottom: '50px' }}>
-            <p className={classes.leftAreaText}>Birth Data</p>
+            <Typography className={classes.leftAreaText}>Birth Data</Typography>
             <Paper className={classes.leftAreaPaper}>4/19/1983</Paper>
-            <p className={classes.leftAreaText}>Phone</p>
+            <Typography className={classes.leftAreaText}>Phone</Typography>
             <Paper className={classes.leftAreaPaper}>765-052-5230</Paper>
-            <p className={classes.leftAreaText}>Email</p>
+            <Typography className={classes.leftAreaText}>Email</Typography>
             <Paper className={classes.leftAreaPaper}>harrington@email.com</Paper>
           </div>
           <div>
-            <p className={classes.leftAreaText}>City</p>
+            <Typography className={classes.leftAreaText}>City</Typography>
             <Paper className={classes.leftAreaPaper}>Whitter</Paper>
-            <p className={classes.leftAreaText}>Address</p>
+            <Typography className={classes.leftAreaText}>Address</Typography>
             <Paper className={classes.leftAreaPaper}>6755 Newline Ave</Paper>
           </div>
         </div>
@@ -84,22 +91,20 @@ export default function ClientArea() {
   }
 
   return (
-    <div className={classes.root}>
-      <Grid container>
-        <PersonalData />
-        <Grid container xs={9} direction="column">
-          <Tabs value={value} onChange={handleChange}>
-            <Tab label="Treatment" />
-            <Tab label="Treatment history" />
-            <Tab label="Complaints" />
-          </Tabs>
-          {value === 0 && <TreatmentContainer />}
-          {value === 1 && <HistoryContainer />}
-          {value === 2 && <ComplaintsContainer />}
-        </Grid>
-
+    <Grid container className={classes.root}>
+      <PersonalData />
+      <Grid container xs={9} direction="column">
+        <Tabs value={value} onChange={handleChange}>
+          <Tab label="Treatment" />
+          <Tab label="Treatment history" />
+          <Tab label="Complaints" />
+        </Tabs>
+        {value === 0 && <TreatmentContainer />}
+        {value === 1 && <HistoryContainer />}
+        {value === 2 && <ComplaintsContainer />}
       </Grid>
-    </div>
+
+    </Grid>
   );
 }
 
