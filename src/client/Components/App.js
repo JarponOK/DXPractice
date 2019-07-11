@@ -6,6 +6,8 @@ import Analytics from '../Containers/analytics';
 import Lk from '../Containers/lk';
 import Settings from '../Containers/settings';
 import Scheduler from '../Containers/scheduler';
+import ClientArea from '../Containers/clientPage';
+
 function App() {
   return (
     <Router>
@@ -17,6 +19,7 @@ function App() {
         <Route path="/analytics" component={Analytics} />
         <Route path="/settings" component={Settings} />
         <Route path="/lk" component={Lk} />
+        <Route path="/test" component={ClientArea} />
 
       </div>
     </Router>
