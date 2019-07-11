@@ -1,24 +1,24 @@
-import React,{PureComponent} from 'react';
+import React, { PureComponent } from 'react';
 import ReactDOM from 'react-dom';
-import { Provider } from 'react-redux'
-import {store} from "./Store/configureStore"
-import App from './Components/App';
+import { Provider } from 'react-redux';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
+import { store } from './Store/configureStore';
+import App from './Components/App';
 import theme from './themes/theme';
 
 export default class Header extends PureComponent {
-    render() {
-      return (
-        <Provider store={store}>
+  render() {
+    return (
+      <Provider store={store}>
         <MuiThemeProvider theme={theme}>
-          <App/>
+          <App />
         </MuiThemeProvider>
-        </Provider>
-      );
-    }
+      </Provider>
+    );
   }
+}
 
 ReactDOM.render(
-    <Header /> , 
-    document.getElementById('root'));
-
+  <Header />,
+  document.getElementById('root')
+);
