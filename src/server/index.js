@@ -291,6 +291,20 @@ app.get('/api/analytics/visit/:type', (req, res) => {
   });
 });
 
+app.get('/api/analytics/total', (req, res) => {
+  const details = {
+    projection: {
+      _id: 0,
+    }
+  };
+
+  db.collection('analyticsTotal').find({}, details).limit(1).toArray((err, result) => {
+    if (err) return res.send({ error: err });
+
+    return res.send(result);
+  });
+});
+
 app.post('/api/clients', (req, res) => {
   let client = new Clients();
 
