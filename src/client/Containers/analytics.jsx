@@ -1,6 +1,6 @@
 import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
-import  { Paper, Grid, Typography } from '@material-ui/core';
+import { Paper, Grid, Typography } from '@material-ui/core';
 
 let useStyles;
 
@@ -72,7 +72,7 @@ export default function Analytics() {
   const classes = useStyles();
 
   return (
-    <div>
+    <div style={{ width: 'auto' }}>
       <TopMenu />
       <div className={classes.root}>
         <Grid container spacing={5}>
