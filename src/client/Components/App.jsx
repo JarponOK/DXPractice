@@ -8,7 +8,6 @@ import EventNote from '@material-ui/icons/EventNote';
 import Group from '@material-ui/icons/Group';
 import Settings from '@material-ui/icons/Settings';
 import Equalizer from '@material-ui/icons/Equalizer';
-import Grid from '@material-ui/core/Grid';
 import Paper from '@material-ui/core/Paper';
 import Person from '@material-ui/icons/Person';
 import Clients from '../Containers/clients';
@@ -19,14 +18,11 @@ import SchedulerPage from '../Containers/scheduler';
 import ClientArea from '../Containers/clientPage';
 
 const useStyles = makeStyles(({
-  body: {
-
-  },
   html: {
     display: 'flex',
     flexFlow: 'row nowrap',
     justifyContent: 'flex-start',
-    alignItems: 'stretch'
+    alignItems: 'stretch',
   },
   li1: {
     alignSelf: 'stretch',
@@ -51,16 +47,19 @@ const headerStyles = theme => ({
     fontSize: '2rem',
   },
   active: {
-    '&>li>div>svg': {
+    '&>li>svg': {
       color: theme.palette.primary.dark,
       fontSize: '2rem',
-    }
+    },
+  },
+  menuItem: {
+    justifyContent: 'center'
   },
   li: {
     listStyleType: 'none',
     alignSelf: 'stretch',
-
-  }
+    width: '58px'
+  },
 });
 function App() {
   const classes = useStyles();
@@ -95,7 +94,6 @@ class HeaderBase extends Component {
     const A = '';
   }
 
-
   render() {
     const { classes } = this.props;
 
@@ -104,38 +102,30 @@ class HeaderBase extends Component {
         <div className={classes.li}>
           <MenuList>
             <NavLink activeClassName={classes.active} to="/scheduler">
-              <MenuItem>
-                <ListItemIcon>
-                  <EventNote className={classes.svgicon} />
-                </ListItemIcon>
+              <MenuItem className={classes.menuItem}>
+                <EventNote className={classes.svgicon} />
               </MenuItem>
             </NavLink>
             <NavLink activeClassName={classes.active} to="/clients">
-              <MenuItem>
-                <ListItemIcon>
-                  <Group className={classes.svgicon} />
-                </ListItemIcon>
+              <MenuItem className={classes.menuItem} >
+                <Group className={classes.svgicon} />
               </MenuItem>
             </NavLink>
             <NavLink activeClassName={classes.active} to="/analytics">
-              <MenuItem>
-                <ListItemIcon>
-                  <Equalizer className={classes.svgicon} />
-                </ListItemIcon>
+              <MenuItem className={classes.menuItem}>
+                <Equalizer className={classes.svgicon} />
               </MenuItem>
             </NavLink>
             <NavLink activeClassName={classes.active} to="/settings">
-              <MenuItem>
-                <ListItemIcon>
-                  <Settings className={classes.svgicon} />
-                </ListItemIcon>
+              <MenuItem className={classes.menuItem}>
+                <Settings className={classes.svgicon} />
               </MenuItem>
             </NavLink>
           </MenuList>
         </div>
         <div className={classes.li}>
           <NavLink activeClassName={classes.active} to="/lk">
-            <MenuItem><Person className={classes.svgicon} /></MenuItem>
+            <MenuItem className={classes.menuItem}><Person className={classes.svgicon} /></MenuItem>
           </NavLink>
         </div>
       </div>
