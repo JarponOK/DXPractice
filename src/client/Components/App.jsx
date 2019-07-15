@@ -20,24 +20,31 @@ import ClientArea from '../Containers/clientPage';
 
 const useStyles = makeStyles(({
   body: {
-    marginLeft: '58px',
-    position: 'fixed',
+
   },
   html: {
-    backgroundColor: '#111111',
+    display: 'flex',
+    flexFlow: 'row nowrap',
+    justifyContent: 'flex-start',
+    alignItems: 'stretch'
+  },
+  li1: {
+    alignSelf: 'stretch',
+    flexGrow: 0,
+  },
+  li2: {
+    alignSelf: 'stretch',
+    flexGrow: 1,
   }
 }));
 
 const headerStyles = theme => ({
   menu: {
-    width: '58px',
+    display: 'flex',
+    flexFlow: 'column nowrap',
+    justifyContent: 'space-between',
+    alignItems: 'stretch',
     height: '100%',
-    position: 'fixed',
-  },
-  lk: {
-    position: 'absolute',
-    bottom: '16px',
-    marginLeft: '16px',
   },
   svgicon: {
     color: '#11cb5f',
@@ -51,25 +58,18 @@ const headerStyles = theme => ({
   },
   li: {
     listStyleType: 'none',
+    alignSelf: 'stretch',
+
   }
 });
 function App() {
   const classes = useStyles();
   return (
     <Router>
-      <Grid
-        container
-        direction="row"
-        justify="flex-start"
-        alignItems="stretch"
-      >
-        <Grid item>
-          <Header className={classes.html} />
-        </Grid>
-        <Grid item>
-          <BodyRouter />
-        </Grid>
-      </Grid>
+      <div className={classes.html}>
+        <div className={classes.li1}><Header /></div>
+        <div className={classes.li2}><BodyRouter /></div>
+      </div>
     </Router>
   );
 }
@@ -100,43 +100,45 @@ class HeaderBase extends Component {
     const { classes } = this.props;
 
     return (
-      <Paper className={classes.menu}>
-        <MenuList>
-          <NavLink activeClassName={classes.active} to="/scheduler">
-            <MenuItem>
-              <ListItemIcon>
-                <EventNote className={classes.svgicon} />
-              </ListItemIcon>
-            </MenuItem>
-          </NavLink>
-          <NavLink activeClassName={classes.active} to="/clients">
-            <MenuItem>
-              <ListItemIcon>
-                <Group className={classes.svgicon} />
-              </ListItemIcon>
-            </MenuItem>
-          </NavLink>
-          <NavLink activeClassName={classes.active} to="/analytics">
-            <MenuItem>
-              <ListItemIcon>
-                <Equalizer className={classes.svgicon} />
-              </ListItemIcon>
-            </MenuItem>
-          </NavLink>
-          <NavLink activeClassName={classes.active} to="/settings">
-            <MenuItem>
-              <ListItemIcon>
-                <Settings className={classes.svgicon} />
-              </ListItemIcon>
-            </MenuItem>
-          </NavLink>
-        </MenuList>
-        <div className={classes.lk}>
+      <div className={classes.menu}>
+        <div className={classes.li}>
+          <MenuList>
+            <NavLink activeClassName={classes.active} to="/scheduler">
+              <MenuItem>
+                <ListItemIcon>
+                  <EventNote className={classes.svgicon} />
+                </ListItemIcon>
+              </MenuItem>
+            </NavLink>
+            <NavLink activeClassName={classes.active} to="/clients">
+              <MenuItem>
+                <ListItemIcon>
+                  <Group className={classes.svgicon} />
+                </ListItemIcon>
+              </MenuItem>
+            </NavLink>
+            <NavLink activeClassName={classes.active} to="/analytics">
+              <MenuItem>
+                <ListItemIcon>
+                  <Equalizer className={classes.svgicon} />
+                </ListItemIcon>
+              </MenuItem>
+            </NavLink>
+            <NavLink activeClassName={classes.active} to="/settings">
+              <MenuItem>
+                <ListItemIcon>
+                  <Settings className={classes.svgicon} />
+                </ListItemIcon>
+              </MenuItem>
+            </NavLink>
+          </MenuList>
+        </div>
+        <div className={classes.li}>
           <NavLink activeClassName={classes.active} to="/lk">
-            <li className={classes.li}><div><Person className={classes.svgicon} /></div></li>
+            <MenuItem><Person className={classes.svgicon} /></MenuItem>
           </NavLink>
         </div>
-      </Paper>
+      </div>
     );
   }
 }
