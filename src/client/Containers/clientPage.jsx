@@ -4,21 +4,19 @@ import { Paper, Grid, Tabs, Tab, Typography } from '@material-ui/core/';
 
 let useStyles;
 
-function TreatmentContainer() {
+function TreatmentContainer() { /* eslint-disable */
   return (
-    <Grid container>
-      <Tabs>
-        <Tab label="Diagnosis" />
-        <Tab label="Restoration" />
-        <Tab label="Root canal" />
-        <Tab label="Hygiene" />
-        <Tab label="Whitening" />
-        <Tab label="Prosthetics" />
-        <Tab label="Implantation" />
-        <Tab label="Orthodontics" />
-        <Tab label="Surgery" />
-      </Tabs>
-    </Grid>
+    <Tabs variant="fullWidth">
+      <Tab label="Diagnosis" />
+      <Tab label="Restoration" />
+      <Tab label="Root canal" />
+      <Tab label="Hygiene" />
+      <Tab label="Whitening" />
+      <Tab label="Prosthetics" />
+      <Tab label="Implantation" />
+      <Tab label="Orthodontics" />
+      <Tab label="Surgery" />
+    </Tabs>
   );
 }
 
@@ -91,27 +89,46 @@ export default function ClientArea() {
   }
 
   return (
-    <Grid container className={classes.root}>
-      <PersonalData />
-      <Grid container xs={9} direction="column">
-        <Tabs value={value} onChange={handleChange}>
-          <Tab label="Treatment" />
-          <Tab label="Treatment history" />
-          <Tab label="Complaints" />
-        </Tabs>
-        {value === 0 && <TreatmentContainer />}
-        {value === 1 && <HistoryContainer />}
-        {value === 2 && <ComplaintsContainer />}
+    <Grid container direction="column">
+
+      {/* Top Menu */}
+      <Grid item xs={12}>
+        <Typography className={classes.header}>Patient Card</Typography>
       </Grid>
 
+      {/* Body */}
+      <Grid container className={classes.root}>
+
+        <PersonalData />
+
+        <Grid container xs={10} direction="column" justify="flex-start">
+          <Tabs value={value} onChange={handleChange}>
+            <Tab label="Treatment" />
+            <Tab label="Treatment history" />
+            <Tab label="Complaints" />
+          </Tabs>
+          {value === 0 && <TreatmentContainer />}
+          {value === 1 && <HistoryContainer />}
+          {value === 2 && <ComplaintsContainer />}
+        </Grid>
+
+      </Grid>
     </Grid>
   );
 }
 
 useStyles = makeStyles(theme => ({
+  header: {
+    textAlign: 'left',
+    fontSize: 18,
+    height: '3vh',
+    padding: '15px',
+    color: theme.palette.text.secondary,
+  },
   root: {
-    flexGrow: 1,
-    backgroundColor: '#E9ECF1'
+    backgroundColor: '#E9ECF1',
+    height: '94vh',
+    margin: '0px',
   },
   leftAreaText: {
     textAlign: 'left',
