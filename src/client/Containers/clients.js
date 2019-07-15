@@ -1,11 +1,13 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import { clientsFetchData } from '../actions/itemClients';
+import { clientsFetchData } from '../Actions/itemClients';
+
 
 class Clients extends Component {
   componentDidMount() {
-    this.props.fetchData('http://localhost:8080/api/clients');
+    const { fetchData } = this.props;
+    fetchData('http://localhost:8080/api/clients');
   }
 
   render() {

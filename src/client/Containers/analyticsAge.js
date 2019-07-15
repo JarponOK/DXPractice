@@ -1,11 +1,12 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import { analyticsAgeFetchData } from '../actions/itemAnalytics';
+import { analyticsAgeFetchData } from '../Actions/itemAnalytics';
 
 class AnalyticsAge extends Component {
   componentDidMount() {
-    this.props.fetchData('http://localhost:8080/api/analytics/age');
+    const { fetchData } = this.props;
+    fetchData('http://localhost:8080/api/analytics/age');
   }
 
   render() {

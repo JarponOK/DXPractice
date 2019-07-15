@@ -89,7 +89,9 @@ export function analyticsHospitalFetchData(url) {
         return response;
       })
       .then(response => response.json())
-      .then(itemsAnalyticsHospital => dispatch(analyticsHospitalFetchDataSuccess(itemsAnalyticsHospital)))
+      .then(itemsAnalyticsHospital => dispatch(
+        analyticsHospitalFetchDataSuccess(itemsAnalyticsHospital)
+      ))
       .catch(() => dispatch(itemsHasErrored(true)));
   };
 }

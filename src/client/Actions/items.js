@@ -15,7 +15,7 @@ export function itemsIsLoading(bool) {
 export function itemsFetchDataSuccess(items) {
   return {
     type: 'CLIENTS_FETCH_DATA_SUCCESS',
-    items
+    items,
   };
 }
 

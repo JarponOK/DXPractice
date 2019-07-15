@@ -1,28 +1,31 @@
-
 import React, { Component } from 'react';
 import { makeStyles, withStyles } from '@material-ui/core/styles';
 import { BrowserRouter as Router, Route, NavLink } from 'react-router-dom';
-import Analytics from "../Containers/analytics";
-import Lk from "../Containers/lk";
-import Settings_Page from "../Containers/settings";
-import Scheduler_Page from '../Containers/scheduler';
 import MenuList from '@material-ui/core/MenuList';
 import MenuItem from '@material-ui/core/MenuItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
-import EventNote from '@material-ui/icons/EventNote'
-import Group from '@material-ui/icons/Group'
-import Settings from '@material-ui/icons/Settings'
-import Equalizer from '@material-ui/icons/Equalizer'
+import EventNote from '@material-ui/icons/EventNote';
+import Group from '@material-ui/icons/Group';
+import Settings from '@material-ui/icons/Settings';
+import Equalizer from '@material-ui/icons/Equalizer';
 import Grid from '@material-ui/core/Grid';
 import Paper from '@material-ui/core/Paper';
-import Person from '@material-ui/icons/Person'
-import Clients from "../Containers/clients";
+import Person from '@material-ui/icons/Person';
+import Clients from '../Containers/clients';
+import Analytics from '../Containers/analytics';
+import Lk from '../Containers/lk';
+import SettingsPage from '../Containers/settings';
+import SchedulerPage from '../Containers/scheduler';
+import ClientArea from '../Containers/clientPage';
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles(({
   body: {
     marginLeft: '58px',
     position: 'fixed',
   },
+  html: {
+    backgroundColor: '#111111',
+  }
 }));
 
 const headerStyles = theme => ({
@@ -42,8 +45,7 @@ const headerStyles = theme => ({
   },
   active: {
     '&>li>div>svg': {
-      // color: '#123456',
-      color: theme.palette.secondary,
+      color: theme.palette.primary.dark,
       fontSize: '2rem',
     }
   },
@@ -52,6 +54,7 @@ const headerStyles = theme => ({
   }
 });
 function App() {
+  const classes = useStyles();
   return (
     <Router>
       <Grid
@@ -61,7 +64,7 @@ function App() {
         alignItems="stretch"
       >
         <Grid item>
-          <Header />
+          <Header className={classes.html} />
         </Grid>
         <Grid item>
           <BodyRouter />
@@ -74,21 +77,24 @@ function App() {
 function BodyRouter() {
   const classes = useStyles();
   return (
-    <Grid className={classes.body}>
-      <Route exact path="/" component={Scheduler_Page} />
-      <Route exact path="/scheduler" component={Scheduler_Page} />
+    <Paper className={classes.body}>
+      <Route exact path="/" component={SchedulerPage} />
+      <Route exact path="/scheduler" component={SchedulerPage} />
       <Route path="/clients" component={Clients} />
       <Route path="/analytics" component={Analytics} />
-      <Route path="/settings" component={Settings_Page} />
+      <Route path="/settings" component={SettingsPage} />
       <Route path="/lk" component={Lk} />
-    </Grid>
-);
+      <Route path="/test" component={ClientArea} />
+    </Paper>
+  );
 }
 
 class HeaderBase extends Component {
   constructor(props) {
     super(props);
+    const A = '';
   }
+
 
   render() {
     const { classes } = this.props;
