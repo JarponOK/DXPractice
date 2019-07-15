@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { itemsFetchData } from '../actions/items';
+import PropTypes from 'prop-types';
+import { clientsFetchData } from '../actions/itemClients';
 
 class Clients extends Component {
   componentDidMount() {
@@ -8,31 +9,35 @@ class Clients extends Component {
   }
 
   render() {
-    console.log(this.props.items.clients);
-    if (this.props.hasErrored) {
+    console.log(this.props);
+    const { hasErrored, isLoading } = this.props;
+    if (hasErrored) {
       return <p>Sorry! There was an error loading the items</p>;
     }
 
-    if (this.props.isLoading) {
+    if (isLoading) {
       return <p>Loading…</p>;
     }
 
-    return true;
+    return <p>Loading is complete</p>;
   }
 }
 
-const mapStateToProps = (state) => {
-  return {
-    items: state.items,
-    hasErrored: state.itemsHasErrored,
-    isLoading: state.itemsIsLoading
-  };
+Clients.propTypes = {
+  fetchData: PropTypes.func.isRequired,
+  hasErrored: PropTypes.bool.isRequired,
+  isLoading: PropTypes.bool.isRequired
 };
 
-const mapDispatchToProps = (dispatch) => {
-  return {
-    fetchData: (url) => dispatch(itemsFetchData(url))
-  };
-};
+const mapStateToProps = state => ({
+  items: state.itemsClients.itemsClients,
+  hasErrored: state.itemsClients.hasErrored,
+  isLoading: state.itemsClients.isLoading
+});
+
+
+const mapDispatchToProps = dispatch => ({
+  fetchData: url => dispatch(clientsFetchData(url))
+});
 
 export default connect(mapStateToProps, mapDispatchToProps)(Clients);

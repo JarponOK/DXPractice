@@ -1,15 +1,14 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import { schedulerFetchData } from '../actions/itemScheduler';
+import { analyticsVisitFetchData } from '../actions/itemAnalytics';
 
-class SchedulerPage extends Component {
+class AnalyticsVisit extends Component {
   componentDidMount() {
-    this.props.fetchData('http://localhost:8080/api/scheduler/2019-07-03T00:00:00.000+00:00&2019-07-07T00:00:00.000+00:00');
+    this.props.fetchData('http://localhost:8080/api/analytics/visit/years');
   }
 
   render() {
-    console.log(this.props);
     const { hasErrored, isLoading } = this.props;
     if (hasErrored) {
       return <p>Sorry! There was an error loading the items</p>;
@@ -23,20 +22,20 @@ class SchedulerPage extends Component {
   }
 }
 
-SchedulerPage.propTypes = {
+AnalyticsVisit.propTypes = {
   fetchData: PropTypes.func.isRequired,
   hasErrored: PropTypes.bool.isRequired,
   isLoading: PropTypes.bool.isRequired
 };
 
 const mapStateToProps = state => ({
-  items: state.itemsScheduler.itemsScheduler,
-  hasErrored: state.itemsScheduler.hasErrored,
-  isLoading: state.itemsScheduler.isLoading
+  items: state.itemsAnalytics.itemsAnalytics,
+  hasErrored: state.itemsAnalytics.hasErrored,
+  isLoading: state.itemsAnalytics.isLoading
 });
 
 const mapDispatchToProps = dispatch => ({
-  fetchData: url => dispatch(schedulerFetchData(url))
+  fetchData: url => dispatch(analyticsVisitFetchData(url))
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(SchedulerPage);
+export default connect(mapStateToProps, mapDispatchToProps)(AnalyticsVisit);
