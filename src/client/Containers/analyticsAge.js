@@ -1,26 +1,29 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import { analyticsAgeFetchData } from '../actions/itemAnalytics';
+import Typography from '@material-ui/core/Typography';
+import { Animation } from '@devexpress/dx-react-chart';
+import { Chart, PieSeries, Title } from '@devexpress/dx-react-chart-material-ui';
+import { analyticsAgeFetchData } from '../Actions/itemAnalytics';
 import { urlAnalyticsAge } from './const';
 
 class AnalyticsAge extends Component {
   componentDidMount() {
     const { fetchData } = this.props;
-    fetchData( urlAnalyticsAge );
+    fetchData(urlAnalyticsAge);
   }
 
   render() {
     const { hasErrored, isLoading } = this.props;
     if (hasErrored) {
-      return <p>Sorry! There was an error loading the items</p>;
+      return <Typography>Sorry! There was an error loading the items</Typography>;
     }
 
     if (isLoading) {
-      return <p>Loading…</p>;
+      return <Typography>Loading…</Typography>;
     }
 
-    return <p>Loading is complete</p>;
+    return <Typography>Loading is complete</Typography>;
   }
 }
 

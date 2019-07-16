@@ -1,24 +1,26 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
+import Typography from '@material-ui/core/Typography';
 import { analyticsNewFetchData } from '../actions/itemAnalytics';
 import { urlAnalyticsTotal } from './const';
 
 class AnalyticsTotal extends Component {
   componentDidMount() {
-    this.props.fetchData(urlAnalyticsTotal);
+    const { fetchData } = this.props;
+    fetchData(urlAnalyticsTotal);
   }
 
   render() {
     const { hasErrored, isLoading } = this.props;
     if (hasErrored) {
-      return <p>Sorry! There was an error loading the items</p>;
+      return <Typography>Sorry! There was an error loading the items</Typography>;
     }
 
     if (isLoading) {
-      return <p>Loading…</p>;
+      return <Typography>Loading…</Typography>;
     }
-    return <p>Loading is complete</p>;
+    return <Typography>Loading is complete</Typography>;
   }
 }
 

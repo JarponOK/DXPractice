@@ -1,6 +1,11 @@
 import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import { Paper, Grid, Typography } from '@material-ui/core';
+import AnalyticsAge from './analyticsAge';
+import AnalyticsHospital from './analyticsHospital';
+import AnalyticsNew from './analyticsNew';
+import AnalyticsTotal from './analyticsTotal';
+import AnalyticsVisit from './analyticsVisit';
 
 export default function Analytics() {
   // eslint-disable-next-line no-use-before-define
@@ -20,10 +25,10 @@ export default function Analytics() {
         {/* Left Area */}
         <Grid container xs={3} justify="space-between" direction="column">
           <Grid item>
-            <Paper className={classes.totalPatient}>Total Patient</Paper>
+            <Paper className={classes.totalPatient}><AnalyticsTotal /></Paper>
           </Grid>
           <Grid item>
-            <Paper className={classes.agePatient}>Age of Patient</Paper>
+            <Paper className={classes.agePatient}><AnalyticsAge /></Paper>
           </Grid>
         </Grid>
 
@@ -48,7 +53,7 @@ export default function Analytics() {
           {/* Center Dashboard */}
           <Grid item>
             <Grid item xs={12} className={classes.centerDashboard}>
-              <Paper className={classes.centerBoard}>New Patients</Paper>
+              <Paper className={classes.centerBoard}><AnalyticsNew /></Paper>
             </Grid>
           </Grid>
 
@@ -56,10 +61,10 @@ export default function Analytics() {
           <Grid item>
             <Grid container spacing={2} direction="row">
               <Grid item xs={6}>
-                <Paper className={classes.bottomBoard}>Hospital Survey</Paper>
+                <Paper className={classes.bottomBoard}><AnalyticsHospital /></Paper>
               </Grid>
               <Grid item xs={6}>
-                <Paper className={classes.bottomBoard}>Visit Patient</Paper>
+                <Paper className={classes.bottomBoard}><AnalyticsVisit /></Paper>
               </Grid>
             </Grid>
           </Grid>
