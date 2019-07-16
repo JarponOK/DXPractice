@@ -2,11 +2,12 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { analyticsNewFetchData } from '../Actions/itemAnalytics';
+import { urlAnalyticsNew } from './const';
 
 class AnalyticsNew extends Component {
   componentDidMount() {
     const { fetchData } = this.props;
-    fetchData('http://localhost:8080/api/analytics/new/years');
+    fetchData(urlAnalyticsNew);
   }
 
   render() {
@@ -30,7 +31,7 @@ AnalyticsNew.propTypes = {
 };
 
 const mapStateToProps = state => ({
-  items: state.itemsAnalytics.itemsAnalytics,
+  items: state.itemsAnalytics.itemsAnalyticsNew,
   hasErrored: state.itemsAnalytics.hasErrored,
   isLoading: state.itemsAnalytics.isLoading
 });

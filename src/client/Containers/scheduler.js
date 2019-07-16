@@ -2,8 +2,9 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { makeStyles } from '@material-ui/core/styles';
-import { Paper, Grid, Typography } from '@material-ui/core';
+import { Grid, Typography } from '@material-ui/core';
 import { schedulerFetchData } from '../Actions/itemScheduler';
+import { urlScheduler } from './const';
 
 const useStyles = makeStyles(theme => ({
   header: {
@@ -27,7 +28,7 @@ function TopMenu() {
 class SchedulerPage extends Component {
   componentDidMount() {
     const { fetchData } = this.props;
-    fetchData('http://localhost:8080/api/scheduler/2019-07-03T00:00:00.000+00:00&2019-07-07T00:00:00.000+00:00');
+    fetchData(urlScheduler);
   }
 
   render() {

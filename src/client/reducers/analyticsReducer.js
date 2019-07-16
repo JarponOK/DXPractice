@@ -5,6 +5,7 @@ const initialState = {
   itemsAnalyticsNew: [],
   itemsAnalyticsHospital: [],
   itemsAnalyticsVisit: [],
+  itemsAnalyticsTotal: [],
 };
 
 export default function itemsAnalytics(state = initialState, action) {
@@ -23,8 +24,12 @@ export default function itemsAnalytics(state = initialState, action) {
 
     case 'ANALYTICS_HOSPITAL_FETCH_DATA_SUCCESS':
       return { ...state, itemsAnalyticsHospital: action.itemsAnalyticsHospital };
+
     case 'ANALYTICS_VISIT_FETCH_DATA_SUCCESS':
       return { ...state, itemsAnalyticsVisit: action.itemsAnalyticsVisit };
+
+    case 'ANALYTICS_TOTAL_FETCH_DATA_SUCCESS':
+      return { ...state, itemsAnalyticsTotal: action.itemsAnalyticsTotalt };
 
     default:
       return state;
