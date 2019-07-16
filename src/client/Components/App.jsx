@@ -1,23 +1,21 @@
 import React, { Component } from 'react';
 import { makeStyles, withStyles } from '@material-ui/core/styles';
 import { BrowserRouter as Router, Route, NavLink } from 'react-router-dom';
-import MenuList from '@material-ui/core/MenuList';
-import MenuItem from '@material-ui/core/MenuItem';
-import ListItemIcon from '@material-ui/core/ListItemIcon';
+import { MenuList, MenuItem, Paper, Button } from '@material-ui/core';
 import EventNote from '@material-ui/icons/EventNote';
 import Group from '@material-ui/icons/Group';
 import Settings from '@material-ui/icons/Settings';
 import Equalizer from '@material-ui/icons/Equalizer';
-import Paper from '@material-ui/core/Paper';
 import Person from '@material-ui/icons/Person';
-import Clients from '../Containers/clients';
+import Clients from '../Containers/clients.jsx';
 import Analytics from '../Containers/analytics';
 import Lk from '../Containers/lk';
 import SettingsPage from '../Containers/settings';
 import SchedulerPage from '../Containers/scheduler';
 import ClientArea from '../Containers/clientPage';
 
-const useStyles = makeStyles(({
+
+const useStyles = makeStyles(theme => ({
   html: {
     display: 'flex',
     flexFlow: 'row nowrap',
@@ -31,7 +29,7 @@ const useStyles = makeStyles(({
   li2: {
     alignSelf: 'stretch',
     flexGrow: 1,
-  }
+  },
 }));
 
 const headerStyles = theme => ({
@@ -43,12 +41,11 @@ const headerStyles = theme => ({
     height: '100%',
   },
   svgicon: {
-    color: '#11cb5f',
     fontSize: '2rem',
   },
   active: {
     '&>li>svg': {
-      color: theme.palette.primary.dark,
+      color: theme.palette.primary.light,
       fontSize: '2rem',
     },
   },
@@ -96,36 +93,35 @@ class HeaderBase extends Component {
 
   render() {
     const { classes } = this.props;
-
     return (
       <div className={classes.menu}>
         <div className={classes.li}>
           <MenuList>
             <NavLink activeClassName={classes.active} to="/scheduler">
               <MenuItem className={classes.menuItem}>
-                <EventNote className={classes.svgicon} />
+                <EventNote className={classes.svgicon} color='secondary' />
               </MenuItem>
             </NavLink>
             <NavLink activeClassName={classes.active} to="/clients">
               <MenuItem className={classes.menuItem} >
-                <Group className={classes.svgicon} />
+                <Group className={classes.svgicon} color='secondary'/>
               </MenuItem>
             </NavLink>
             <NavLink activeClassName={classes.active} to="/analytics">
               <MenuItem className={classes.menuItem}>
-                <Equalizer className={classes.svgicon} />
+                <Equalizer className={classes.svgicon} color='secondary'/>
               </MenuItem>
             </NavLink>
             <NavLink activeClassName={classes.active} to="/settings">
               <MenuItem className={classes.menuItem}>
-                <Settings className={classes.svgicon} />
+                <Settings className={classes.svgicon} color='secondary'/>
               </MenuItem>
             </NavLink>
           </MenuList>
         </div>
         <div className={classes.li}>
           <NavLink activeClassName={classes.active} to="/lk">
-            <MenuItem className={classes.menuItem}><Person className={classes.svgicon} /></MenuItem>
+            <MenuItem className={classes.menuItem}><Person className={classes.svgicon} color='secondary'/></MenuItem>
           </NavLink>
         </div>
       </div>

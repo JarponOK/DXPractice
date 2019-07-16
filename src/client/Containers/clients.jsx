@@ -6,6 +6,7 @@ import { Paper, Grid, Typography, Button, TextField, InputAdornment, IconButton 
 import Search from '@material-ui/icons/Search';
 import { clientsFetchData } from '../Actions/itemClients';
 
+
 const useStyles = makeStyles(theme => ({
   header: {
     textAlign: 'left',
@@ -20,6 +21,10 @@ const useStyles = makeStyles(theme => ({
     margin: '0px',
     padding: '25px',
   },
+  button: {
+    marginRight: '25px',
+
+  }
 }));
 
 function ClientsBody() {
@@ -49,7 +54,7 @@ function ClientsBody() {
               }}
             />
           </Grid>
-          <Button style={{ marginRight: '25px' }} variant="contained">Add new patient</Button>
+          <Button className={classes.button} color='secondary' variant="contained">Add new patient</Button>
         </Grid>
       </Grid>
 
@@ -64,6 +69,7 @@ class Clients extends Component {
   componentDidMount() {
     const { fetchData } = this.props;
     fetchData('http://localhost:8080/api/clients');
+
   }
 
   render() {
