@@ -7,23 +7,18 @@ import Search from '@material-ui/icons/Search';
 import { clientsFetchData } from '../Actions/itemClients';
 
 const useStyles = makeStyles(theme => ({
-  root: {
-    backgroundColor: '#E9ECF1',
-    height: '94vh',
-    margin: '0px',
-    padding: '25px',
-  },
   header: {
     textAlign: 'left',
     fontSize: 18,
-    height: '5vh',
-    paddingLeft: '15px',
-    paddingRight: '15px',
-    paddingTop: '15px',
+    // height: '3vh',
+    padding: '15px',
     color: theme.palette.text.secondary,
   },
-  button: {
-  //  backgroundColor: theme.palette.button.light,
+  root: {
+    backgroundColor: '#E9ECF1',
+    height: '86vh',
+    margin: '0px',
+    padding: '25px',
   },
 }));
 
@@ -36,6 +31,7 @@ function ClientsBody() {
       {/* Top Menu */}
       <Grid item xs={12} style={{ marginBottom: '25px', paddingLeft: '25px' }}>
         <Typography className={classes.header}>Patient</Typography>
+
         <Grid container direction="row" alignItems="center" justify="space-between">
           <Grid item>
             <TextField
@@ -53,7 +49,7 @@ function ClientsBody() {
               }}
             />
           </Grid>
-          <Button style={{ marginRight: '25px' }} className={classes.button} variant="contained">Add new patient</Button>
+          <Button style={{ marginRight: '25px' }} variant="contained">Add new patient</Button>
         </Grid>
       </Grid>
 
