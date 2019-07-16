@@ -2,8 +2,9 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { makeStyles } from '@material-ui/core/styles';
-import { Paper, Grid, Typography } from '@material-ui/core';
+import { Grid, Typography } from '@material-ui/core';
 import { clientsFetchData } from '../Actions/itemClients';
+import { urlClients } from './const';
 
 const useStyles = makeStyles(theme => ({
   header: {
@@ -24,7 +25,7 @@ function TopMenu() {
 class Clients extends Component {
   componentDidMount() {
     const { fetchData } = this.props;
-    fetchData('http://localhost:8080/api/clients');
+    fetchData(urlClients);
   }
 
   render() {

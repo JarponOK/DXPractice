@@ -122,3 +122,30 @@ export function analyticsVisitFetchData(url) {
       .catch(() => dispatch(itemsHasErrored(true)));
   };
 }
+
+export function analyticsTotalFetchDataSuccess(itemsAnalyticsTotal) {
+  return {
+    type: 'ANALYTICS_TOTAL_FETCH_DATA_SUCCESS',
+    itemsAnalyticsTotal
+  };
+}
+
+export function analyticsTotalFetchData(url) {
+  return (dispatch) => {
+    dispatch(itemsIsLoading(true));
+
+    fetch(url)
+      .then((response) => {
+        if (!response.ok) {
+          throw Error(response.statusText);
+        }
+
+        dispatch(itemsIsLoading(false));
+
+        return response;
+      })
+      .then(response => response.json())
+      .then(itemsAnalyticsTotal => dispatch(analyticsTotalFetchDataSuccess(itemsAnalyticsTotal)))
+      .catch(() => dispatch(itemsHasErrored(true)));
+  };
+}
