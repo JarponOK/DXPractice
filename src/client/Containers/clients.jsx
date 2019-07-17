@@ -9,7 +9,6 @@ import {
   PagingState,
   IntegratedPaging,
   SortingState,
-  SearchState,
   IntegratedFiltering,
   IntegratedSorting,
 } from '@devexpress/dx-react-grid';
@@ -17,7 +16,6 @@ import {
   Grid as GridData,
   Table,
   Toolbar,
-  SearchPanel,
   TableHeaderRow,
 } from '@devexpress/dx-react-grid-material-ui';
 import Search from '@material-ui/icons/Search';
@@ -29,7 +27,6 @@ const useStyles = makeStyles(theme => ({
   header: {
     textAlign: 'left',
     fontSize: 18,
-    // height: '3vh',
     padding: '15px',
     color: theme.palette.text.secondary,
   },
