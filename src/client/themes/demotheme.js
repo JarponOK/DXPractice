@@ -1,7 +1,10 @@
-import * as React from 'react';
+import React, { Component } from 'react'
 import * as PropTypes from 'prop-types';
+import { connect } from 'react-redux';
 import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles';
-import { pink, blue, purple, green, yellow } from '@material-ui/core/colors';
+import {
+  blue, purple, green, yellow
+} from '@material-ui/core/colors';
 
 const lightTheme = createMuiTheme({
   palette: {
@@ -25,16 +28,34 @@ const darkTheme = createMuiTheme({
   },
 });
 
-const DemoContainer = ({ theme, children }) => (
-  <MuiThemeProvider theme={theme}>
-    {children}
-  </MuiThemeProvider>
-);
+class DemoContainer extends Component {
+  render() {
+    console.log(this.props);
+    const { appTheme, children } = this.props;
+    if (appTheme === 'light') {
+      return (
+        <MuiThemeProvider theme={lightTheme}>
+          {children}
+        </MuiThemeProvider>
+      );
+    }
+
+    if (appTheme === 'dark') {
+      return (
+        <MuiThemeProvider theme={darkTheme}>
+          {children}
+        </MuiThemeProvider>
+      );
+    }
+  }
+}
 
 DemoContainer.propTypes = {
-  theme: PropTypes.any.isRequired,
   children: PropTypes.node.isRequired,
 };
 
-export default props => <DemoContainer {...props} theme={lightTheme} />;
-export const Dark = props => <DemoContainer {...props} theme={darkTheme} />;
+const mapStateToProps = state => ({
+  appTheme: state.themeReturn.appTheme,
+});
+
+export default connect(mapStateToProps)(DemoContainer);

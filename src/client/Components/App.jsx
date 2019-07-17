@@ -10,7 +10,7 @@ import Person from '@material-ui/icons/Person';
 import Clients from '../Containers/clients.jsx';
 import Analytics from '../Containers/analytics';
 import Lk from '../Containers/lk';
-import SettingsPage from '../Containers/settings';
+import SettingsPage from '../Containers/settings.jsx';
 import SchedulerPage from '../Containers/scheduler';
 import ClientArea from '../Containers/clientPage';
 
