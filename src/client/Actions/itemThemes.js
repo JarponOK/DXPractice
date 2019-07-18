@@ -1,6 +1,6 @@
-export function themeReturn(appTheme) {
+export function themeReturn(themeName) {
   return {
     type: 'THEME_RETURN',
-    appTheme
+    themeName
   };
 }

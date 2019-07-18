@@ -40,7 +40,7 @@ ThemeContainer.propTypes = {
 };
 
 const mapStateToProps = state => ({
-  appTheme: state.themeReturn.appTheme,
+  themeName: state.themeReturn.themeName,
 });
 
 export default connect(mapStateToProps)(ThemeContainer);

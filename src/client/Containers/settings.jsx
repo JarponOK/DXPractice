@@ -33,7 +33,6 @@ class SettingsBase extends Component {
 
     console.log(this.props);
     const { themeChange, classes } = this.props;
-    // const classes = useStyles();
     return (
       <Grid item xs={12} style={{ paddingBottom: '25px', paddingLeft: '25px' }} container direction="column">
         <Typography className={classes.header}>Settings</Typography>
@@ -51,12 +50,12 @@ class SettingsBase extends Component {
 }
 const SettingsPage = withStyles(useStyles)(SettingsBase);
 const mapStateToProps = state => ({
-  appTheme: state.themeReturn.appTheme,
+  themeName: state.themeReturn.themeName,
 });
 
 
 const mapDispatchToProps = dispatch => ({
-  themeChange: appTheme => dispatch(themeReturn(appTheme))
+  themeChange: themeName => dispatch(themeReturn(themeName))
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(SettingsPage);
