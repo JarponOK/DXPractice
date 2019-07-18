@@ -7,6 +7,7 @@ import { Animation } from '@devexpress/dx-react-chart';
 import { Chart, PieSeries } from '@devexpress/dx-react-chart-material-ui';
 import { analyticsAgeFetchData } from '../Actions/itemAnalytics';
 import { URL_ANALYTICS_AGE } from './const';
+import Loading from '../Components/loading-indicator';
 
 /* eslint-disable react/prop-types */
 class AnalyticsAge extends Component {
@@ -31,24 +32,7 @@ class AnalyticsAge extends Component {
   render() {
     const { hasErrored, isLoading, classes } = this.props;
 
-    if (hasErrored) {
-      return (
-        <Paper className={classes.centerBoard}>
-          <Typography>Sorry! There was an error loading the items</Typography>
-        </Paper>
-      );
-    }
-
-    if (isLoading) {
-      return (
-        <Paper className={classes.centerBoard}>
-          <Typography>Loading…</Typography>
-        </Paper>
-      );
-    }
-
     const { items } = this.props;
-
     let dataChart;
     if (items) {
       dataChart = [
@@ -60,18 +44,22 @@ class AnalyticsAge extends Component {
 
     return (
       <Paper className={classes.centerBoard} ref={this.rootElement}>
-        <Chart
-          data={dataChart || []}
-          height={this.state.height}
-        >
-          <PieSeries />
-          <Animation />
-          <PieSeries
-            valueField="val"
-            argumentField="age"
-            innerRadius={0.6}
-          />
-        </Chart>
+        {isLoading && <Loading />}
+        {hasErrored && <Typography>Sorry! There was an error loading the items</Typography>}
+        {!isLoading && (
+          <Chart
+            data={dataChart || []}
+            height={this.state.height}
+          >
+            <PieSeries />
+            <Animation />
+            <PieSeries
+              valueField="val"
+              argumentField="age"
+              innerRadius={0.6}
+            />
+          </Chart>
+        )}
       </Paper>
     );
   }

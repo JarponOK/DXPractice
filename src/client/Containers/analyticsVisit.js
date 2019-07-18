@@ -7,6 +7,7 @@ import { Animation } from '@devexpress/dx-react-chart';
 import { withStyles } from '@material-ui/core/styles';
 import { analyticsVisitFetchData } from '../Actions/itemAnalytics';
 import { URL_ANALYTICS_VISIT } from './const';
+import Loading from '../Components/loading-indicator';
 
 class AnalyticsVisit extends Component {
   constructor(props) {
@@ -30,37 +31,24 @@ class AnalyticsVisit extends Component {
   render() {
     const { hasErrored, isLoading, classes } = this.props;
 
-    if (hasErrored) {
-      return (
-        <Paper className={classes.centerBoard}>
-          <Typography>Sorry! There was an error loading the items</Typography>
-        </Paper>
-      );
-    }
-
-
-    if (isLoading) {
-      return (
-        <Paper className={classes.centerBoard}>
-          <Typography>Loading…</Typography>
-        </Paper>
-      );
-    }
-
     // eslint-disable-next-line react/prop-types
     const { items } = this.props;
     return (
       <Paper className={classes.centerBoard} ref={this.rootElement}>
-        <Chart
-          // eslint-disable-next-line react/destructuring-assignment
-          height={this.state.height}
-          data={items || []}
-        >
-          <ArgumentAxis />
-          <ValueAxis />
-          <BarSeries valueField="num" argumentField="name" />
-          <Animation />
-        </Chart>
+        {isLoading && <Loading />}
+        {hasErrored && <Typography>Sorry! There was an error loading the items</Typography>}
+        {!isLoading && (
+          <Chart
+            // eslint-disable-next-line react/destructuring-assignment
+            height={this.state.height}
+            data={items || []}
+          >
+            <ArgumentAxis />
+            <ValueAxis />
+            <BarSeries valueField="num" argumentField="name" />
+            <Animation />
+          </Chart>
+        )}
       </Paper>
     );
   }
