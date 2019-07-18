@@ -1,6 +1,5 @@
-export function themeReturn(themeName) {
-  return {
-    type: 'THEME_RETURN',
-    themeName
-  };
-}
+export const themeReturn = payload => ({
+  type: 'THEME_RETURN',
+  themeName: payload,
+  payload
+});

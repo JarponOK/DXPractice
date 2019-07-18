@@ -1,40 +1,35 @@
-export function itemsHasErrored(bool) {
-  return {
-    type: 'CLIENTS_HAS_ERRORED',
-    hasErrored: bool
-  };
-}
+export const itemsHasErrored = payload => ({
+  type: 'CLIENTS_HAS_ERRORED',
+  hasErrored: false,
+  payload
+});
 
-export function itemsIsLoading(bool) {
-  return {
-    type: 'CLIENTS_IS_LOADING',
-    isLoading: bool
-  };
-}
+export const itemsIsLoading = payload => ({
+  type: 'CLIENTS_IS_LOADING',
+  isLoading: payload,
+  payload
+});
 
-export function clientsFetchDataSuccess(itemsClients) {
-  return {
-    type: 'CLIENTS_FETCH_DATA_SUCCESS',
-    itemsClients
-  };
-}
+export const clientsFetchDataSuccess = payload => ({
+  type: 'CLIENTS_FETCH_DATA_SUCCESS',
+  itemsClients: payload,
+  payload
+});
 
-export function clientsFetchData(url) {
-  return (dispatch) => {
-    dispatch(itemsIsLoading(true));
+export const clientsFetchData = url => (dispatch) => {
+  dispatch(itemsIsLoading(true));
 
-    fetch(url)
-      .then((response) => {
-        if (!response.ok) {
-          throw Error(response.statusText);
-        }
+  fetch(url)
+    .then((response) => {
+      if (!response.ok) {
+        throw Error(response.statusText);
+      }
 
-        dispatch(itemsIsLoading(false));
+      dispatch(itemsIsLoading(false));
 
-        return response;
-      })
-      .then(response => response.json())
-      .then(itemsClients => dispatch(clientsFetchDataSuccess(itemsClients)))
-      .catch(() => dispatch(itemsHasErrored(true)));
-  };
-}
+      return response;
+    })
+    .then(response => response.json())
+    .then(itemsClients => dispatch(clientsFetchDataSuccess(itemsClients)))
+    .catch(() => dispatch(itemsHasErrored(true)));
+};
