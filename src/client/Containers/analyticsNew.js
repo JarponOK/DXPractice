@@ -25,6 +25,8 @@ class AnalyticsNew extends Component {
   constructor(props) {
     super(props);
 
+    this.rootElement = React.createRef();
+
     this.state = {
       height: 0,
     };
@@ -34,7 +36,7 @@ class AnalyticsNew extends Component {
     const { fetchData } = this.props;
     fetchData(URL_ANALYTICS_NEW);
 
-    const height = this.paperElement.clientHeight - 20;
+    const height = this.rootElement.current.clientHeight - 20;
     this.setState({ height });
   }
 
@@ -61,7 +63,7 @@ class AnalyticsNew extends Component {
     const { items } = this.props;
     return (
       // eslint-disable-next-line react/prop-types
-      <Paper className={classes.centerBoard} ref={paperElement => this.paperElement = paperElement}>
+      <Paper className={classes.centerBoard} ref={this.rootElement}>
         <Chart
           // eslint-disable-next-line react/destructuring-assignment
           height={this.state.height}

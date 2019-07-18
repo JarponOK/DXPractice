@@ -24,7 +24,7 @@ class AnalyticsAge extends Component {
     const { fetchData } = this.props;
     fetchData(URL_ANALYTICS_AGE);
 
-    const height = this.rootElement.clientHeight - 20;
+    const height = (this.rootElement.current.clientHeight - 20) / 3;
     this.setState({ height });
   }
 
