@@ -1,31 +1,89 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import Typography from '@material-ui/core/Typography';
+import { Typography, Paper } from '@material-ui/core';
+import { withStyles } from '@material-ui/core/styles';
 import { Animation } from '@devexpress/dx-react-chart';
 import { Chart, PieSeries, Title } from '@devexpress/dx-react-chart-material-ui';
 import { analyticsAgeFetchData } from '../Actions/itemAnalytics';
 import { URL_ANALYTICS_AGE } from './const';
 
 class AnalyticsAge extends Component {
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      height: 0,
+    };
+  }
+
   componentDidMount() {
     const { fetchData } = this.props;
     fetchData(URL_ANALYTICS_AGE);
+
+    const height = this.paperElement.clientHeight - 20;
+    this.setState({ height });
   }
 
   render() {
-    const { hasErrored, isLoading } = this.props;
+    const { hasErrored, isLoading, classes } = this.props;
+
     if (hasErrored) {
-      return <Typography>Sorry! There was an error loading the items</Typography>;
+      return (
+        <Paper className={classes.centerBoard}>
+          <Typography>Sorry! There was an error loading the items</Typography>
+        </Paper>
+      );
     }
 
     if (isLoading) {
-      return <Typography>Loading…</Typography>;
+      return (
+        // eslint-disable-next-line no-return-assign
+        <Paper className={classes.centerBoard}>
+          <Typography>Loading…</Typography>
+        </Paper>
+      );
     }
 
-    return <Typography>Loading is complete</Typography>;
+    // eslint-disable-next-line react/prop-types
+    const { items } = this.props;
+
+    let dataChart;
+    if (items) { /* eslint-disable */
+      dataChart = [
+        { age: 'Junior', val: items.ageJunior },
+        { age: 'Middle', val: items.ageMiddle },
+        { age: 'Senior', val: items.ageSenior }
+      ];
+    }
+
+    return (
+      // eslint-disable-next-line no-return-assign
+      <Paper className={classes.centerBoard} ref={paperElement => this.paperElement = paperElement}>
+        <Chart
+          data={dataChart || []}
+        >
+          <PieSeries />
+          <Animation />
+          <PieSeries
+            valueField="val"
+            argumentField="age"
+            innerRadius={0.6}
+          />
+        </Chart>
+      </Paper>
+    );
   }
 }
+
+const useStyles = theme => ({
+  centerBoard: {
+    height: '56.5vh',
+    color: theme.palette.text.secondary,
+  },
+});
+
+const AnalyticsAges = withStyles(useStyles)(AnalyticsAge);
 
 AnalyticsAge.propTypes = {
   fetchData: PropTypes.func.isRequired,
@@ -43,4 +101,4 @@ const mapDispatchToProps = dispatch => ({
   fetchData: url => dispatch(analyticsAgeFetchData(url))
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(AnalyticsAge);
+export default connect(mapStateToProps, mapDispatchToProps)(AnalyticsAges);

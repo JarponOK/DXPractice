@@ -1,15 +1,17 @@
+/* eslint-disable no-return-assign */
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { Chart, ArgumentAxis, ValueAxis, LineSeries, Title, Legend, } from '@devexpress/dx-react-chart-material-ui';
 import { ArgumentScale, Animation } from '@devexpress/dx-react-chart';
-import Typography from '@material-ui/core/Typography';
+import { Typography, Paper } from '@material-ui/core';
+import { withStyles } from '@material-ui/core/styles';
 import { scalePoint } from 'd3-scale';
 import { curveCatmullRom, line } from 'd3-shape';
 import { analyticsNewFetchData } from '../Actions/itemAnalytics';
 import { URL_ANALYTICS_NEW } from './const';
 
-const Line = props => (
+const Spline = props => (
   <LineSeries.Path
     {...props}
     path={line()
@@ -23,52 +25,67 @@ class AnalyticsNew extends Component {
   constructor(props) {
     super(props);
 
-    this.state = {};
+    this.state = {
+      height: 0,
+    };
   }
 
   componentDidMount() {
     const { fetchData } = this.props;
     fetchData(URL_ANALYTICS_NEW);
+
+    const height = this.paperElement.clientHeight - 20;
+    this.setState({ height });
   }
 
   render() {
-    const { hasErrored, isLoading } = this.props;
+    const { hasErrored, isLoading, classes } = this.props;
+
     if (hasErrored) {
-      return <Typography>Sorry! There was an error loading the items</Typography>;
-    }
-
-    if (isLoading) {
-      return <Typography>Loading…</Typography>;
-    }
-
-    if (!isLoading && !hasErrored) {
-      // eslint-disable-next-line react/destructuring-assignment
-      const chartData = this.props.items;
-      this.setState(chartData);
-
-      // console.log(chartData);
       return (
-        <Chart data={chartData}>
-          <ArgumentScale factory={scalePoint} />
-          <ArgumentAxis />
-          <ValueAxis />
-
-          <LineSeries
-            name="Patient"
-            valueField="name"
-            argumentField="num"
-            color="#00F"
-            seriesComponent={Line}
-          />
-          {/* <Legend position="bottom" /> */}
-          <Title text="New patient" />
-          <Animation />
-        </Chart>
+        <Paper className={classes.centerBoard}>
+          <Typography>Sorry! There was an error loading the items</Typography>
+        </Paper>
       );
     }
 
+    if (isLoading) {
+      return (
+        <Paper className={classes.centerBoard}>
+          <Typography>Loading…</Typography>
+        </Paper>
+      );
+    }
+
+    // eslint-disable-next-line react/prop-types
+    const { items } = this.props;
+    return (
+      // eslint-disable-next-line react/prop-types
+      <Paper className={classes.centerBoard} ref={paperElement => this.paperElement = paperElement}>
+        <Chart
+          // eslint-disable-next-line react/destructuring-assignment
+          height={this.state.height}
+          data={items || []}
+        >
+          <ArgumentScale factory={scalePoint} />
+          <ArgumentAxis />
+          <ValueAxis />
+          <LineSeries valueField="num" argumentField="name" seriesComponent={Spline} />
+          <Animation />
+        </Chart>
+      </Paper>
+    );
   }
 }
+
+const useStyles = theme => ({
+  centerBoard: {
+    height: '39vh',
+    color: theme.palette.text.secondary,
+  },
+});
+
+const AnalyticsNews = withStyles(useStyles)(AnalyticsNew);
 
 AnalyticsNew.propTypes = {
   fetchData: PropTypes.func.isRequired,
@@ -86,4 +103,4 @@ const mapDispatchToProps = dispatch => ({
   fetchData: url => dispatch(analyticsNewFetchData(url))
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(AnalyticsNew);
+export default connect(mapStateToProps, mapDispatchToProps)(AnalyticsNews);

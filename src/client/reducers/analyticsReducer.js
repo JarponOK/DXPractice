@@ -20,16 +20,16 @@ export default function itemsAnalytics(state = initialState, action) {
       return { ...state, itemsAnalyticsAge: action.itemsAnalyticsAge };
 
     case 'ANALYTICS_NEW_FETCH_DATA_SUCCESS':
-      return { ...state, itemsAnalyticsNew: action.itemsAnalyticsNew };
+      return { ...state, itemsAnalyticsNew: action.itemsAnalyticsNew.list };
 
     case 'ANALYTICS_HOSPITAL_FETCH_DATA_SUCCESS':
-      return { ...state, itemsAnalyticsHospital: action.itemsAnalyticsHospital };
+      return { ...state, itemsAnalyticsHospital: action.itemsAnalyticsHospital.list };
 
     case 'ANALYTICS_VISIT_FETCH_DATA_SUCCESS':
-      return { ...state, itemsAnalyticsVisit: action.itemsAnalyticsVisit };
+      return { ...state, itemsAnalyticsVisit: action.itemsAnalyticsVisit.list };
 
     case 'ANALYTICS_TOTAL_FETCH_DATA_SUCCESS':
-      return { ...state, itemsAnalyticsTotal: action.itemsAnalyticsTotalt };
+      return { ...state, itemsAnalyticsTotal: action.itemsAnalyticsTotal.list };
 
     default:
       return state;
