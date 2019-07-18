@@ -38,6 +38,7 @@ const headerStyles = theme => ({
     justifyContent: 'space-between',
     alignItems: 'stretch',
     height: '100%',
+    backgroundColor: theme.palette.background.paper,
   },
   svgicon: {
     fontSize: '2rem',
