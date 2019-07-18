@@ -7,7 +7,7 @@ import Typography from '@material-ui/core/Typography';
 import { scalePoint } from 'd3-scale';
 import { curveCatmullRom, line } from 'd3-shape';
 import { analyticsNewFetchData } from '../Actions/itemAnalytics';
-import { urlAnalyticsNew } from './const';
+import { URL_ANALYTICS_NEW } from './const';
 
 const Line = props => (
   <LineSeries.Path
@@ -28,7 +28,7 @@ class AnalyticsNew extends Component {
 
   componentDidMount() {
     const { fetchData } = this.props;
-    fetchData(urlAnalyticsNew);
+    fetchData(URL_ANALYTICS_NEW);
   }
 
   render() {

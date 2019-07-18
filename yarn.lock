@@ -715,10 +715,41 @@
   dependencies:
     "@date-io/core" "^1.3.8"
 
+"@devexpress/dx-chart-core@2.0.0":
+  version "2.0.0"
+  resolved "https://registry.yarnpkg.com/@devexpress/dx-chart-core/-/dx-chart-core-2.0.0.tgz#84d303e57f8486049c3ab8e445347c44c5fe6c57"
+  integrity sha512-NFN7pHcGzMKl7awRJIde6cwOaczRoG52zOkztuKHbmC4Cuz/CbII9e0IEk+F1zv8CeeYQnFmLryFt2ComwtzzA==
+  dependencies:
+    d3-array "^2.2.0"
+    d3-scale "^3.0.0"
+    d3-shape "^1.3.5"
+
 "@devexpress/dx-core@2.0.0":
   version "2.0.0"
   resolved "https://registry.yarnpkg.com/@devexpress/dx-core/-/dx-core-2.0.0.tgz#893efbf659fd62587753a27b70248a449bd77f0b"
   integrity sha512-4qhe+R77pRekGaoGn1zOiFBV0CKnR3bbnS7wFLy+DxdSthfIC1uK2G9vEayYd+X6PBjVmMuFuMNs1rrnZkJfoQ==
+
+"@devexpress/dx-grid-core@2.0.0":
+  version "2.0.0"
+  resolved "https://registry.yarnpkg.com/@devexpress/dx-grid-core/-/dx-grid-core-2.0.0.tgz#f36a04af8efc1099782046dfe9b30db1db4481b8"
+  integrity sha512-FC4VZf7LInOB30rMf69yy33QkbbH4s+YpH2TImfykDTwdXb7Nfw8BOJBdhOqqpNMs6ozgkZpNmKcioJRq9AkAw==
+
+"@devexpress/dx-react-chart-material-ui@^2.0.0":
+  version "2.0.0"
+  resolved "https://registry.yarnpkg.com/@devexpress/dx-react-chart-material-ui/-/dx-react-chart-material-ui-2.0.0.tgz#1ed658426cb0f5bc4c3fdef3424fda65b2c4d268"
+  integrity sha512-j8RhJ+HC3Yz0eDoCCGTs+w7wf7PwGnnihzWM4zu+0VtDz73OFOi7yFfuQtcqZw0XglV0UJCiWm7hD5k79ihE2A==
+  dependencies:
+    classnames "^2.2.6"
+    prop-types "^15.7.2"
+
+"@devexpress/dx-react-chart@^2.0.0":
+  version "2.0.0"
+  resolved "https://registry.yarnpkg.com/@devexpress/dx-react-chart/-/dx-react-chart-2.0.0.tgz#08e43f53a4cdb1f2ad861b8b7e4af7dda1d9d15c"
+  integrity sha512-SLff2x+TURc8x+DLqLBk9NLO/v/VeY4eHYyozrITySyu4J010OeGM8KNJtcOSrXQFiftkkjm6BYwO6eZUrG2sQ==
+  dependencies:
+    "@devexpress/dx-chart-core" "2.0.0"
+    d3-scale "^3.0.0"
+    d3-shape "^1.3.5"
 
 "@devexpress/dx-react-core@^2.0.0":
   version "2.0.0"
@@ -727,6 +758,21 @@
   dependencies:
     "@devexpress/dx-core" "2.0.0"
     prop-types "^15.7.2"
+
+"@devexpress/dx-react-grid-material-ui@^2.0.0":
+  version "2.0.0"
+  resolved "https://registry.yarnpkg.com/@devexpress/dx-react-grid-material-ui/-/dx-react-grid-material-ui-2.0.0.tgz#11ef275e5fb647690f4e6cabc8ee6f925b80a308"
+  integrity sha512-gDz85qJFUVRClFLfKk8NY704VyahaWgdMAwii5lblF+2qXHivCXjQvq0FL0V9JlJhe82Z9l3XFHoEss15EUbzQ==
+  dependencies:
+    classnames "^2.2.6"
+    prop-types "^15.7.2"
+
+"@devexpress/dx-react-grid@^2.0.0":
+  version "2.0.0"
+  resolved "https://registry.yarnpkg.com/@devexpress/dx-react-grid/-/dx-react-grid-2.0.0.tgz#c4c16a73301df76cbdd17330983e7c3ff5c5c2a2"
+  integrity sha512-DOpD3y4HW1bYLMbTu5M/YCJi4H4mJHbD7v1PZwir8dUciHEZlWY28DYA+ORZqpPV2+ZHMYuGBHIKiXeiFy6TeQ==
+  dependencies:
+    "@devexpress/dx-grid-core" "2.0.0"
 
 "@devexpress/dx-react-scheduler-material-ui@^2.0.0":
   version "2.0.0"
@@ -786,31 +832,7 @@
   dependencies:
     "@babel/runtime" "^7.2.0"
 
-"@material-ui/styles@4.1.2":
-  version "4.1.2"
-  resolved "https://registry.yarnpkg.com/@material-ui/styles/-/styles-4.1.2.tgz#f22cb0d8f60a5e4a4b92f1ffb4b56f825ff89034"
-  integrity sha512-IRwhGI3OzxMKIDXnYl/vi9FD/i5ZktVP2m/5PIf/HVdvhqUZGIzqR2OB/9f3W1hc+kKKExdOPlpZpVihIsJWkA==
-  dependencies:
-    "@babel/runtime" "^7.2.0"
-    "@emotion/hash" "^0.7.1"
-    "@material-ui/types" "^4.1.1"
-    "@material-ui/utils" "^4.1.0"
-    clsx "^1.0.2"
-    csstype "^2.5.2"
-    deepmerge "^3.0.0"
-    hoist-non-react-statics "^3.2.1"
-    jss "10.0.0-alpha.17"
-    jss-plugin-camel-case "10.0.0-alpha.17"
-    jss-plugin-default-unit "10.0.0-alpha.17"
-    jss-plugin-global "10.0.0-alpha.17"
-    jss-plugin-nested "10.0.0-alpha.17"
-    jss-plugin-props-sort "10.0.0-alpha.17"
-    jss-plugin-rule-value-function "10.0.0-alpha.17"
-    jss-plugin-vendor-prefixer "10.0.0-alpha.17"
-    prop-types "^15.7.2"
-    warning "^4.0.1"
-
-"@material-ui/styles@^4.2.0":
+"@material-ui/styles@^4.1.2", "@material-ui/styles@^4.2.0":
   version "4.2.0"
   resolved "https://registry.yarnpkg.com/@material-ui/styles/-/styles-4.2.0.tgz#dafb8a271cb6772354aece15d3e43af33844f692"
   integrity sha512-VpPCNWYK1KjpurFh1gH02xpAmCqKZrC/rmiBosZcCRDl8AOcUkSxBMNU0rziHgSQ/jYTEh3MdKNs3Gq0vGCQ/w==
@@ -2174,6 +2196,63 @@ cyclist@~0.2.2:
   version "0.2.2"
   resolved "https://registry.yarnpkg.com/cyclist/-/cyclist-0.2.2.tgz#1b33792e11e914a2fd6d6ed6447464444e5fa640"
   integrity sha1-GzN5LhHpFKL9bW7WRHRkRE5fpkA=
+
+"d3-array@^1.2.0 || 2", d3-array@^2.2.0:
+  version "2.2.0"
+  resolved "https://registry.yarnpkg.com/d3-array/-/d3-array-2.2.0.tgz#a9e966b8f8d78f0888d98db1fb840fc8da8ac5c7"
+  integrity sha512-eE0QmSh6xToqM3sxHiJYg/QFdNn52ZEgmFE8A8abU8GsHvsIOolqH8B70/8+VGAKm5MlwaExhqR3DLIjOJMLPA==
+
+d3-color@1:
+  version "1.2.8"
+  resolved "https://registry.yarnpkg.com/d3-color/-/d3-color-1.2.8.tgz#4eaf9b60ef188c893fcf8b28f3546aafebfbd9f4"
+  integrity sha512-yeANXzP37PHk0DbSTMNPhnJD+Nn4G//O5E825bR6fAfHH43hobSBpgB9G9oWVl9+XgUaQ4yCnsX1H+l8DoaL9A==
+
+d3-format@1:
+  version "1.3.2"
+  resolved "https://registry.yarnpkg.com/d3-format/-/d3-format-1.3.2.tgz#6a96b5e31bcb98122a30863f7d92365c00603562"
+  integrity sha512-Z18Dprj96ExragQ0DeGi+SYPQ7pPfRMtUXtsg/ChVIKNBCzjO8XYJvRTC1usblx52lqge56V5ect+frYTQc8WQ==
+
+d3-interpolate@1:
+  version "1.3.2"
+  resolved "https://registry.yarnpkg.com/d3-interpolate/-/d3-interpolate-1.3.2.tgz#417d3ebdeb4bc4efcc8fd4361c55e4040211fd68"
+  integrity sha512-NlNKGopqaz9qM1PXh9gBF1KSCVh+jSFErrSlD/4hybwoNX/gt1d8CDbDW+3i+5UOHhjC6s6nMvRxcuoMVNgL2w==
+  dependencies:
+    d3-color "1"
+
+d3-path@1:
+  version "1.0.7"
+  resolved "https://registry.yarnpkg.com/d3-path/-/d3-path-1.0.7.tgz#8de7cd693a75ac0b5480d3abaccd94793e58aae8"
+  integrity sha512-q0cW1RpvA5c5ma2rch62mX8AYaiLX0+bdaSM2wxSU9tXjU4DNvkx9qiUvjkuWCj3p22UO/hlPivujqMiR9PDzA==
+
+d3-scale@3.0.0, d3-scale@^3.0.0:
+  version "3.0.0"
+  resolved "https://registry.yarnpkg.com/d3-scale/-/d3-scale-3.0.0.tgz#ddede1278ac3ea2bf3666de6ca625e20bed9b6c9"
+  integrity sha512-ktic5HBFlAZj2CN8CCl/p/JyY8bMQluN7+fA6ICE6yyoMOnSQAZ1Bb8/5LcNpNKMBMJge+5Vv4pWJhARYlQYFw==
+  dependencies:
+    d3-array "^1.2.0 || 2"
+    d3-format "1"
+    d3-interpolate "1"
+    d3-time "1"
+    d3-time-format "2"
+
+d3-shape@^1.3.5:
+  version "1.3.5"
+  resolved "https://registry.yarnpkg.com/d3-shape/-/d3-shape-1.3.5.tgz#e81aea5940f59f0a79cfccac012232a8987c6033"
+  integrity sha512-VKazVR3phgD+MUCldapHD7P9kcrvPcexeX/PkMJmkUov4JM8IxsSg1DvbYoYich9AtdTsa5nNk2++ImPiDiSxg==
+  dependencies:
+    d3-path "1"
+
+d3-time-format@2:
+  version "2.1.3"
+  resolved "https://registry.yarnpkg.com/d3-time-format/-/d3-time-format-2.1.3.tgz#ae06f8e0126a9d60d6364eac5b1533ae1bac826b"
+  integrity sha512-6k0a2rZryzGm5Ihx+aFMuO1GgelgIz+7HhB4PH4OEndD5q2zGn1mDfRdNrulspOfR6JXkb2sThhDK41CSK85QA==
+  dependencies:
+    d3-time "1"
+
+d3-time@1:
+  version "1.0.11"
+  resolved "https://registry.yarnpkg.com/d3-time/-/d3-time-1.0.11.tgz#1d831a3e25cd189eb256c17770a666368762bbce"
+  integrity sha512-Z3wpvhPLW4vEScGeIMUckDW7+3hWKOQfAWg/U7PlWBnQmeKQ00gCUsTtWSYulrKNA7ta8hJ+xXc6MHrMuITwEw==
 
 damerau-levenshtein@^1.0.4:
   version "1.0.5"

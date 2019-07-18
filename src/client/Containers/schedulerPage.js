@@ -1,10 +1,14 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
+import { ViewState } from '@devexpress/dx-react-scheduler';
+import {
+  Scheduler, WeekView, Appointments
+} from '@devexpress/dx-react-scheduler-material-ui';
 import { makeStyles } from '@material-ui/core/styles';
 import { Grid, Typography } from '@material-ui/core';
 import { schedulerFetchData } from '../Actions/itemScheduler';
-import { urlScheduler } from './const';
+import { URL_SCHEDULER } from './const';
 
 const useStyles = makeStyles(theme => ({
   header: {
@@ -19,20 +23,21 @@ function TopMenu() {
   const classes = useStyles();
 
   return (
-    <Grid item xs={12} style={{ marginBottom: '25px', paddingLeft: '25px' }}>
-      <Typography className={classes.header}>Scheduler</Typography>
-    </Grid>
+    <Typography className={classes.header}>Scheduler</Typography>
   );
 }
 
 class SchedulerPage extends Component {
   componentDidMount() {
     const { fetchData } = this.props;
-    fetchData(urlScheduler);
+    fetchData(URL_SCHEDULER);
   }
 
   render() {
-    console.log(this.props);
+    const { items } = this.props;
+    const startDate = '2019-07-03';
+    const data = items;
+    console.log(items);
     const { hasErrored, isLoading } = this.props;
     if (hasErrored) {
       return <p>Sorry! There was an error loading the items</p>;
@@ -42,7 +47,20 @@ class SchedulerPage extends Component {
       return <p>Loading…</p>;
     }
 
-    return (<TopMenu />);
+    return (
+      <Grid item xs={12} style={{ marginBottom: '25px', paddingLeft: '25px' }}>
+        <TopMenu />
+        <Scheduler data={data}>
+          <ViewState
+            currentDate={startDate}
+          />
+          <WeekView
+            startDayHour={9}
+            endDayHour={18} />
+          <Appointments />
+        </Scheduler>
+      </Grid>
+    );
   }
 }
 

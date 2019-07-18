@@ -5,12 +5,12 @@ import Typography from '@material-ui/core/Typography';
 import { Animation } from '@devexpress/dx-react-chart';
 import { Chart, PieSeries, Title } from '@devexpress/dx-react-chart-material-ui';
 import { analyticsAgeFetchData } from '../Actions/itemAnalytics';
-import { urlAnalyticsAge } from './const';
+import { URL_ANALYTICS_AGE } from './const';
 
 class AnalyticsAge extends Component {
   componentDidMount() {
     const { fetchData } = this.props;
-    fetchData(urlAnalyticsAge);
+    fetchData(URL_ANALYTICS_AGE);
   }
 
   render() {
