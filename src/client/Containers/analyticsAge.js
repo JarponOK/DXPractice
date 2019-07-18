@@ -4,13 +4,16 @@ import PropTypes from 'prop-types';
 import { Typography, Paper } from '@material-ui/core';
 import { withStyles } from '@material-ui/core/styles';
 import { Animation } from '@devexpress/dx-react-chart';
-import { Chart, PieSeries, Title } from '@devexpress/dx-react-chart-material-ui';
+import { Chart, PieSeries } from '@devexpress/dx-react-chart-material-ui';
 import { analyticsAgeFetchData } from '../Actions/itemAnalytics';
 import { URL_ANALYTICS_AGE } from './const';
 
+/* eslint-disable react/prop-types */
 class AnalyticsAge extends Component {
   constructor(props) {
     super(props);
+
+    this.rootElement = React.createRef();
 
     this.state = {
       height: 0,
@@ -21,7 +24,7 @@ class AnalyticsAge extends Component {
     const { fetchData } = this.props;
     fetchData(URL_ANALYTICS_AGE);
 
-    const height = this.paperElement.clientHeight - 20;
+    const height = this.rootElement.clientHeight - 20;
     this.setState({ height });
   }
 
@@ -38,18 +41,16 @@ class AnalyticsAge extends Component {
 
     if (isLoading) {
       return (
-        // eslint-disable-next-line no-return-assign
         <Paper className={classes.centerBoard}>
           <Typography>Loading…</Typography>
         </Paper>
       );
     }
 
-    // eslint-disable-next-line react/prop-types
     const { items } = this.props;
 
     let dataChart;
-    if (items) { /* eslint-disable */
+    if (items) {
       dataChart = [
         { age: 'Junior', val: items.ageJunior },
         { age: 'Middle', val: items.ageMiddle },
@@ -58,10 +59,10 @@ class AnalyticsAge extends Component {
     }
 
     return (
-      // eslint-disable-next-line no-return-assign
-      <Paper className={classes.centerBoard} ref={paperElement => this.paperElement = paperElement}>
+      <Paper className={classes.centerBoard} ref={this.rootElement}>
         <Chart
           data={dataChart || []}
+          height={this.state.height}
         >
           <PieSeries />
           <Animation />

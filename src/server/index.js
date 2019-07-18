@@ -309,6 +309,9 @@ app.get('/api/analytics/total', (req, res) => {
 app.post('/api/clients', (req, res) => {
   let client = new Clients();
 
+  // TODO ???
+  // client = req.body;
+
   client.name = req.body.name;
   client.lastname = req.body.lastname;
   client.birthday = req.body.birthday;
@@ -369,9 +372,7 @@ app.patch('/api/clients', (req, res) => {
 
   const objUpdate = req.body;
 
-  Clients.findOneAndUpdate(
-    { _id: ObjectId(id) },
-    objUpdate, (err) => {
+  Clients.findOneAndUpdate({ _id: ObjectId(id) }, objUpdate, (err) => {
       if (err) return res.status(400).send({ error: err });
 
       res.status(200).send({ type: 'OK' });

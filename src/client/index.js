@@ -3,22 +3,23 @@ import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
 import configureStore from './Store/configureStore';
 import App from './Components/App';
-import DemoContainer, { Dark } from './themes/demotheme'
+import ThemeContainer from './themes/demotheme';
 
+const initialStore = configureStore();
 
-export default class Header extends PureComponent {
+export default class Root extends PureComponent {
   render() {
     return (
-      <Provider store={configureStore()}>
-        <DemoContainer>
+      <Provider store={initialStore}>
+        <ThemeContainer>
           <App />
-        </DemoContainer>
+        </ThemeContainer>
       </Provider>
     );
   }
 }
 
 ReactDOM.render(
-  <Header />,
+  <Root />,
   document.getElementById('root')
 );

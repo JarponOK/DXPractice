@@ -2,10 +2,9 @@ const initialState = {
   hasErrored: false,
   isLoading: false,
   itemsClients: [],
-
 };
 
-export default function itemsClients(state = initialState, action) {
+export default (state = initialState, action) => {
   switch (action.type) {
     case 'CLIENTS_HAS_ERRORED':
       return { ...state, hasErrored: action.hasErrored };
@@ -20,4 +19,4 @@ export default function itemsClients(state = initialState, action) {
     default:
       return state;
   }
-}
+};

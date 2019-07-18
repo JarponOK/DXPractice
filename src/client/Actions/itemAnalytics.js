@@ -1,14 +1,16 @@
-export function itemsHasErrored(bool) {
+export function itemsHasErrored() {
   return {
     type: 'ANALYTICS_HAS_ERRORED',
-    hasErrored: bool
+    hasErrored: false
   };
 }
 
-export function itemsIsLoading(bool) {
+export function itemsIsLoading(payload) {
   return {
     type: 'ANALYTICS_IS_LOADING',
-    isLoading: bool
+    isLoading: payload,
+    // TODO:
+    payload,
   };
 }
 

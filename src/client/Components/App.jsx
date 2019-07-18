@@ -1,21 +1,20 @@
-import React, { Component } from 'react';
+import React from 'react';
 import { makeStyles, withStyles } from '@material-ui/core/styles';
 import { BrowserRouter as Router, Route, NavLink } from 'react-router-dom';
-import { MenuList, MenuItem, Paper, Button } from '@material-ui/core';
+import { MenuList, MenuItem, Paper } from '@material-ui/core';
 import EventNote from '@material-ui/icons/EventNote';
 import Group from '@material-ui/icons/Group';
 import Settings from '@material-ui/icons/Settings';
 import Equalizer from '@material-ui/icons/Equalizer';
 import Person from '@material-ui/icons/Person';
-import Clients from '../Containers/clients.jsx';
+import Clients from '../Containers/clients';
 import Analytics from '../Containers/analytics';
 import Lk from '../Containers/lk';
-import SettingsPage from '../Containers/settings.jsx';
+import SettingsPage from '../Containers/settings';
 import SchedulerPage from '../Containers/schedulerPage';
 import ClientArea from '../Containers/clientPage';
 
-
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles(() => ({
   html: {
     display: 'flex',
     flexFlow: 'row nowrap',
@@ -58,7 +57,8 @@ const headerStyles = theme => ({
     width: '58px'
   },
 });
-function App() {
+
+const App = () => {
   const classes = useStyles();
   return (
     <Router>
@@ -68,7 +68,7 @@ function App() {
       </div>
     </Router>
   );
-}
+};
 
 function BodyRouter() {
   const classes = useStyles();
@@ -85,49 +85,41 @@ function BodyRouter() {
   );
 }
 
-class HeaderBase extends Component {
-  constructor(props) {
-    super(props);
-    const A = '';
-  }
-
-  render() {
-    const { classes } = this.props;
-    return (
-      <div className={classes.menu}>
-        <div className={classes.li}>
-          <MenuList>
-            <NavLink activeClassName={classes.active} to="/scheduler">
-              <MenuItem className={classes.menuItem}>
-                <EventNote className={classes.svgicon} color='secondary' />
-              </MenuItem>
-            </NavLink>
-            <NavLink activeClassName={classes.active} to="/clients">
-              <MenuItem className={classes.menuItem} >
-                <Group className={classes.svgicon} color='secondary'/>
-              </MenuItem>
-            </NavLink>
-            <NavLink activeClassName={classes.active} to="/analytics">
-              <MenuItem className={classes.menuItem}>
-                <Equalizer className={classes.svgicon} color='secondary'/>
-              </MenuItem>
-            </NavLink>
-            <NavLink activeClassName={classes.active} to="/settings">
-              <MenuItem className={classes.menuItem}>
-                <Settings className={classes.svgicon} color='secondary'/>
-              </MenuItem>
-            </NavLink>
-          </MenuList>
-        </div>
-        <div className={classes.li}>
-          <NavLink activeClassName={classes.active} to="/lk">
-            <MenuItem className={classes.menuItem}><Person className={classes.svgicon} color='secondary'/></MenuItem>
+const HeaderBase = ({ classes }) => {
+  return (
+    <div className={classes.menu}>
+      <div className={classes.li}>
+        <MenuList>
+          <NavLink activeClassName={classes.active} to="/scheduler">
+            <MenuItem className={classes.menuItem}>
+              <EventNote className={classes.svgicon} color='secondary' />
+            </MenuItem>
           </NavLink>
-        </div>
+          <NavLink activeClassName={classes.active} to="/clients">
+            <MenuItem className={classes.menuItem} >
+              <Group className={classes.svgicon} color='secondary'/>
+            </MenuItem>
+          </NavLink>
+          <NavLink activeClassName={classes.active} to="/analytics">
+            <MenuItem className={classes.menuItem}>
+              <Equalizer className={classes.svgicon} color='secondary'/>
+            </MenuItem>
+          </NavLink>
+          <NavLink activeClassName={classes.active} to="/settings">
+            <MenuItem className={classes.menuItem}>
+              <Settings className={classes.svgicon} color='secondary'/>
+            </MenuItem>
+          </NavLink>
+        </MenuList>
       </div>
-    );
-  }
-}
+      <div className={classes.li}>
+        <NavLink activeClassName={classes.active} to="/lk">
+          <MenuItem className={classes.menuItem}><Person className={classes.svgicon} color="secondary" /></MenuItem>
+        </NavLink>
+      </div>
+    </div>
+  );
+};
 
 const Header = withStyles(headerStyles)(HeaderBase);
 

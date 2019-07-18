@@ -22,6 +22,14 @@ import Search from '@material-ui/icons/Search';
 import { clientsFetchData } from '../Actions/itemClients';
 import { URL_CLIENTS } from './const';
 
+const getCellValue = data => `${data.name} ${data.lastname}`;
+
+const columns = [
+  { name: 'name', getCellValue, title: 'Patient name' },
+  { name: 'birthday', title: 'Birthday' },
+  { name: 'phone', title: 'Phone' },
+  { name: 'lastAppt', title: 'Last appt' },
+];
 
 const useStyles = makeStyles(theme => ({
   header: {
@@ -41,8 +49,6 @@ const useStyles = makeStyles(theme => ({
 
   }
 }));
-
-const getCellValue = data => `${data.name} ${data.lastname}`;
 
 function ClientsBody() {
   const classes = useStyles();
@@ -85,15 +91,6 @@ class Clients extends Component {
 
   render() {
     const { items } = this.props;
-    const { rows, columns } = {
-      columns: [
-        { name: 'name', getCellValue, title: 'Patient name' },
-        { name: 'birthday', title: 'Birthday' },
-        { name: 'phone', title: 'Phone' },
-        { name: 'lastAppt', title: 'Last appt' },
-      ],
-      rows: items,
-    };
     const { hasErrored, isLoading } = this.props;
     if (hasErrored) {
       return <p>Sorry! There was an error loading the items</p>;
@@ -107,7 +104,7 @@ class Clients extends Component {
       <Paper>
         <ClientsBody />
         <GridData
-          rows={rows}
+          rows={items}
           columns={columns}
         >
           <PagingState

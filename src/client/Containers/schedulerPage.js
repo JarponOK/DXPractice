@@ -36,7 +36,6 @@ class SchedulerPage extends Component {
   render() {
     const { items } = this.props;
     const startDate = '2019-07-03';
-    const data = items;
     console.log(items);
     const { hasErrored, isLoading } = this.props;
     if (hasErrored) {
@@ -50,13 +49,14 @@ class SchedulerPage extends Component {
     return (
       <Grid item xs={12} style={{ marginBottom: '25px', paddingLeft: '25px' }}>
         <TopMenu />
-        <Scheduler data={data}>
+        <Scheduler data={items}>
           <ViewState
             currentDate={startDate}
           />
           <WeekView
             startDayHour={9}
-            endDayHour={18} />
+            endDayHour={18}
+          />
           <Appointments />
         </Scheduler>
       </Grid>
