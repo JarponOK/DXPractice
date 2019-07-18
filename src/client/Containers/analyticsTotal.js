@@ -20,6 +20,7 @@ class AnalyticsTotal extends Component {
     if (isLoading) {
       return <Typography>Loading…</Typography>;
     }
+
     return <Typography>Loading is complete</Typography>;
   }
 }
