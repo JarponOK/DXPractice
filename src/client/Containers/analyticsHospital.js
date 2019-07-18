@@ -3,12 +3,12 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import Typography from '@material-ui/core/Typography';
 import { analyticsHospitalFetchData } from '../Actions/itemAnalytics';
-import { urlAnalyticsHospital } from './const';
+import { URL_ANALYTICS_HOSPITAL } from './const';
 
 class AnalyticsHospital extends Component {
   componentDidMount() {
     const { fetchData } = this.props;
-    fetchData(urlAnalyticsHospital);
+    fetchData(URL_ANALYTICS_HOSPITAL);
   }
 
   render() {

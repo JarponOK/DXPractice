@@ -2,13 +2,13 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import Typography from '@material-ui/core/Typography';
-import { analyticsNewFetchData } from '../actions/itemAnalytics';
-import { urlAnalyticsTotal } from './const';
+import { analyticsTotalFetchData } from '../Actions/itemAnalytics';
+import { URL_ANALYTICS_TOTAL } from './const';
 
 class AnalyticsTotal extends Component {
   componentDidMount() {
     const { fetchData } = this.props;
-    fetchData(urlAnalyticsTotal);
+    fetchData(URL_ANALYTICS_TOTAL);
   }
 
   render() {
@@ -20,6 +20,7 @@ class AnalyticsTotal extends Component {
     if (isLoading) {
       return <Typography>Loading…</Typography>;
     }
+
     return <Typography>Loading is complete</Typography>;
   }
 }
@@ -37,7 +38,7 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-  fetchData: url => dispatch(analyticsNewFetchData(url))
+  fetchData: url => dispatch(analyticsTotalFetchData(url))
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(AnalyticsTotal);
