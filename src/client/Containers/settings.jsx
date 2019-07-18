@@ -17,37 +17,30 @@ const useStyles = theme => ({
     color: theme.palette.text.secondary,
   },
   body: {
-
     height: '86vh',
     margin: '0px',
     padding: '25px',
-    backgroundColor: '#E9ECF1',
   },
   button: {
     marginRight: '25px',
   }
 });
 
-class SettingsBase extends Component {
-  render() {
-
-    console.log(this.props);
-    const { themeChange, classes } = this.props;
-    return (
-      <Grid item xs={12} style={{ paddingBottom: '25px', paddingLeft: '25px' }} container direction="column">
-        <Typography className={classes.header}>Settings</Typography>
-        <Typography className={classes.body}>
-          <Button className={classes.button} color="secondary" variant="contained" onClick={() => { themeChange('dark') }}>
-            Dark
-          </Button>
-          <Button className={classes.button} color="secondary" variant="contained" onClick={() => { themeChange('light') }}>
-            Light
-          </Button>
-        </Typography>
-      </Grid>
-    );
-  }
-}
+const SettingsBase = ({ classes, themeChange }) => {
+  return (
+    <Grid item xs={12} style={{ paddingBottom: '25px', paddingLeft: '25px' }} container direction="column">
+      <Typography className={classes.header}>Settings</Typography>
+      <Typography className={classes.body}>
+        <Button className={classes.button} color="secondary" variant="contained" onClick={() => { themeChange('dark'); }}>
+          Dark
+        </Button>
+        <Button className={classes.button} color="secondary" variant="contained" onClick={() => { themeChange('light'); }}>
+          Light
+        </Button>
+      </Typography>
+    </Grid>
+  );
+};
 const SettingsPage = withStyles(useStyles)(SettingsBase);
 const mapStateToProps = state => ({
   themeName: state.themeReturn.themeName,

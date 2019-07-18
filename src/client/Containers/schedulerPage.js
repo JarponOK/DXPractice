@@ -18,14 +18,12 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-
-function TopMenu() {
+const TopMenu = () => {
   const classes = useStyles();
-
   return (
     <Typography className={classes.header}>Scheduler</Typography>
   );
-}
+};
 
 class SchedulerPage extends Component {
   componentDidMount() {
