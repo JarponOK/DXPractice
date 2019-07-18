@@ -25,10 +25,10 @@ export default function Analytics() {
         {/* Left Area */}
         <Grid container xs={3} justify="space-between" direction="column">
           <Grid item>
-            <Paper className={classes.totalPatient}><AnalyticsTotal /></Paper>
+            <AnalyticsTotal />
           </Grid>
           <Grid item>
-            <Paper className={classes.agePatient}><AnalyticsAge /></Paper>
+            <AnalyticsAge />
           </Grid>
         </Grid>
 
@@ -53,7 +53,7 @@ export default function Analytics() {
           {/* Center Dashboard */}
           <Grid item>
             <Grid item xs={12} className={classes.centerDashboard}>
-              <Paper className={classes.centerBoard}><AnalyticsNew /></Paper>
+              <AnalyticsNew />
             </Grid>
           </Grid>
 
@@ -61,10 +61,10 @@ export default function Analytics() {
           <Grid item>
             <Grid container spacing={2} direction="row">
               <Grid item xs={6}>
-                <Paper className={classes.bottomBoard}><AnalyticsHospital /></Paper>
+                <AnalyticsHospital />
               </Grid>
               <Grid item xs={6}>
-                <Paper className={classes.bottomBoard}><AnalyticsVisit /></Paper>
+                <AnalyticsVisit />
               </Grid>
             </Grid>
           </Grid>

@@ -48,6 +48,7 @@ app.get('/api/clients', (req, res) => {
           name: { $first: '$name' },
           lastname: { $first: '$lastname' },
           birthday: { $first: '$birthday' },
+          phone: { $first: '$phone' },
           lastAppt: { $push: '$lastAppt.startDate' }
         }
       }
@@ -207,7 +208,7 @@ app.get('/api/doctors', (req, res) => {
     db.collection('doctors').find({}, details).toArray((err, result) => {
       if (err) return res.send({ error: err });
 
-      return res.send(result);
+      return res.send(result[0]);
     });
   } else {
     res.send({ error: 'Error auth' });
@@ -224,7 +225,7 @@ app.get('/api/analytics/age', (req, res) => {
   db.collection('analyticsAge').find({}, details).toArray((err, result) => {
     if (err) return res.send({ error: err });
 
-    return res.send(result);
+    return res.send(result[0]);
   });
 });
 
@@ -245,7 +246,7 @@ app.get('/api/analytics/new/:type', (req, res) => {
   db.collection('analyticsNew').find(finding, details).limit(1).toArray((err, result) => {
     if (err) return res.send({ error: err });
 
-    return res.send(result);
+    return res.send(result[0]);
   });
 });
 
@@ -266,7 +267,7 @@ app.get('/api/analytics/hospital/:type', (req, res) => {
   db.collection('analyticsHospital').find(finding, details).limit(1).toArray((err, result) => {
     if (err) return res.send({ error: err });
 
-    return res.send(result);
+    return res.send(result[0]);
   });
 });
 
@@ -287,7 +288,7 @@ app.get('/api/analytics/visit/:type', (req, res) => {
   db.collection('analyticsVisit').find(finding, details).limit(1).toArray((err, result) => {
     if (err) return res.send({ error: err });
 
-    return res.send(result);
+    return res.send(result[0]);
   });
 });
 
@@ -301,7 +302,7 @@ app.get('/api/analytics/total', (req, res) => {
   db.collection('analyticsTotal').find({}, details).limit(1).toArray((err, result) => {
     if (err) return res.send({ error: err });
 
-    return res.send(result);
+    return res.send(result[0]);
   });
 });
 
