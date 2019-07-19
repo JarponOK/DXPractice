@@ -172,7 +172,6 @@ app.get('/api/scheduler/:firstDay&:lastDay', (req, res) => {
       }).sort()[0];
 
       delete element.treatment;
-      delete element._id;
       delete element.idTreatment;
     });
 
