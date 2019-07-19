@@ -3,11 +3,26 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { Typography, Paper } from '@material-ui/core';
 import { withStyles } from '@material-ui/core/styles';
-import { Animation } from '@devexpress/dx-react-chart';
+import { Animation, Palette } from '@devexpress/dx-react-chart';
 import { Chart, PieSeries, Title } from '@devexpress/dx-react-chart-material-ui';
 import { analyticsAgeFetchData } from '../actions/item-analytics';
 import { URL_ANALYTICS_AGE } from './const';
 import Loading from './loading-indicator';
+
+const schemeColors = {
+  junior: [
+    '#00c078',
+    '#DCDCDC'
+  ],
+  middle: [
+    '#4d76cf',
+    '#DCDCDC'
+  ],
+  senior: [
+    '#ffac00',
+    '#DCDCDC'
+  ]
+};
 
 /* eslint-disable react/prop-types */
 class AnalyticsAge extends Component {
@@ -25,21 +40,19 @@ class AnalyticsAge extends Component {
     const { fetchData } = this.props;
     fetchData(URL_ANALYTICS_AGE);
 
-    const height = (this.rootElement.current.clientHeight - 20) / 4;
+    const height = (this.rootElement.current.clientHeight) / 3;
     this.setState({ height });
   }
 
   render() {
-    const { hasErrored, isLoading, classes } = this.props;
-
-    const { items } = this.props;
-    const { height } = this.state;
+    const {
+      hasErrored, isLoading, classes, items
+    } = this.props;
 
     let chartJunior = [];
     let chartMiddle = [];
     let chartSenior = [];
 
-    console.log(items);
     if (items.length > 0) {
       chartJunior = [
         { age: 'Junior', val: items[0].ageJunior },
@@ -53,9 +66,9 @@ class AnalyticsAge extends Component {
         { age: 'Senior', val: items[0].ageSenior },
         { age: 'Other', val: items[0].ageMiddle + items[0].ageJunior }
       ];
-      console.log(chartJunior);
     }
 
+    const { height } = this.state;
     return (
       <Paper className={classes.centerBoard} ref={this.rootElement}>
         {isLoading && <Loading />}
@@ -65,10 +78,11 @@ class AnalyticsAge extends Component {
           data={chartJunior || []}
           height={height}
         >
+          <Palette scheme={schemeColors.junior} />
           <PieSeries
             valueField="val"
             argumentField="age"
-            innerRadius={0.6}
+            innerRadius={0.7}
           />
           <Animation />
           <Title
@@ -80,10 +94,11 @@ class AnalyticsAge extends Component {
           data={chartMiddle || []}
           height={height}
         >
+          <Palette scheme={schemeColors.middle} />
           <PieSeries
             valueField="val"
             argumentField="age"
-            innerRadius={0.6}
+            innerRadius={0.7}
           />
           <Animation />
           <Title
@@ -95,10 +110,11 @@ class AnalyticsAge extends Component {
           data={chartSenior || []}
           height={height}
         >
+          <Palette scheme={schemeColors.senior} />
           <PieSeries
             valueField="val"
             argumentField="age"
-            innerRadius={0.6}
+            innerRadius={0.7}
           />
           <Title
             text="45 + oy"
