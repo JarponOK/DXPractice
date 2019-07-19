@@ -1,11 +1,9 @@
-import React, { Component } from 'react';
+import React from 'react';
 import { connect } from 'react-redux';
-import PropTypes from 'prop-types';
-import { makeStyles, withStyles } from '@material-ui/core/styles';
+import { withStyles } from '@material-ui/core/styles';
 import {
-  Paper, Grid, Typography, Button, TextField, InputAdornment, IconButton
+  Grid, Typography, Button
 } from '@material-ui/core';
-import Search from '@material-ui/icons/Search';
 import { themeReturn } from '../actions/item-themes';
 
 
