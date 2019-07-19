@@ -4,9 +4,10 @@ import PropTypes from 'prop-types';
 import { Typography, Paper } from '@material-ui/core';
 import { withStyles } from '@material-ui/core/styles';
 import { Animation } from '@devexpress/dx-react-chart';
-import { Chart, PieSeries } from '@devexpress/dx-react-chart-material-ui';
+import { Chart, PieSeries, Title } from '@devexpress/dx-react-chart-material-ui';
 import { analyticsAgeFetchData } from '../actions/item-analytics';
 import { URL_ANALYTICS_AGE } from './const';
+import Loading from './loading-indicator';
 
 /* eslint-disable react/prop-types */
 class AnalyticsAge extends Component {
@@ -24,53 +25,86 @@ class AnalyticsAge extends Component {
     const { fetchData } = this.props;
     fetchData(URL_ANALYTICS_AGE);
 
-    const height = (this.rootElement.current.clientHeight - 20) / 3;
+    const height = (this.rootElement.current.clientHeight - 20) / 4;
     this.setState({ height });
   }
 
   render() {
     const { hasErrored, isLoading, classes } = this.props;
 
-    if (hasErrored) {
-      return (
-        <Paper className={classes.centerBoard}>
-          <Typography>Sorry! There was an error loading the items</Typography>
-        </Paper>
-      );
-    }
-
-    if (isLoading) {
-      return (
-        <Paper className={classes.centerBoard}>
-          <Typography>Loading…</Typography>
-        </Paper>
-      );
-    }
-
     const { items } = this.props;
+    const { height } = this.state;
 
-    let dataChart;
-    if (items) {
-      dataChart = [
-        { age: 'Junior', val: items.ageJunior },
-        { age: 'Middle', val: items.ageMiddle },
-        { age: 'Senior', val: items.ageSenior }
+    let chartJunior = [];
+    let chartMiddle = [];
+    let chartSenior = [];
+
+    console.log(items);
+    if (items.length > 0) {
+      chartJunior = [
+        { age: 'Junior', val: items[0].ageJunior },
+        { age: 'Other', val: items[0].ageMiddle + items[0].ageSenior }
       ];
+      chartMiddle = [
+        { age: 'Middle', val: items[0].ageMiddle },
+        { age: 'Other', val: items[0].ageJunior + items[0].ageSenior }
+      ];
+      chartSenior = [
+        { age: 'Senior', val: items[0].ageSenior },
+        { age: 'Other', val: items[0].ageMiddle + items[0].ageJunior }
+      ];
+      console.log(chartJunior);
     }
 
     return (
       <Paper className={classes.centerBoard} ref={this.rootElement}>
+        {isLoading && <Loading />}
+        {hasErrored && <Typography>Sorry! There was an error loading the items</Typography>}
+        <Typography>Age of Patient</Typography>
         <Chart
-          data={dataChart || []}
-          height={this.state.height}
+          data={chartJunior || []}
+          height={height}
         >
-          <PieSeries />
-          <Animation />
           <PieSeries
             valueField="val"
             argumentField="age"
             innerRadius={0.6}
           />
+          <Animation />
+          <Title
+            text="0-22 oy"
+            position="bottom"
+          />
+        </Chart>
+        <Chart
+          data={chartMiddle || []}
+          height={height}
+        >
+          <PieSeries
+            valueField="val"
+            argumentField="age"
+            innerRadius={0.6}
+          />
+          <Animation />
+          <Title
+            text="22-45 oy"
+            position="bottom"
+          />
+        </Chart>
+        <Chart
+          data={chartSenior || []}
+          height={height}
+        >
+          <PieSeries
+            valueField="val"
+            argumentField="age"
+            innerRadius={0.6}
+          />
+          <Title
+            text="45 + oy"
+            position="bottom"
+          />
+          <Animation />
         </Chart>
       </Paper>
     );
