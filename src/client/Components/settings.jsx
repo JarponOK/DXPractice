@@ -6,7 +6,7 @@ import {
   Paper, Grid, Typography, Button, TextField, InputAdornment, IconButton
 } from '@material-ui/core';
 import Search from '@material-ui/icons/Search';
-import { themeReturn } from '../Actions/itemThemes';
+import { themeReturn } from '../actions/item-themes';
 
 
 const useStyles = theme => ({

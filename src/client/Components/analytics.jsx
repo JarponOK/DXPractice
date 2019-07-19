@@ -1,11 +1,11 @@
 import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import { Paper, Grid, Typography } from '@material-ui/core';
-import AnalyticsAge from './analyticsAge';
-import AnalyticsHospital from './analyticsHospital';
-import AnalyticsNew from './analyticsNew';
-import AnalyticsTotal from './analyticsTotal';
-import AnalyticsVisit from './analyticsVisit';
+import AnalyticsAge from './analytics-age';
+import AnalyticsHospital from './analytics-hospital';
+import AnalyticsNew from './analytics-new';
+import AnalyticsTotal from './analytics-total';
+import AnalyticsVisit from './analytics-visit';
 
 export default function Analytics() {
   // eslint-disable-next-line no-use-before-define

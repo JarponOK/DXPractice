@@ -19,7 +19,7 @@ import {
   TableHeaderRow,
 } from '@devexpress/dx-react-grid-material-ui';
 import Search from '@material-ui/icons/Search';
-import { clientsFetchData } from '../Actions/itemClients';
+import { clientsFetchData } from '../actions/item-clients';
 import { URL_CLIENTS } from './const';
 
 const getCellValue = data => `${data.name} ${data.lastname}`;

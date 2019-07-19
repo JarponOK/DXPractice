@@ -7,12 +7,12 @@ import Group from '@material-ui/icons/Group';
 import Settings from '@material-ui/icons/Settings';
 import Equalizer from '@material-ui/icons/Equalizer';
 import Person from '@material-ui/icons/Person';
-import Clients from '../Containers/clients';
-import Analytics from '../Containers/analytics';
-import Lk from '../Containers/lk';
-import SettingsPage from '../Containers/settings';
-import SchedulerPage from '../Containers/schedulerPage';
-import ClientArea from '../Containers/clientPage';
+import Clients from '../components/clients';
+import Analytics from '../components/analytics';
+import Lk from '../components/lk';
+import SettingsPage from '../components/settings';
+import SchedulerPage from '../components/scheduler-page';
+import ClientArea from '../components/client-page';
 
 const useStyles = makeStyles(() => ({
   html: {
@@ -38,7 +38,6 @@ const headerStyles = theme => ({
     justifyContent: 'space-between',
     alignItems: 'stretch',
     height: '100%',
-    backgroundColor: theme.palette.background.paper,
   },
   svgicon: {
     fontSize: '2rem',

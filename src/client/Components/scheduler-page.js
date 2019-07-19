@@ -7,7 +7,7 @@ import {
 } from '@devexpress/dx-react-scheduler-material-ui';
 import { makeStyles } from '@material-ui/core/styles';
 import { Grid, Typography } from '@material-ui/core';
-import { schedulerFetchData } from '../Actions/itemScheduler';
+import { schedulerFetchData } from '../actions/item-scheduler';
 import { URL_SCHEDULER } from './const';
 
 const useStyles = makeStyles(theme => ({

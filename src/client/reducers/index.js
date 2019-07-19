@@ -1,8 +1,8 @@
 import { combineReducers } from 'redux';
-import itemsClients from './clientsReducer';
-import itemsAnalytics from './analyticsReducer';
-import itemsScheduler from './schedulerReducer';
-import themeReturn from './themeReducer';
+import itemsClients from './clients-reducer';
+import itemsAnalytics from './analytics-reducer';
+import itemsScheduler from './scheduler-reducer';
+import themeReturn from './theme-reducer';
 
 export default combineReducers({
   itemsClients,
