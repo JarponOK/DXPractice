@@ -225,7 +225,7 @@ app.get('/api/analytics/age', (req, res) => {
   db.collection('analyticsAge').find({}, details).toArray((err, result) => {
     if (err) return res.send({ error: err });
 
-    return res.send(result[0]);
+    return res.send(result);
   });
 });
 
