@@ -308,9 +308,6 @@ app.get('/api/analytics/total', (req, res) => {
 app.post('/api/clients', (req, res) => {
   let client = new Clients();
 
-  // TODO ???
-  // client = req.body;
-
   client.name = req.body.name;
   client.lastname = req.body.lastname;
   client.birthday = req.body.birthday;
@@ -411,8 +408,8 @@ app.delete('/api/clients', (req, res) => {
   })
 });
 
-app.delete('/api/scheduler', (req, res) => {
-  const id = req.body.id;
+app.delete('/api/scheduler/:id', (req, res) => {
+  const { id } = req.params;
 
   Schedulers.remove({ _id: id }, (err) => {
     if (err) res.status(400).send(err);
