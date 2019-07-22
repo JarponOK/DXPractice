@@ -7,6 +7,8 @@ import { Animation } from '@devexpress/dx-react-chart';
 import { withStyles } from '@material-ui/core/styles';
 import { analyticsVisitFetchData } from '../actions/item-analytics';
 import { URL_ANALYTICS_VISIT } from './const';
+import Loading from './loading-indicator';
+import Error from './error-indicator';
 
 class AnalyticsVisit extends Component {
   constructor(props) {
@@ -30,27 +32,12 @@ class AnalyticsVisit extends Component {
   render() {
     const { hasErrored, isLoading, classes } = this.props;
 
-    if (hasErrored) {
-      return (
-        <Paper className={classes.centerBoard}>
-          <Typography>Sorry! There was an error loading the items</Typography>
-        </Paper>
-      );
-    }
-
-
-    if (isLoading) {
-      return (
-        <Paper className={classes.centerBoard}>
-          <Typography>Loading…</Typography>
-        </Paper>
-      );
-    }
-
     // eslint-disable-next-line react/prop-types
     const { items } = this.props;
     return (
       <Paper className={classes.centerBoard} ref={this.rootElement}>
+        {isLoading && <Loading />}
+        {hasErrored && <Error />}
         <Chart
           // eslint-disable-next-line react/destructuring-assignment
           height={this.state.height}
@@ -59,6 +46,7 @@ class AnalyticsVisit extends Component {
           <ArgumentAxis />
           <ValueAxis />
           <BarSeries valueField="num" argumentField="name" />
+          <Title text="Visit patient" />
           <Animation />
         </Chart>
       </Paper>

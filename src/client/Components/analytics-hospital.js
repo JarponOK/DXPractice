@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import { Chart, ArgumentAxis, ValueAxis, LineSeries, Title, Legend, } from '@devexpress/dx-react-chart-material-ui';
+import { Chart, ArgumentAxis, ValueAxis, LineSeries, Title } from '@devexpress/dx-react-chart-material-ui';
 import { ArgumentScale, Animation } from '@devexpress/dx-react-chart';
 import { Typography, Paper } from '@material-ui/core';
 import { withStyles } from '@material-ui/core/styles';
@@ -9,6 +9,8 @@ import { scalePoint } from 'd3-scale';
 import { curveCatmullRom, line } from 'd3-shape';
 import { analyticsHospitalFetchData } from '../actions/item-analytics';
 import { URL_ANALYTICS_HOSPITAL } from './const';
+import Loading from './loading-indicator';
+import Error from './error-indicator';
 
 const Spline = props => (
   <LineSeries.Path
@@ -42,27 +44,13 @@ class AnalyticsHospital extends Component {
   render() {
     const { hasErrored, isLoading, classes } = this.props;
 
-    if (hasErrored) {
-      return (
-        <Paper className={classes.centerBoard}>
-          <Typography>Sorry! There was an error loading the items</Typography>
-        </Paper>
-      );
-    }
-
-    if (isLoading) {
-      return (
-        <Paper className={classes.centerBoard}>
-          <Typography>Loading…</Typography>
-        </Paper>
-      );
-    }
-
     // eslint-disable-next-line react/prop-types
     const { items } = this.props;
     return (
       // eslint-disable-next-line react/prop-types
       <Paper className={classes.centerBoard} ref={this.rootElement}>
+        {isLoading && <Loading />}
+        {hasErrored && <Error />}
         <Chart
           // eslint-disable-next-line react/destructuring-assignment
           height={this.state.height}
@@ -72,6 +60,7 @@ class AnalyticsHospital extends Component {
           <ArgumentAxis />
           <ValueAxis />
           <LineSeries valueField="num" argumentField="name" seriesComponent={Spline} />
+          <Title text="Hospital Survey" />
           <Animation />
         </Chart>
       </Paper>

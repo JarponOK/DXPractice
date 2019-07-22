@@ -8,6 +8,7 @@ import { Chart, PieSeries, Title } from '@devexpress/dx-react-chart-material-ui'
 import { analyticsAgeFetchData } from '../actions/item-analytics';
 import { URL_ANALYTICS_AGE } from './const';
 import Loading from './loading-indicator';
+import Error from './error-indicator';
 
 const schemeColors = {
   junior: [
@@ -40,7 +41,7 @@ class AnalyticsAge extends Component {
     const { fetchData } = this.props;
     fetchData(URL_ANALYTICS_AGE);
 
-    const height = (this.rootElement.current.clientHeight) / 3;
+    const height = (this.rootElement.current.clientHeight) / 4;
     this.setState({ height });
   }
 
@@ -72,7 +73,7 @@ class AnalyticsAge extends Component {
     return (
       <Paper className={classes.centerBoard} ref={this.rootElement}>
         {isLoading && <Loading />}
-        {hasErrored && <Typography>Sorry! There was an error loading the items</Typography>}
+        {hasErrored && <Error />}
         <Typography>Age of Patient</Typography>
         <Chart
           data={chartJunior || []}
