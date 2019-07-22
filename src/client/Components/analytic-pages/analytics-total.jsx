@@ -1,26 +1,13 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import { Chart, ArgumentAxis, ValueAxis, LineSeries, Title, Legend, } from '@devexpress/dx-react-chart-material-ui';
-import { ArgumentScale, Animation } from '@devexpress/dx-react-chart';
-import { Typography, Paper } from '@material-ui/core';
-import { withStyles } from '@material-ui/core/styles';
-import { scalePoint } from 'd3-scale';
-import { curveCatmullRom, line } from 'd3-shape';
-import { analyticsTotalFetchData } from '../actions/item-analytics';
-import { URL_ANALYTICS_TOTAL } from './const';
-import Loading from './loading-indicator';
-import Error from './error-indicator';
-
-const Spline = props => (
-  <LineSeries.Path
-    {...props}
-    path={line()
-      .x(({ arg }) => arg)
-      .y(({ val }) => val)
-      .curve(curveCatmullRom)}
-  />
-);
+import Paper from '@material-ui/core/Paper';
+import withStyles from '@material-ui/core/styles/withStyles';
+import { analyticsTotalFetchData } from '../../actions/item-analytics';
+import { URL_ANALYTICS_TOTAL } from '../const';
+import Loading from '../loading-indicator';
+import Error from '../error-indicator';
+import Chart from '../chart-component/spline-chart';
 
 class AnalyticsTotal extends Component {
   constructor(props) {
@@ -46,23 +33,19 @@ class AnalyticsTotal extends Component {
 
     // eslint-disable-next-line react/prop-types
     const { items } = this.props;
+    const { height } = this.state;
     return (
       // eslint-disable-next-line react/prop-types
       <Paper className={classes.centerBoard} ref={this.rootElement}>
         {isLoading && <Loading />}
         {hasErrored && <Error />}
-        <Chart
-          // eslint-disable-next-line react/destructuring-assignment
-          height={this.state.height}
-          data={items || []}
-        >
-          <ArgumentScale factory={scalePoint} />
-          <ArgumentAxis />
-          <ValueAxis />
-          <LineSeries valueField="num" argumentField="name" seriesComponent={Spline} />
-          <Title text="Total patient" />
-          <Animation />
-        </Chart>
+        {!isLoading && (
+          <Chart
+            chartData={items}
+            chartHeight={height}
+            chartTitle="Total patient"
+          />
+        )}
       </Paper>
     );
   }

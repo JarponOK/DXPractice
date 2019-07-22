@@ -1,14 +1,13 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import { Typography, Paper } from '@material-ui/core';
-import { Chart, BarSeries, Title, ArgumentAxis, ValueAxis, } from '@devexpress/dx-react-chart-material-ui';
-import { Animation } from '@devexpress/dx-react-chart';
+import Paper from '@material-ui/core/Paper';
 import { withStyles } from '@material-ui/core/styles';
-import { analyticsVisitFetchData } from '../actions/item-analytics';
-import { URL_ANALYTICS_VISIT } from './const';
-import Loading from './loading-indicator';
-import Error from './error-indicator';
+import { analyticsVisitFetchData } from '../../actions/item-analytics';
+import { URL_ANALYTICS_VISIT } from '../const';
+import Loading from '../loading-indicator';
+import Error from '../error-indicator';
+import Chart from '../chart-component/bar-chart';
 
 class AnalyticsVisit extends Component {
   constructor(props) {
@@ -34,21 +33,18 @@ class AnalyticsVisit extends Component {
 
     // eslint-disable-next-line react/prop-types
     const { items } = this.props;
+    const { height } = this.state;
     return (
       <Paper className={classes.centerBoard} ref={this.rootElement}>
         {isLoading && <Loading />}
         {hasErrored && <Error />}
-        <Chart
-          // eslint-disable-next-line react/destructuring-assignment
-          height={this.state.height}
-          data={items || []}
-        >
-          <ArgumentAxis />
-          <ValueAxis />
-          <BarSeries valueField="num" argumentField="name" />
-          <Title text="Visit patient" />
-          <Animation />
-        </Chart>
+        {!isLoading && (
+          <Chart
+            chartData={items}
+            chartHeight={height}
+            chartTitle="Visit patient"
+          />
+        )}
       </Paper>
     );
   }

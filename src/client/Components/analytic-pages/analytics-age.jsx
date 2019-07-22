@@ -1,29 +1,13 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import { Typography, Paper } from '@material-ui/core';
+import { Typography, Paper, Grid } from '@material-ui/core';
 import { withStyles } from '@material-ui/core/styles';
-import { Animation, Palette } from '@devexpress/dx-react-chart';
-import { Chart, PieSeries, Title } from '@devexpress/dx-react-chart-material-ui';
-import { analyticsAgeFetchData } from '../actions/item-analytics';
-import { URL_ANALYTICS_AGE } from './const';
-import Loading from './loading-indicator';
-import Error from './error-indicator';
-
-const schemeColors = {
-  junior: [
-    '#00c078',
-    '#DCDCDC'
-  ],
-  middle: [
-    '#4d76cf',
-    '#DCDCDC'
-  ],
-  senior: [
-    '#ffac00',
-    '#DCDCDC'
-  ]
-};
+import { analyticsAgeFetchData } from '../../actions/item-analytics';
+import { URL_ANALYTICS_AGE } from '../const';
+import Loading from '../loading-indicator';
+import Error from '../error-indicator';
+import Chart from '../chart-component/donut-chart';
 
 /* eslint-disable react/prop-types */
 class AnalyticsAge extends Component {
@@ -74,55 +58,27 @@ class AnalyticsAge extends Component {
       <Paper className={classes.centerBoard} ref={this.rootElement}>
         {isLoading && <Loading />}
         {hasErrored && <Error />}
-        <Typography>Age of Patient</Typography>
-        <Chart
-          data={chartJunior || []}
-          height={height}
-        >
-          <Palette scheme={schemeColors.junior} />
-          <PieSeries
-            valueField="val"
-            argumentField="age"
-            innerRadius={0.7}
-          />
-          <Animation />
-          <Title
-            text="0-22 oy"
-            position="bottom"
-          />
-        </Chart>
-        <Chart
-          data={chartMiddle || []}
-          height={height}
-        >
-          <Palette scheme={schemeColors.middle} />
-          <PieSeries
-            valueField="val"
-            argumentField="age"
-            innerRadius={0.7}
-          />
-          <Animation />
-          <Title
-            text="22-45 oy"
-            position="bottom"
-          />
-        </Chart>
-        <Chart
-          data={chartSenior || []}
-          height={height}
-        >
-          <Palette scheme={schemeColors.senior} />
-          <PieSeries
-            valueField="val"
-            argumentField="age"
-            innerRadius={0.7}
-          />
-          <Title
-            text="45 + oy"
-            position="bottom"
-          />
-          <Animation />
-        </Chart>
+        {/* !!! */}
+        {!isLoading && (
+          <Grid>
+            <Typography>Age of Patient</Typography>
+            <Chart
+              chartHeight={height}
+              chartData={chartJunior}
+              chartTitle="0-22 oy"
+            />
+            <Chart
+              chartHeight={height}
+              chartData={chartMiddle}
+              chartTitle="22-45 oy"
+            />
+            <Chart
+              chartHeight={height}
+              chartData={chartSenior}
+              chartTitle="45+ oy"
+            />
+          </Grid>
+        )}
       </Paper>
     );
   }
