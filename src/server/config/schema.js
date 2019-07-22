@@ -39,8 +39,14 @@ const schedulerScheme = mongoose.Schema({
     type: ObjectId,
     default: new ObjectId()
   },
-  startDate: Date,
-  endDate: Date,
+  startDate: {
+    type: Date,
+    default: new Date()
+  },
+  endDate: {
+    type: Date,
+    default: new Date()
+  },
   location: {
     type: String,
     default: ''

@@ -10,9 +10,12 @@ const app = express();
 app.use((req, res, next) => {
   res.header('Access-Control-Allow-Origin', '*');
   res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
+  res.header('Access-Control-Allow-Methods', 'PATCH');
   next();
 });
+
 app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.json());
 
 let db;
 mongoose.connect(mongodb.url, (err) => {
@@ -320,9 +323,14 @@ app.post('/api/clients', (req, res) => {
     if (err) res.status(400).send(err);
 
     let complaint = new Complaints();
-
     complaint.idClient = client._id;
     complaint.save((err) => {
+      if (err) res.status(400).send(err);
+    })
+
+    let scheduler = new Schedulers();
+    scheduler.idClient = client._id;
+    scheduler.save((err) => {
       if (err) res.status(400).send(err);
     })
 
@@ -369,10 +377,10 @@ app.patch('/api/clients', (req, res) => {
   const objUpdate = req.body;
 
   Clients.findOneAndUpdate({ _id: ObjectId(id) }, objUpdate, (err) => {
-      if (err) return res.status(400).send({ error: err });
+    if (err) return res.status(400).send({ error: err });
 
-      res.status(200).send({ type: 'OK' });
-    })
+    res.status(200).send({ type: 'OK' });
+  })
 });
 
 app.patch('/api/scheduler', (req, res) => {
