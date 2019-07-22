@@ -1,24 +1,11 @@
-import React from 'react';
-import { makeStyles } from '@material-ui/core/styles';
-import { Paper, Grid, Tabs, Tab, Typography } from '@material-ui/core/';
+import React, { Component } from 'react';
+import { makeStyles, withStyles } from '@material-ui/core/styles';
+import {
+  Paper, Grid, Tabs, Tab, Typography
+} from '@material-ui/core/';
+import TreatmentContainer from './client-components/treatment-container';
 
 let useStyles;
-
-function TreatmentContainer() { /* eslint-disable */
-  return (
-    <Tabs variant="fullWidth">
-      <Tab label="Diagnosis" />
-      <Tab label="Restoration" />
-      <Tab label="Root canal" />
-      <Tab label="Hygiene" />
-      <Tab label="Whitening" />
-      <Tab label="Prosthetics" />
-      <Tab label="Implantation" />
-      <Tab label="Orthodontics" />
-      <Tab label="Surgery" />
-    </Tabs>
-  );
-}
 
 function HistoryContainer() {
   return (
@@ -80,44 +67,48 @@ function PersonalData() {
   );
 }
 
-export default function ClientArea() {
-  const classes = useStyles();
-  const [value, setValue] = React.useState(0);
+class ClientArea extends Component {
+  constructor(props) {
+    super(props);
 
-  function handleChange(event, newValue) {
-    setValue(newValue);
+    this.props = props;
+
+    this.state = {
+      value: 0,
+    };
   }
 
-  return (
-    <Grid container direction="column">
+  render() {
+    const { classes } = this.props;
 
-      {/* Top Menu */}
-      <Grid item xs={12}>
-        <Typography className={classes.header}>Patient Card</Typography>
-      </Grid>
+    const { value } = this.state;
+    return (
+      <Grid container direction="column">
 
-      {/* Body */}
-      <Grid container className={classes.root}>
-
-        <PersonalData />
-
-        <Grid container xs={10} direction="column" justify="flex-start">
-          <Tabs value={value} onChange={handleChange}>
-            <Tab label="Treatment" />
-            <Tab label="Treatment history" />
-            <Tab label="Complaints" />
-          </Tabs>
-          {value === 0 && <TreatmentContainer />}
-          {value === 1 && <HistoryContainer />}
-          {value === 2 && <ComplaintsContainer />}
+        <Grid item xs={12}>
+          <Typography className={classes.header}>Patient Card</Typography>
         </Grid>
 
+        <Grid container className={classes.root}>
+          <PersonalData />
+          <Grid container xs={10} direction="column" justify="flex-start">
+            <Tabs value={value} onChange={this.handleChange}>
+              <Tab label="Treatment" />
+              <Tab label="Treatment history" />
+              <Tab label="Complaints" />
+            </Tabs>
+            {value === 0 && <TreatmentContainer />}
+            {value === 1 && <HistoryContainer />}
+            {value === 2 && <ComplaintsContainer />}
+          </Grid>
+
+        </Grid>
       </Grid>
-    </Grid>
-  );
+    );
+  }
 }
 
-useStyles = makeStyles(theme => ({
+const classStyle = theme => ({
   header: {
     textAlign: 'left',
     fontSize: 18,
@@ -130,6 +121,11 @@ useStyles = makeStyles(theme => ({
     height: '94vh',
     margin: '0px',
   },
+});
+
+const ClientsArea = withStyles(classStyle)(ClientArea);
+
+useStyles = makeStyles(theme => ({
   leftAreaText: {
     textAlign: 'left',
     color: theme.palette.text.secondary,
@@ -142,3 +138,6 @@ useStyles = makeStyles(theme => ({
     marginBottom: '5px'
   },
 }));
+
+// export default connect(mapStateToProps, mapDispatchToProps)(ClientArea);
+export default ClientsArea;
