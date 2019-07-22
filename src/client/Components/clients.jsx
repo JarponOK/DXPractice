@@ -13,13 +13,13 @@ import {
   IntegratedSorting,
 } from '@devexpress/dx-react-grid';
 import {
-  Grid as GridData,
+  Grid as DXGrid,
   Table,
   Toolbar,
   TableHeaderRow,
 } from '@devexpress/dx-react-grid-material-ui';
 import Search from '@material-ui/icons/Search';
-import { clientsFetchData } from '../actions/item-clients';
+import { clientsFetchData, getClientsData } from '../actions/item-clients';
 import { URL_CLIENTS } from './const';
 
 const getCellValue = data => `${data.name} ${data.lastname}`;
@@ -30,6 +30,16 @@ const columns = [
   { name: 'phone', title: 'Phone' },
   { name: 'lastAppt', title: 'Last appt' },
 ];
+
+const data = {
+  name: 'Alex',
+  lastname: 'Belavin',
+  birthday: '1998-04-16T20:00:00.000Z',
+  phone: '38-12-57',
+  email: 'lexaperchik@email.ru',
+  city: 'Tula',
+  address: '3223 New Line',
+};
 
 const useStyles = makeStyles(theme => ({
   header: {
@@ -50,9 +60,10 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-function ClientsBody() {
-  const classes = useStyles();
 
+const ClientsBody = (props) => {
+  const classes = useStyles();
+  const { postRequest } = props.props;
   return (
     <Grid container direction="column">
 
@@ -77,12 +88,13 @@ function ClientsBody() {
               }}
             />
           </Grid>
-          <Button className={classes.button} color="secondary" variant="contained">Add new patient</Button>
+          <Button className={classes.button} color="secondary" variant="contained" onClick={() => { postRequest(URL_CLIENTS, data); }}>Add new patient</Button>
         </Grid>
       </Grid>
     </Grid>
   );
-}
+};
+
 class Clients extends Component {
   componentDidMount() {
     const { fetchData } = this.props;
@@ -102,8 +114,8 @@ class Clients extends Component {
 
     return (
       <Paper>
-        <ClientsBody />
-        <GridData
+        <ClientsBody props={this.props} />
+        <DXGrid
           rows={items}
           columns={columns}
         >
@@ -120,7 +132,7 @@ class Clients extends Component {
           <Table />
           <Toolbar />
           <TableHeaderRow showSortingControls />
-        </GridData>
+        </DXGrid>
       </Paper>
     );
   }
@@ -134,14 +146,14 @@ Clients.propTypes = {
 };
 
 const mapStateToProps = state => ({
-  items: state.itemsClients.itemsClients,
+  items: state.itemsClients.сlients,
   hasErrored: state.itemsClients.hasErrored,
   isLoading: state.itemsClients.isLoading
 });
 
-
 const mapDispatchToProps = dispatch => ({
-  fetchData: url => dispatch(clientsFetchData(url))
+  fetchData: url => dispatch(clientsFetchData(url)),
+  postRequest: url => dispatch(getClientsData(url, data))
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Clients);
