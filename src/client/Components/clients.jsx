@@ -9,6 +9,7 @@ import {
   PagingState,
   IntegratedPaging,
   SortingState,
+  SearchState,
   IntegratedFiltering,
   IntegratedSorting,
 } from '@devexpress/dx-react-grid';
@@ -19,7 +20,11 @@ import {
   TableHeaderRow,
 } from '@devexpress/dx-react-grid-material-ui';
 import Search from '@material-ui/icons/Search';
-import { clientsFetchData, getClientsData } from '../actions/item-clients';
+import Loading from './loading-indicator';
+import Error from './error-indicator';
+import {
+  clientsFetchData, getClientsData, deleteClientData, changeClientData
+} from '../actions/item-clients';
 import { URL_CLIENTS } from './const';
 
 const getCellValue = data => `${data.name} ${data.lastname}`;
@@ -32,13 +37,23 @@ const columns = [
 ];
 
 const data = {
-  name: 'Alex',
-  lastname: 'Belavin',
-  birthday: '1998-04-16T20:00:00.000Z',
-  phone: '38-12-57',
-  email: 'lexaperchik@email.ru',
+  name: 'Genry',
+  lastname: 'Wood',
+  birthday: '1954-02-23T20:00:00.000Z',
+  phone: '38-13-76',
+  email: 'perchikmen@email.ru',
   city: 'Tula',
-  address: '3223 New Line',
+  address: '3231 New Line',
+};
+
+const dataChange = {
+  _id: '5d36c888a6b94d24b4064bcc',
+  phone: '38-13-77',
+  address: '3222 New Line',
+};
+
+const dataDelete = {
+  id: '5d35c79466c3cb17b012852f'
 };
 
 const useStyles = makeStyles(theme => ({
@@ -60,10 +75,12 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
+const searchValue = '';
+const changeSearchValue = value => this.setState({ searchValue: value });
 
 const ClientsBody = (props) => {
   const classes = useStyles();
-  const { postRequest } = props.props;
+  const { postRequest, deleteData, changeData } = props.props;
   return (
     <Grid container direction="column">
 
@@ -80,7 +97,7 @@ const ClientsBody = (props) => {
               InputProps={{
                 startAdornment: (
                   <InputAdornment position="start">
-                    <IconButton edge="start">
+                    <IconButton edge="start" onClick={changeSearchValue}>
                       <Search />
                     </IconButton>
                   </InputAdornment>
@@ -89,6 +106,8 @@ const ClientsBody = (props) => {
             />
           </Grid>
           <Button className={classes.button} color="secondary" variant="contained" onClick={() => { postRequest(URL_CLIENTS, data); }}>Add new patient</Button>
+          <Button className={classes.button} color="secondary" variant="contained" onClick={() => { deleteData(URL_CLIENTS, dataDelete); }}>Delete patient</Button>
+          <Button className={classes.button} color="secondary" variant="contained" onClick={() => { changeData(URL_CLIENTS, dataChange); }}>Change patient</Button>
         </Grid>
       </Grid>
     </Grid>
@@ -104,21 +123,20 @@ class Clients extends Component {
   render() {
     const { items } = this.props;
     const { hasErrored, isLoading } = this.props;
-    if (hasErrored) {
-      return <p>Sorry! There was an error loading the items</p>;
-    }
-
-    if (isLoading) {
-      return <p>Loading…</p>;
-    }
-
+    console.log(items);
     return (
       <Paper>
         <ClientsBody props={this.props} />
+        {isLoading && <Loading />}
+        {hasErrored && <Error />}
         <DXGrid
           rows={items}
           columns={columns}
         >
+          <SearchState
+            value={searchValue}
+            onValueChange={changeSearchValue}
+          />
           <PagingState
             defaultCurrentPage={0}
             pageSize={6}
@@ -153,7 +171,9 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => ({
   fetchData: url => dispatch(clientsFetchData(url)),
-  postRequest: url => dispatch(getClientsData(url, data))
+  postRequest: url => dispatch(getClientsData(url, data)),
+  deleteData: url => dispatch(deleteClientData(url, dataDelete)),
+  changeData: url => dispatch(changeClientData(url, dataChange))
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Clients);

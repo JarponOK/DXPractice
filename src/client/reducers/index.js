@@ -3,6 +3,7 @@ import itemsClients from './clients-reducer';
 import itemsAnalytics from './analytics-reducer';
 import itemsScheduler from './scheduler-reducer';
 import idRequest from './request-by-id-reducer';
+import requestTreatment from './treatment-reducer';
 import themeReturn from './theme-reducer';
 
 export default combineReducers({
@@ -10,5 +11,6 @@ export default combineReducers({
   itemsAnalytics,
   itemsScheduler,
   themeReturn,
+  requestTreatment,
   idRequest
 });
