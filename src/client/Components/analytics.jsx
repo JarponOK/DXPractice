@@ -6,6 +6,7 @@ import AnalyticsHospital from './analytic-pages/analytics-hospital';
 import AnalyticsNew from './analytic-pages/analytics-new';
 import AnalyticsTotal from './analytic-pages/analytics-total';
 import AnalyticsVisit from './analytic-pages/analytics-visit';
+import Header from './header';
 
 export default function Analytics() {
   // eslint-disable-next-line no-use-before-define
@@ -13,16 +14,9 @@ export default function Analytics() {
 
   return (
     <Grid container direction="column">
-
-      {/* Top Menu */}
-      <Grid item xs={12}>
-        <Typography className={classes.header}>Analytics</Typography>
-      </Grid>
-
-      {/* Body */}
+      <Header title="Analytics" />
       <Grid container direction="row" justify="space-between" className={classes.root}>
 
-        {/* Left Area */}
         <Grid container xs={3} justify="space-between" direction="column">
           <Grid item>
             <AnalyticsTotal />
@@ -32,10 +26,7 @@ export default function Analytics() {
           </Grid>
         </Grid>
 
-        {/* Right Area */}
         <Grid container xs={9} direction="column" justify="space-between" className={classes.rightArea}>
-
-          {/* Top Dashboard */}
           <Grid item>
             <Grid container spacing={2} className={classes.topDashboard}>
               <Grid item xs={4}>
@@ -50,14 +41,12 @@ export default function Analytics() {
             </Grid>
           </Grid>
 
-          {/* Center Dashboard */}
           <Grid item>
             <Grid item xs={12} className={classes.centerDashboard}>
               <AnalyticsNew />
             </Grid>
           </Grid>
 
-          {/* Bottom Dashboard */}
           <Grid item>
             <Grid container spacing={2} direction="row">
               <Grid item xs={6}>

@@ -15,7 +15,7 @@ const useStyles = makeStyles(theme => ({
   body: {
     textAlign: 'left',
     color: theme.palette.text.secondary,
-    height: 40
+    height: 40,
   },
 }));
 
@@ -29,14 +29,14 @@ export default (props) => {
         className={classes.title}
         component="div"
       >
-        <Box fontSize={16}>{title}</Box>
+        <Box fontSize={14}>{title}</Box>
       </Typography>
       <TextField
         className={classes.body}
         disabled={disabled !== undefined}
         value={value}
         variant="outlined"
-        inputProps={{ 'aria-label': 'bare' }}
+        fullWidth
       />
     </Grid>
   );

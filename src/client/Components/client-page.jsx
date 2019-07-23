@@ -11,7 +11,7 @@ import { URL_CLIENTS } from './const';
 import Loading from './loading-indicator';
 import Error from './error-indicator';
 import PersonalData from './client-components/personal-area';
-import { ImageTimelapse } from 'material-ui/svg-icons';
+import Header from './header';
 
 function HistoryContainer() {
   return (
@@ -80,16 +80,12 @@ class ClientArea extends Component {
     console.log(items.birthday);
     return (
       <Grid container direction="column">
-
-        <Grid item xs={12}>
-          <Typography className={classes.header}>Patient Card</Typography>
-        </Grid>
-
+        <Header title="Patient Card" />
         <Grid container className={classes.root}>
           {isLoading && <Loading />}
           {hasErrored && <Error />}
           <PersonalData data={personalData} />
-          <Grid container xs={10} direction="column" justify="flex-start">
+          <Grid container xs={9} direction="column" justify="flex-start">
             <Tabs value={value} onChange={this.handleChange}>
               <Tab label="Treatment" />
               <Tab label="Treatment history" />
