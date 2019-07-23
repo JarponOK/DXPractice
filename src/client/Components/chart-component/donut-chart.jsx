@@ -2,43 +2,28 @@ import React from 'react';
 import { Animation, Palette } from '@devexpress/dx-react-chart';
 import { Chart, PieSeries, Title } from '@devexpress/dx-react-chart-material-ui';
 
-const schemeColors = {
-  junior: [
-    '#00c078',
-    '#DCDCDC'
-  ],
-  middle: [
-    '#4d76cf',
-    '#DCDCDC'
-  ],
-  senior: [
-    '#ffac00',
-    '#DCDCDC'
-  ]
-};
-
 export default (props) => {
   const {
     // eslint-disable-next-line react/prop-types
-    chartHeight, chartData, chartTitle
+    height, data, title, color,
   } = props;
 
   return (
     <Chart
-      data={chartData || []}
-      height={chartHeight}
+      data={data || []}
+      height={height}
     >
-      <Palette scheme={schemeColors.junior} />
+      <Palette scheme={color} />
       <PieSeries
         valueField="val"
         argumentField="age"
         innerRadius={0.7}
       />
       <Title
-        text={chartTitle}
+        text={title}
         position="bottom"
       />
       <Animation />
     </Chart>
   );
-}
+};

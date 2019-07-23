@@ -9,6 +9,21 @@ import Loading from '../loading-indicator';
 import Error from '../error-indicator';
 import Chart from '../chart-component/donut-chart';
 
+const schemeColors = {
+  junior: [
+    '#00c078',
+    '#DCDCDC'
+  ],
+  middle: [
+    '#4d76cf',
+    '#DCDCDC'
+  ],
+  senior: [
+    '#ffac00',
+    '#DCDCDC'
+  ]
+};
+
 /* eslint-disable react/prop-types */
 class AnalyticsAge extends Component {
   constructor(props) {
@@ -58,24 +73,26 @@ class AnalyticsAge extends Component {
       <Paper className={classes.centerBoard} ref={this.rootElement}>
         {isLoading && <Loading />}
         {hasErrored && <Error />}
-        {/* !!! */}
         {!isLoading && (
           <Grid>
             <Typography>Age of Patient</Typography>
             <Chart
-              chartHeight={height}
-              chartData={chartJunior}
-              chartTitle="0-22 oy"
+              height={height}
+              data={chartJunior}
+              title="0-22 oy"
+              color={schemeColors.junior}
             />
             <Chart
-              chartHeight={height}
-              chartData={chartMiddle}
-              chartTitle="22-45 oy"
+              height={height}
+              data={chartMiddle}
+              title="22-45 oy"
+              color={schemeColors.middle}
             />
             <Chart
-              chartHeight={height}
-              chartData={chartSenior}
-              chartTitle="45+ oy"
+              height={height}
+              data={chartSenior}
+              title="45+ oy"
+              color={schemeColors.senior}
             />
           </Grid>
         )}
