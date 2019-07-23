@@ -309,27 +309,34 @@ app.get('/api/analytics/total', (req, res) => {
 });
 
 app.post('/api/clients', (req, res) => {
-  let client = new Clients();
+  const { name, lastname, birthday, phone, email, city, address } = req.body;
 
-  client.name = req.body.name;
-  client.lastname = req.body.lastname;
-  client.birthday = req.body.birthday;
-  client.phone = req.body.phone;
-  client.email = req.body.email;
-  client.city = req.body.city;
-  client.address = req.body.address;
+  const client = new Clients({
+    _id: new ObjectId(),
+    name,
+    lastname,
+    birthday,
+    phone,
+    email,
+    city,
+    address,
+  });
 
   client.save((err) => {
     if (err) res.status(400).send(err);
 
-    let complaint = new Complaints();
-    complaint.idClient = client._id;
+    let complaint = new Complaints({
+      _id: new ObjectId,
+      idClient: client._id
+    });
     complaint.save((err) => {
       if (err) res.status(400).send(err);
     })
 
-    let scheduler = new Schedulers();
-    scheduler.idClient = client._id;
+    let scheduler = new Schedulers({
+      _id: new ObjectId,
+      idClient: client._id
+    });
     scheduler.save((err) => {
       if (err) res.status(400).send(err);
     })
@@ -339,14 +346,17 @@ app.post('/api/clients', (req, res) => {
 });
 
 app.post('/api/scheduler', (req, res) => {
-  let scheduler = new Schedulers();
+  const { startDate, endDate, location, note, idTreatment, idClient } = req.body;
 
-  scheduler.startDate = req.body.startDate;
-  scheduler.endDate = req.body.endDate;
-  scheduler.location = req.body.location;
-  scheduler.note = req.body.note;
-  scheduler.idTreatment = ObjectId(req.body.idTreatment);
-  scheduler.idClient = ObjectId(req.body.idClient);
+  let scheduler = new Schedulers({
+    _id: new ObjectId(),
+    startDate,
+    endDate,
+    location,
+    note,
+    idTreatment: ObjectId(idTreatment),
+    idClient: ObjectId(idClient)
+  });
 
   scheduler.save((err) => {
     if (err) res.status(400).send(err);
@@ -401,25 +411,27 @@ app.patch('/api/scheduler', (req, res) => {
 app.delete('/api/clients', (req, res) => {
   const id = req.body.id;
 
-  Clients.remove({ _id: id }, (err) => {
-    if (err) res.status(400).send(err);
+  if (id !== undefined) {
+    Clients.deleteOne({ _id: id }, (err) => {
+      if (err) res.status(400).send(err);
 
-    Schedulers.remove({ idClient: id }, (error) => {
-      if (error) res.status(400).send(error);
+      Schedulers.deleteMany({ idClient: id }, (error) => {
+        if (error) res.status(400).send(error);
+      })
+
+      Complaints.deleteMany({ idClient: id }, (error) => {
+        if (error) res.status(400).send(error);
+      })
+
+      res.send({ type: 'OK' });
     })
-
-    Complaints.remove({ idClient: id }, (error) => {
-      if (error) res.status(400).send(error);
-    })
-
-    res.send({ type: 'OK' });
-  })
+  }
 });
 
 app.delete('/api/scheduler/', (req, res) => {
   const { id } = req.body;
 
-  Schedulers.remove({ _id: id }, (err) => {
+  Schedulers.deleteOne({ _id: id }, (err) => {
     if (err) res.status(400).send(err);
 
     res.send({ type: 'OK' });
