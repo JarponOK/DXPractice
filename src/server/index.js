@@ -10,7 +10,7 @@ const app = express();
 app.use((req, res, next) => {
   res.header('Access-Control-Allow-Origin', '*');
   res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
-  res.header('Access-Control-Allow-Methods', 'PATCH');
+  res.header('Access-Control-Allow-Methods', 'PATCH, DELETE, POST');
   next();
 });
 
@@ -416,8 +416,8 @@ app.delete('/api/clients', (req, res) => {
   })
 });
 
-app.delete('/api/scheduler/:id', (req, res) => {
-  const { id } = req.params;
+app.delete('/api/scheduler/', (req, res) => {
+  const { id } = req.body;
 
   Schedulers.remove({ _id: id }, (err) => {
     if (err) res.status(400).send(err);
