@@ -54,7 +54,7 @@ export const getSchedulersData = (url, data) => (dispatch) => {
     .catch(() => dispatch(itemsHasErrored(true)));
 };
 
-export const deleteSchedulerData = (url, dataDelete) => (dispatch) => {
+export const deleteSchedulerData = (url, urlToFetch, dataDelete) => (dispatch) => {
   dispatch(itemsIsLoading(true));
   fetch(url, {
     headers: {
@@ -73,11 +73,12 @@ export const deleteSchedulerData = (url, dataDelete) => (dispatch) => {
       return response;
     })
     .then(response => response.json())
-    .then(() => dispatch(schedulerFetchData(url)))
+    .then(() => dispatch(schedulerFetchData(urlToFetch)))
     .catch(() => dispatch(itemsHasErrored(true)));
 };
 
-export const changeSchedulerData = (url, dataChange) => (dispatch) => {
+export const changeSchedulerData = (url, urlToFetch, dataChange) => (dispatch) => {
+  console.log(urlToFetch);
   dispatch(itemsIsLoading(true));
   fetch(url, {
     headers: {
@@ -96,6 +97,6 @@ export const changeSchedulerData = (url, dataChange) => (dispatch) => {
       return response;
     })
     .then(response => response.json())
-    .then(() => dispatch(schedulerFetchData(url)))
+    .then(() => dispatch(schedulerFetchData(urlToFetch)))
     .catch(() => dispatch(itemsHasErrored(true)));
 };
