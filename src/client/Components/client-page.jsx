@@ -1,11 +1,17 @@
 import React, { Component } from 'react';
-import { makeStyles, withStyles } from '@material-ui/core/styles';
+import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
+import { withStyles } from '@material-ui/core/styles';
 import {
   Paper, Grid, Tabs, Tab, Typography
 } from '@material-ui/core/';
 import TreatmentContainer from './client-components/treatment-container';
-
-let useStyles;
+import { clientsFetchDataById } from '../actions/item-request-by-id';
+import { URL_CLIENTS } from './const';
+import Loading from './loading-indicator';
+import Error from './error-indicator';
+import PersonalData from './client-components/personal-area';
+import { ImageTimelapse } from 'material-ui/svg-icons';
 
 function HistoryContainer() {
   return (
@@ -34,39 +40,6 @@ function ComplaintsContainer() {
   );
 }
 
-function PersonalData() {
-  const classes = useStyles();
-
-  return (
-    <Grid container direction="column" xs={2} style={{ backgroundColor: '#FFF' }}>
-      <Paper>
-        <div style={{ marginLeft: '10px' }}>
-          <div style={{ marginBottom: '50px' }}>
-            <Typography className={classes.leftAreaText}>Name</Typography>
-            <Paper className={classes.leftAreaPaper}>Derick</Paper>
-            <Typography className={classes.leftAreaText}>Surname</Typography>
-            <Paper className={classes.leftAreaPaper}>Lawson</Paper>
-          </div>
-          <div style={{ marginBottom: '50px' }}>
-            <Typography className={classes.leftAreaText}>Birth Data</Typography>
-            <Paper className={classes.leftAreaPaper}>4/19/1983</Paper>
-            <Typography className={classes.leftAreaText}>Phone</Typography>
-            <Paper className={classes.leftAreaPaper}>765-052-5230</Paper>
-            <Typography className={classes.leftAreaText}>Email</Typography>
-            <Paper className={classes.leftAreaPaper}>harrington@email.com</Paper>
-          </div>
-          <div>
-            <Typography className={classes.leftAreaText}>City</Typography>
-            <Paper className={classes.leftAreaPaper}>Whitter</Paper>
-            <Typography className={classes.leftAreaText}>Address</Typography>
-            <Paper className={classes.leftAreaPaper}>6755 Newline Ave</Paper>
-          </div>
-        </div>
-      </Paper>
-    </Grid>
-  );
-}
-
 class ClientArea extends Component {
   constructor(props) {
     super(props);
@@ -76,12 +49,35 @@ class ClientArea extends Component {
     this.state = {
       value: 0,
     };
+
+    this.handleChange = this.handleChange.bind(this);
+  }
+
+  componentDidMount() {
+    const { fetchData } = this.props;
+    fetchData(`${URL_CLIENTS}/5d20a76524e3ce238805c520`);
+  }
+
+  handleChange(event, nextValue) {
+    this.setState({ value: nextValue });
   }
 
   render() {
-    const { classes } = this.props;
+    const {
+      hasErrored, isLoading, classes, items
+    } = this.props;
 
     const { value } = this.state;
+    const personalData = {
+      name: items.name,
+      lastname: items.lastname,
+      birthday: items.birthday,
+      city: items.city,
+      address: items.address,
+      email: items.email,
+      phone: items.phone
+    };
+    console.log(items.birthday);
     return (
       <Grid container direction="column">
 
@@ -90,7 +86,9 @@ class ClientArea extends Component {
         </Grid>
 
         <Grid container className={classes.root}>
-          <PersonalData />
+          {isLoading && <Loading />}
+          {hasErrored && <Error />}
+          <PersonalData data={personalData} />
           <Grid container xs={10} direction="column" justify="flex-start">
             <Tabs value={value} onChange={this.handleChange}>
               <Tab label="Treatment" />
@@ -125,19 +123,21 @@ const classStyle = theme => ({
 
 const ClientsArea = withStyles(classStyle)(ClientArea);
 
-useStyles = makeStyles(theme => ({
-  leftAreaText: {
-    textAlign: 'left',
-    color: theme.palette.text.secondary,
-    marginBottom: '3px'
-  },
-  leftAreaPaper: {
-    padding: theme.spacing(1),
-    textAlign: 'left',
-    marginRight: '10px',
-    marginBottom: '5px'
-  },
-}));
+ClientArea.propTypes = {
+  items: PropTypes.arrayOf.isRequired,
+  fetchData: PropTypes.func.isRequired,
+  hasErrored: PropTypes.bool.isRequired,
+  isLoading: PropTypes.bool.isRequired
+};
 
-// export default connect(mapStateToProps, mapDispatchToProps)(ClientArea);
-export default ClientsArea;
+const mapStateToProps = state => ({
+  items: state.idRequest.costomerDate,
+  hasErrored: state.idRequest.hasErrored,
+  isLoading: state.idRequest.isLoading
+});
+
+const mapDispatchToProps = dispatch => ({
+  fetchData: url => dispatch(clientsFetchDataById(url))
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(ClientsArea);
