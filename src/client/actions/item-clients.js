@@ -36,12 +36,12 @@ export const clientsFetchData = url => (dispatch) => {
 
 export const getClientsData = (url, data) => (dispatch) => {
   dispatch(itemsIsLoading(true));
-  console.log(data);
-  console.log(url);
-
   fetch(url, {
+    headers: {
+      'Content-Type': 'application/json'
+    },
     method: 'POST',
-    body: data,
+    body: JSON.stringify(data),
   })
     .then((response) => {
       if (!response.ok) {
@@ -53,5 +53,52 @@ export const getClientsData = (url, data) => (dispatch) => {
       return response;
     })
     .then(response => response.json())
+    .then(() => dispatch(clientsFetchData(url)))
+    .catch(() => dispatch(itemsHasErrored(true)));
+};
+
+export const deleteClientData = (url, dataDelete) => (dispatch) => {
+  dispatch(itemsIsLoading(true));
+  fetch(url, {
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    method: 'DELETE',
+    body: JSON.stringify(dataDelete),
+  })
+    .then((response) => {
+      if (!response.ok) {
+        throw Error(response.statusText);
+      }
+
+      dispatch(itemsIsLoading(false));
+
+      return response;
+    })
+    .then(response => response.json())
+    .then(() => dispatch(clientsFetchData(url)))
+    .catch(() => dispatch(itemsHasErrored(true)));
+};
+
+export const changeClientData = (url, dataChange) => (dispatch) => {
+  dispatch(itemsIsLoading(true));
+  fetch(url, {
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    method: 'PATCH',
+    body: JSON.stringify(dataChange),
+  })
+    .then((response) => {
+      if (!response.ok) {
+        throw Error(response.statusText);
+      }
+
+      dispatch(itemsIsLoading(false));
+
+      return response;
+    })
+    .then(response => response.json())
+    .then(() => dispatch(clientsFetchData(url)))
     .catch(() => dispatch(itemsHasErrored(true)));
 };
