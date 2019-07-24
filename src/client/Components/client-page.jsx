@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import {
-  Paper, Grid, Tabs, Tab, Typography
+  Paper, Grid, Tabs, Tab
 } from '@material-ui/core/';
 import TreatmentContainer from './client-components/treatment-container';
 import { clientsFetchDataById } from '../actions/item-request-by-id';
@@ -12,6 +12,7 @@ import Loading from './loading-indicator';
 import Error from './error-indicator';
 import PersonalData from './client-components/personal-area';
 import Header from './header';
+import Complaints from './client-components/complaints';
 
 function HistoryContainer() {
   return (
@@ -22,19 +23,6 @@ function HistoryContainer() {
       </Grid>
       <Grid item xs={6}>
         <Paper>Meeting</Paper>
-      </Grid>
-    </Grid>
-  );
-}
-
-function ComplaintsContainer() {
-  return (
-    <Grid container>
-      <Grid item xs={6}>
-        <Paper>Complaints</Paper>
-      </Grid>
-      <Grid item xs={6}>
-        <Paper>Notes</Paper>
       </Grid>
     </Grid>
   );
@@ -77,7 +65,6 @@ class ClientArea extends Component {
       email: items.email,
       phone: items.phone
     };
-    console.log(items.birthday);
     return (
       <Grid container direction="column">
         <Header title="Patient Card" />
@@ -93,7 +80,7 @@ class ClientArea extends Component {
             </Tabs>
             {value === 0 && <TreatmentContainer />}
             {value === 1 && <HistoryContainer />}
-            {value === 2 && <ComplaintsContainer />}
+            {value === 2 && <Complaints data={items.complaints} />}
           </Grid>
 
         </Grid>
