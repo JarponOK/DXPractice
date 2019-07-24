@@ -5,15 +5,9 @@ import {
   Grid, Typography, Button
 } from '@material-ui/core';
 import { themeReturn } from '../actions/item-themes';
+import Header from './header';
 
-
-const useStyles = theme => ({
-  header: {
-    textAlign: 'left',
-    fontSize: 18,
-    padding: '15px',
-    color: theme.palette.text.secondary,
-  },
+const useStyles = () => ({
   body: {
     height: '86vh',
     margin: '0px',
@@ -27,7 +21,7 @@ const useStyles = theme => ({
 const SettingsBase = ({ classes, themeChange }) => {
   return (
     <Grid item xs={12} style={{ paddingBottom: '25px', paddingLeft: '25px' }} container direction="column">
-      <Typography className={classes.header}>Settings</Typography>
+      <Header title="Settings" />
       <Typography className={classes.body}>
         <Button className={classes.button} color="secondary" variant="contained" onClick={() => { themeChange('dark'); }}>
           Dark
