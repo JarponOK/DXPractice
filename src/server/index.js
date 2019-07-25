@@ -183,18 +183,26 @@ app.get('/api/scheduler/:firstDay&:lastDay', (req, res) => {
 });
 
 app.get('/api/treatment', (req, res) => {
-  Treatments
-    .find({},
-      {
-        $projection: {
-          _id: 0
-        }
-      })
-    .exec((err, result) => {
-      if (err) res.status(400).send(err);
+  details = {
+    projection: {
+      _id: 0
+    }
+  };
 
-      res.status(200).send(result);
-    })
+  db.collection('treatment').find({}, details).toArray((err, result) => {
+    if (err) return res.send({ error: err });
+
+    return res.send(result);
+  });;
+
+  // Treatments
+  //   .find({})
+  //   .select({ _id: 0 })
+  //   .exec((err, result) => {
+  //     if (err) res.status(400).send(err);
+
+  //     res.status(200).send(result);
+  //   })
 });
 
 app.get('/api/doctors', (req, res) => {
