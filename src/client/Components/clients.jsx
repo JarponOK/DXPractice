@@ -5,36 +5,14 @@ import { makeStyles } from '@material-ui/core/styles';
 import {
   Paper, Grid, Typography, Button, TextField, InputAdornment, IconButton
 } from '@material-ui/core';
-import {
-  PagingState,
-  IntegratedPaging,
-  SortingState,
-  SearchState,
-  IntegratedFiltering,
-  IntegratedSorting,
-} from '@devexpress/dx-react-grid';
-import {
-  Grid as DXGrid,
-  Table,
-  Toolbar,
-  TableHeaderRow,
-} from '@devexpress/dx-react-grid-material-ui';
 import Search from '@material-ui/icons/Search';
 import Loading from './loading-indicator';
 import Error from './error-indicator';
 import {
   clientsFetchData, getClientsData, deleteClientData, changeClientData
 } from '../actions/item-clients';
+import CreateGrid from './grid-component/clients-grid';
 import { URL_CLIENTS } from './const';
-
-const getCellValue = data => `${data.name} ${data.lastname}`;
-
-const columns = [
-  { name: 'name', getCellValue, title: 'Patient name' },
-  { name: 'birthday', title: 'Birthday' },
-  { name: 'phone', title: 'Phone' },
-  { name: 'lastAppt', title: 'Last appt' },
-];
 
 const data = {
   name: 'Genry',
@@ -50,10 +28,6 @@ const dataChange = {
   _id: '5d36c888a6b94d24b4064bcc',
   phone: '38-13-77',
   address: '3222 New Line',
-};
-
-const dataDelete = {
-  id: '5d35c79466c3cb17b012852f'
 };
 
 const useStyles = makeStyles(theme => ({
@@ -75,13 +49,22 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-const searchValue = '';
-const changeSearchValue = value => this.setState({ searchValue: value });
+let changeSearchValue = '';
 
-const ClientsBody = (props) => {
+const ClientsHeader = (props) => {
   const classes = useStyles();
-  const { postRequest, deleteData, changeData } = props.props;
-  return (
+
+  const { postRequest, changeData } = props.props;
+
+  const [values, setValues] = React.useState({
+    name: '',
+  });
+
+  changeSearchValue = `${values.name}`;
+  const handleChange = (event) => {
+    setValues({ ...values, name: event.target.value });
+  };
+  return (changeSearchValue,
     <Grid container direction="column">
 
       {/* Top Menu */}
@@ -94,10 +77,12 @@ const ClientsBody = (props) => {
               id="filled-adornment-password"
               variant="filled"
               label="Search"
+              type="search"
+              onChange={handleChange}
               InputProps={{
                 startAdornment: (
                   <InputAdornment position="start">
-                    <IconButton edge="start" onClick={changeSearchValue}>
+                    <IconButton edge="start">
                       <Search />
                     </IconButton>
                   </InputAdornment>
@@ -106,13 +91,13 @@ const ClientsBody = (props) => {
             />
           </Grid>
           <Button className={classes.button} color="secondary" variant="contained" onClick={() => { postRequest(URL_CLIENTS, data); }}>Add new patient</Button>
-          <Button className={classes.button} color="secondary" variant="contained" onClick={() => { deleteData(URL_CLIENTS, dataDelete); }}>Delete patient</Button>
           <Button className={classes.button} color="secondary" variant="contained" onClick={() => { changeData(URL_CLIENTS, dataChange); }}>Change patient</Button>
         </Grid>
       </Grid>
+      <CreateGrid props={props} searchValue={changeSearchValue} />
     </Grid>
   );
-};
+}; // { props: ..., searchValue: ..., a: 1, ... }
 
 class Clients extends Component {
   componentDidMount() {
@@ -121,43 +106,18 @@ class Clients extends Component {
   }
 
   render() {
-    const { items } = this.props;
     const { hasErrored, isLoading } = this.props;
-    console.log(items);
     return (
       <Paper>
-        <ClientsBody props={this.props} />
+        <ClientsHeader props={this.props} />
         {isLoading && <Loading />}
         {hasErrored && <Error />}
-        <DXGrid
-          rows={items}
-          columns={columns}
-        >
-          <SearchState
-            value={searchValue}
-            onValueChange={changeSearchValue}
-          />
-          <PagingState
-            defaultCurrentPage={0}
-            pageSize={6}
-          />
-          <SortingState
-            defaultSorting={[{ columnName: 'name', direction: 'asc' }]}
-          />
-          <IntegratedSorting />
-          <IntegratedPaging />
-          <IntegratedFiltering />
-          <Table />
-          <Toolbar />
-          <TableHeaderRow showSortingControls />
-        </DXGrid>
       </Paper>
     );
   }
 }
 
 Clients.propTypes = {
-  items: PropTypes.arrayOf.isRequired,
   fetchData: PropTypes.func.isRequired,
   hasErrored: PropTypes.bool.isRequired,
   isLoading: PropTypes.bool.isRequired
@@ -172,7 +132,7 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = dispatch => ({
   fetchData: url => dispatch(clientsFetchData(url)),
   postRequest: url => dispatch(getClientsData(url, data)),
-  deleteData: url => dispatch(deleteClientData(url, dataDelete)),
+  deleteData: (url, deleted) => dispatch(deleteClientData(url, deleted)),
   changeData: url => dispatch(changeClientData(url, dataChange))
 });
 

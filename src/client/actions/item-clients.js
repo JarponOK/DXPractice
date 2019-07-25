@@ -72,7 +72,6 @@ export const deleteClientData = (url, dataDelete) => (dispatch) => {
       }
 
       dispatch(itemsIsLoading(false));
-
       return response;
     })
     .then(response => response.json())
@@ -80,14 +79,14 @@ export const deleteClientData = (url, dataDelete) => (dispatch) => {
     .catch(() => dispatch(itemsHasErrored(true)));
 };
 
-export const changeClientData = (url, dataChange) => (dispatch) => {
+export const changeClientData = (url, patch) => (dispatch) => {
   dispatch(itemsIsLoading(true));
   fetch(url, {
     headers: {
       'Content-Type': 'application/json'
     },
     method: 'PATCH',
-    body: JSON.stringify(dataChange),
+    body: JSON.stringify(patch),
   })
     .then((response) => {
       if (!response.ok) {

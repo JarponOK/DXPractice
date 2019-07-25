@@ -33,3 +33,26 @@ export const clientsFetchDataById = url => (dispatch) => {
     .then(costomerDate => dispatch(clientsFetchDataByIDSuccess(costomerDate)))
     .catch(() => dispatch(itemsHasErrored(true)));
 };
+
+export const clientsComplaint = (url, patch) => (dispatch) => {
+  dispatch(itemsIsLoading(true));
+
+  fetch(url, {
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    method: 'PATCH',
+    body: JSON.stringify(patch),
+  })
+    .then((response) => {
+      if (!response.ok) {
+        throw Error(response.statusText);
+      }
+
+      dispatch(itemsIsLoading(false));
+
+      return response;
+    })
+    .then(response => response.json())
+    .catch(() => dispatch(itemsHasErrored(true)));
+};
