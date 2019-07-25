@@ -16,7 +16,7 @@ class AnalyticsTotal extends Component {
     this.rootElement = React.createRef();
 
     this.state = {
-      height: 0,
+      heightChart: 0,
     };
   }
 
@@ -24,25 +24,28 @@ class AnalyticsTotal extends Component {
     const { fetchData } = this.props;
     fetchData(URL_ANALYTICS_TOTAL);
 
-    const height = this.rootElement.current.clientHeight - 20;
-    this.setState({ height });
+    const heightChart = this.rootElement.current.clientHeight - 20;
+    this.setState({ heightChart });
+  }
+
+  componentDidUpdate() {
+    this.state.heightChart = this.rootElement.current.clientHeight - 20;
   }
 
   render() {
-    const { hasErrored, isLoading, classes } = this.props;
+    const {
+      hasErrored, isLoading, classes, items
+    } = this.props;
 
-    // eslint-disable-next-line react/prop-types
-    const { items } = this.props;
-    const { height } = this.state;
+    const { heightChart } = this.state;
     return (
-      // eslint-disable-next-line react/prop-types
       <Paper className={classes.centerBoard} ref={this.rootElement}>
         {isLoading && <Loading />}
         {hasErrored && <Error />}
         {!isLoading && (
           <Chart
             chartData={items}
-            chartHeight={height}
+            chartHeight={heightChart}
             chartTitle="Total patient"
           />
         )}

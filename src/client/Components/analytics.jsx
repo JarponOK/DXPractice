@@ -1,6 +1,7 @@
 import React from 'react';
-import { makeStyles } from '@material-ui/core/styles';
-import { Paper, Grid, Typography } from '@material-ui/core';
+import makeStyles from '@material-ui/core/styles/makeStyles';
+import Grid from '@material-ui/core/Grid';
+import Paper from '@material-ui/core/Paper';
 import AnalyticsAge from './analytic-pages/analytics-age';
 import AnalyticsHospital from './analytic-pages/analytics-hospital';
 import AnalyticsNew from './analytic-pages/analytics-new';
@@ -15,45 +16,49 @@ export default function Analytics() {
   return (
     <Grid container direction="column">
       <Header title="Analytics" />
-      <Grid container direction="row" justify="space-between" className={classes.root}>
+      <Grid container direction="row" className={classes.root}>
 
-        <Grid container xs={3} justify="space-between" direction="column">
-          <Grid item>
-            <AnalyticsTotal />
-          </Grid>
-          <Grid item>
-            <AnalyticsAge />
+        <Grid item xs={3}>
+          <Grid container justify="space-between" direction="column" spacing={2}>
+            <Grid item>
+              <AnalyticsTotal />
+            </Grid>
+            <Grid item>
+              <AnalyticsAge />
+            </Grid>
           </Grid>
         </Grid>
 
-        <Grid container xs={9} direction="column" justify="space-between" className={classes.rightArea}>
-          <Grid item>
-            <Grid container spacing={2} className={classes.topDashboard}>
-              <Grid item xs={4}>
-                <Paper className={classes.topBoard}>New Feedbacks</Paper>
-              </Grid>
-              <Grid item xs={4}>
-                <Paper className={classes.topBoard}>Happy Clients</Paper>
-              </Grid>
-              <Grid item xs={4}>
-                <Paper className={classes.topBoard}>New Patients</Paper>
+        <Grid item xs={9}>
+          <Grid container direction="column" justify="space-between" spacing={2} className={classes.rightArea}>
+            <Grid item>
+              <Grid container spacing={2} direction="row" className={classes.topDashboard}>
+                <Grid item xs={4}>
+                  <Paper className={classes.topBoard}>New Feedbacks</Paper>
+                </Grid>
+                <Grid item xs={4}>
+                  <Paper className={classes.topBoard}>Happy Clients</Paper>
+                </Grid>
+                <Grid item xs={4}>
+                  <Paper className={classes.topBoard}>New Patients</Paper>
+                </Grid>
               </Grid>
             </Grid>
-          </Grid>
 
-          <Grid item>
-            <Grid item xs={12} className={classes.centerDashboard}>
-              <AnalyticsNew />
-            </Grid>
-          </Grid>
-
-          <Grid item>
-            <Grid container spacing={2} direction="row">
-              <Grid item xs={6}>
-                <AnalyticsHospital />
+            <Grid item>
+              <Grid item xs={12} className={classes.centerDashboard}>
+                <AnalyticsNew />
               </Grid>
-              <Grid item xs={6}>
-                <AnalyticsVisit />
+            </Grid>
+
+            <Grid item>
+              <Grid container spacing={2} direction="row">
+                <Grid item xs={6}>
+                  <AnalyticsHospital />
+                </Grid>
+                <Grid item xs={6}>
+                  <AnalyticsVisit />
+                </Grid>
               </Grid>
             </Grid>
           </Grid>
@@ -64,16 +69,9 @@ export default function Analytics() {
 }
 
 const useStyles = makeStyles(theme => ({
-  header: {
-    textAlign: 'left',
-    fontSize: 18,
-    height: '3vh',
-    padding: '15px',
-    color: theme.palette.text.secondary,
-  },
   root: {
     backgroundColor: '#E9ECF1',
-    height: '94vh',
+    height: '97vh',
     margin: '0px',
     padding: '25px',
   },

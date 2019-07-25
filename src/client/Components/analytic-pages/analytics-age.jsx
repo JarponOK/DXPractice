@@ -30,9 +30,10 @@ class AnalyticsAge extends Component {
     super(props);
 
     this.rootElement = React.createRef();
+    this.chartElement = React.createRef();
 
     this.state = {
-      height: 0,
+      heightChart: 0,
     };
   }
 
@@ -40,8 +41,12 @@ class AnalyticsAge extends Component {
     const { fetchData } = this.props;
     fetchData(URL_ANALYTICS_AGE);
 
-    const height = (this.rootElement.current.clientHeight) / 4;
-    this.setState({ height });
+    const heightChart = (this.rootElement.current.clientHeight) / 4;
+    this.setState({ heightChart });
+  }
+
+  componentDidUpdate() {
+    this.state.heightChart = (this.rootElement.current.clientHeight) / 4;
   }
 
   render() {
@@ -68,28 +73,28 @@ class AnalyticsAge extends Component {
       ];
     }
 
-    const { height } = this.state;
+    const { heightChart } = this.state;
     return (
-      <Paper className={classes.centerBoard} ref={this.rootElement}>
+      <Paper className={classes.root} ref={this.rootElement}>
         {isLoading && <Loading />}
         {hasErrored && <Error />}
         {!isLoading && (
-          <Grid>
+          <Grid container direction="column" justify="center">
             <Typography>Age of Patient</Typography>
             <Chart
-              height={height}
+              height={heightChart}
               data={chartJunior}
               title="0-22 oy"
               color={schemeColors.junior}
             />
             <Chart
-              height={height}
+              height={heightChart}
               data={chartMiddle}
               title="22-45 oy"
               color={schemeColors.middle}
             />
             <Chart
-              height={height}
+              height={heightChart}
               data={chartSenior}
               title="45+ oy"
               color={schemeColors.senior}
@@ -102,8 +107,8 @@ class AnalyticsAge extends Component {
 }
 
 const useStyles = theme => ({
-  centerBoard: {
-    height: '56.5vh',
+  root: {
+    height: '56vh',
     color: theme.palette.text.secondary,
   },
 });
