@@ -8,7 +8,7 @@ import TextField from './text-field';
 
 const useStyles = makeStyles(theme => ({
   root: {
-    // height: '100%',
+    height: '97vh',
   },
   dateArea: {
     marginBottom: '40px'

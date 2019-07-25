@@ -5,3 +5,4 @@ export const URL_ANALYTICS_HOSPITAL = 'http://localhost:8080/api/analytics/hospi
 export const URL_ANALYTICS_NEW = 'http://localhost:8080/api/analytics/new/years';
 export const URL_ANALYTICS_TOTAL = 'http://localhost:8080/api/analytics/total';
 export const URL_ANALYTICS_VISIT = 'http://localhost:8080/api/analytics/visit/years';
+export const URL_TREATMENT = 'http://localhost:8080/api/treatment';

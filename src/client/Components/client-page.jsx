@@ -1,32 +1,18 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import { withStyles } from '@material-ui/core/styles';
-import {
-  Paper, Grid, Tabs, Tab
-} from '@material-ui/core/';
+import { withStyles } from '@material-ui/core/styles/';
+import { Grid, Tabs, Tab } from '@material-ui/core';
 import TreatmentContainer from './client-components/treatment-container';
 import { clientsFetchDataById } from '../actions/item-request-by-id';
-import { URL_CLIENTS } from './const';
+import { treatmentFetchData } from '../actions/item-treatment';
+import { URL_CLIENTS, URL_TREATMENT } from './const';
 import Loading from './loading-indicator';
 import Error from './error-indicator';
-import PersonalData from './client-components/personal-area';
 import Header from './header';
+import PersonalData from './client-components/personal-area';
 import Complaints from './client-components/complaints';
-
-function HistoryContainer() {
-  return (
-    <Grid container>
-      <Grid item xs={6}>
-        <Paper>Plan</Paper>
-        <Paper>Total Amount</Paper>
-      </Grid>
-      <Grid item xs={6}>
-        <Paper>Meeting</Paper>
-      </Grid>
-    </Grid>
-  );
-}
+import HistoryTreatments from './client-components/history-treatments';
 
 class ClientArea extends Component {
   constructor(props) {
@@ -42,8 +28,9 @@ class ClientArea extends Component {
   }
 
   componentDidMount() {
-    const { fetchData } = this.props;
-    fetchData(`${URL_CLIENTS}/5d20a76524e3ce238805c520`);
+    const { fetchDataClient, fetchDataTreatment } = this.props;
+    fetchDataClient(`${URL_CLIENTS}/5d20a76524e3ce238805c520`);
+    fetchDataTreatment(URL_TREATMENT);
   }
 
   handleChange(event, nextValue) {
@@ -52,35 +39,51 @@ class ClientArea extends Component {
 
   render() {
     const {
-      hasErrored, isLoading, classes, items
+      hasErroredClient, isLoadingClient,
+      hasErroredTreatment, isLoadingTreatment,
+      itemClients, itemTreatment,
+      classes
     } = this.props;
 
-    const { value } = this.state;
+    const {
+      name, lastname,
+      birthday, email, phone,
+      city, address
+    } = itemClients;
     const personalData = {
-      name: items.name,
-      lastname: items.lastname,
-      birthday: items.birthday,
-      city: items.city,
-      address: items.address,
-      email: items.email,
-      phone: items.phone
+      name,
+      lastname,
+      birthday,
+      email,
+      phone,
+      city,
+      address
     };
+
+    const { value } = this.state;
     return (
       <Grid container direction="column">
         <Header title="Patient Card" />
         <Grid container className={classes.root}>
-          {isLoading && <Loading />}
-          {hasErrored && <Error />}
+          {(hasErroredClient || hasErroredTreatment) && <Loading />}
+          {(isLoadingClient || isLoadingTreatment) && <Error />}
           <PersonalData data={personalData} />
-          <Grid container xs={9} direction="column" justify="flex-start">
-            <Tabs value={value} onChange={this.handleChange}>
-              <Tab label="Treatment" />
-              <Tab label="Treatment history" />
-              <Tab label="Complaints" />
-            </Tabs>
-            {value === 0 && <TreatmentContainer />}
-            {value === 1 && <HistoryContainer />}
-            {value === 2 && <Complaints data={items.complaints} />}
+          <Grid xs={9}>
+            <Grid container direction="column" justify="flex-start">
+              <Tabs value={value} onChange={this.handleChange}>
+                <Tab label="Treatment" />
+                <Tab label="Treatment history" />
+                <Tab label="Complaints" />
+              </Tabs>
+              {value === 0 && <TreatmentContainer />}
+              {value === 1 && (
+                <HistoryTreatments
+                  schedules={itemClients.historyTreatment}
+                  listTreatment={itemTreatment}
+                />
+              )}
+              {value === 2 && <Complaints data={itemClients.complaints} />}
+            </Grid>
           </Grid>
 
         </Grid>
@@ -99,7 +102,7 @@ const classStyle = theme => ({
   },
   root: {
     backgroundColor: '#E9ECF1',
-    height: '94vh',
+    height: '97vh',
     margin: '0px',
   },
 });
@@ -107,20 +110,30 @@ const classStyle = theme => ({
 const ClientsArea = withStyles(classStyle)(ClientArea);
 
 ClientArea.propTypes = {
-  items: PropTypes.arrayOf.isRequired,
-  fetchData: PropTypes.func.isRequired,
-  hasErrored: PropTypes.bool.isRequired,
-  isLoading: PropTypes.bool.isRequired
+  itemClients: PropTypes.arrayOf.isRequired,
+  fetchDataClient: PropTypes.func.isRequired,
+  hasErroredClient: PropTypes.bool.isRequired,
+  isLoadingClient: PropTypes.bool.isRequired,
+
+  itemTreatment: PropTypes.arrayOf.isRequired,
+  fetchDataTreatment: PropTypes.func.isRequired,
+  hasErroredTreatment: PropTypes.bool.isRequired,
+  isLoadingTreatment: PropTypes.bool.isRequired
 };
 
 const mapStateToProps = state => ({
-  items: state.idRequest.costomerDate,
-  hasErrored: state.idRequest.hasErrored,
-  isLoading: state.idRequest.isLoading
+  itemClients: state.idRequest.costomerDate,
+  hasErroredClient: state.idRequest.hasErrored,
+  isLoadingClient: state.idRequest.isLoading,
+
+  itemTreatment: state.requestTreatment.treatment,
+  hasErroredTreatment: state.requestTreatment.hasErrored,
+  isLoadingTreatment: state.requestTreatment.isLoading
 });
 
 const mapDispatchToProps = dispatch => ({
-  fetchData: url => dispatch(clientsFetchDataById(url))
+  fetchDataClient: url => dispatch(clientsFetchDataById(url)),
+  fetchDataTreatment: url => dispatch(treatmentFetchData(url))
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(ClientsArea);
