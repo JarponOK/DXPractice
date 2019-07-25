@@ -5,12 +5,10 @@ import {
 import { Animation } from '@devexpress/dx-react-chart';
 
 export default (props) => {
-  // eslint-disable-next-line react/prop-types
   const { chartHeight, chartData, chartTitle } = props;
 
   return (
     <Chart
-      // eslint-disable-next-line react/destructuring-assignment
       height={chartHeight}
       data={chartData || []}
     >

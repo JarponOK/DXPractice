@@ -25,6 +25,7 @@ export default (props) => {
       height={chartHeight}
       data={chartData || []}
     >
+      {/* TODO */}
       <ArgumentScale factory={scalePoint} />
       <ArgumentAxis />
       <ValueAxis />
