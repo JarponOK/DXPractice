@@ -78,7 +78,6 @@ export const deleteSchedulerData = (url, urlToFetch, dataDelete) => (dispatch) =
 };
 
 export const changeSchedulerData = (url, urlToFetch, dataChange) => (dispatch) => {
-  console.log(urlToFetch);
   dispatch(itemsIsLoading(true));
   fetch(url, {
     headers: {

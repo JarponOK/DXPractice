@@ -14,7 +14,7 @@ const styles = {
 };
 
 function SimplePopover({
-  startDay, endDay, endDayHourChange, startDayHourChange
+  startDayHour, endDayHour, endDayHourChange, startDayHourChange, currentRoom, roomChange
 }) {
   const [anchorEl, setAnchorEl] = React.useState(null);
 
@@ -55,7 +55,7 @@ function SimplePopover({
               <Typography>Operation hours.</Typography>
               <FormControl>
                 <Select
-                  value={startDay}
+                  value={startDayHour}
                   onChange={event => startDayHourChange(event.target.value)}
                   inputProps={{
                     id: 'age-simple',
@@ -68,7 +68,7 @@ function SimplePopover({
               </FormControl>
               <FormControl>
                 <Select
-                  value={endDay}
+                  value={endDayHour}
                   onChange={event => endDayHourChange(event.target.value)}
                   inputProps={{
                     id: 'age-simple',
@@ -77,6 +77,20 @@ function SimplePopover({
                   <MenuItem value={17}>17</MenuItem>
                   <MenuItem value={18}>18</MenuItem>
                   <MenuItem value={19}>19</MenuItem>
+                </Select>
+              </FormControl>
+              <Typography>Current Room.</Typography>
+              <FormControl>
+                <Select
+                  value={currentRoom}
+                  onChange={event => roomChange(event.target.value)}
+                  inputProps={{
+                    id: 'age-simple',
+                  }}
+                >
+                  <MenuItem value="All Rooms">All Rooms</MenuItem>
+                  <MenuItem value="Room 1">Room 1</MenuItem>
+                  <MenuItem value="Room 25">Room 25</MenuItem>
                 </Select>
               </FormControl>
 
@@ -90,12 +104,12 @@ function SimplePopover({
 
 export default withStyles(styles, { name: 'FlexibleSpace' })(
   ({
-    classes, startDay, endDay, startDayHour, endDayHour, ...restProps
+    classes, roomChange, currentRoom, startDayHour, endDayHour, startDayHourChange, endDayHourChange, ...restProps
   }) => (
-      <Toolbar.FlexibleSpace {...restProps} className={classes.flexibleSpace}>
+    <Toolbar.FlexibleSpace {...restProps} className={classes.flexibleSpace}>
         <FormControl>
-          <SimplePopover startDay={startDay} endDay={endDay} startDayHourChange={startDayHour} endDayHourChange={endDayHour} />
+          <SimplePopover currentRoom={currentRoom} startDayHour={startDayHour} endDayHour={endDayHour} startDayHourChange={startDayHourChange} endDayHourChange={endDayHourChange} roomChange={roomChange} />
         </FormControl>
       </Toolbar.FlexibleSpace>
-    ),
+  ),
 );
