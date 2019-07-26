@@ -1,4 +1,5 @@
 import React from 'react';
+import { NavLink } from 'react-router-dom';
 import {
   PagingState,
   IntegratedPaging,
@@ -19,7 +20,7 @@ import {
 import IconButton from '@material-ui/core/IconButton';
 import DeleteIcon from '@material-ui/icons/Delete';
 import EditIcon from '@material-ui/icons/Edit';
-import { Paper } from '@material-ui/core';
+import { Paper, Grid } from '@material-ui/core';
 import { URL_CLIENTS } from '../const';
 
 const getCellValue = data => `${data.name} ${data.lastname}`;
@@ -34,9 +35,11 @@ const columns = [
 const getRowId = row => row._id;
 
 const EditButton = ({ onExecute }) => (
-  <IconButton title="Edit row">
-    <EditIcon />
-  </IconButton>
+  <NavLink to="/test">
+    <IconButton onClick={onExecute} title="Edit row">
+      <EditIcon />
+    </IconButton>
+  </NavLink>
 );
 
 const DeleteButton = ({ onExecute }) => (
@@ -60,7 +63,7 @@ const Command = ({ id, onExecute }) => {
 };
 
 const CreateGrid = (props) => {
-  const { items, deleteData  } = props.props.props;
+  const { items, deleteData } = props.props.props;
 
   const commitChanges = ({ added, changed, deleted }) => {
     // let { rows } = this.state;
@@ -74,16 +77,14 @@ const CreateGrid = (props) => {
     //     })),
     //   ];
     // }
-    // if (changed) {
-    //   rows = rows.map(row => (changed[row.id] ? { ...row, ...changed[row.id] } : row));
-    // }
+    //if (changed) {
+    //  const data = { id: changed, };
+    //}
     if (deleted) {
       const data = { id: deleted, };
       deleteData(URL_CLIENTS, data);
     }
   };
-
-
   return (
     <Paper>
       <DXGrid

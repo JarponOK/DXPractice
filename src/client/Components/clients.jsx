@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { NavLink } from 'react-router-dom';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { makeStyles } from '@material-ui/core/styles';
@@ -24,12 +25,6 @@ const data = {
   address: '3231 New Line',
 };
 
-const dataChange = {
-  _id: '5d36c888a6b94d24b4064bcc',
-  phone: '38-13-77',
-  address: '3222 New Line',
-};
-
 const useStyles = makeStyles(theme => ({
   header: {
     textAlign: 'left',
@@ -49,22 +44,18 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-let changeSearchValue = '';
-
 const ClientsHeader = (props) => {
   const classes = useStyles();
 
-  const { postRequest, changeData } = props.props;
-
   const [values, setValues] = React.useState({
-    name: '',
+    name: '1',
   });
 
-  changeSearchValue = `${values.name}`;
   const handleChange = (event) => {
     setValues({ ...values, name: event.target.value });
   };
-  return (changeSearchValue,
+
+  return (`${values.name}`,
     <Grid container direction="column">
 
       {/* Top Menu */}
@@ -90,11 +81,14 @@ const ClientsHeader = (props) => {
               }}
             />
           </Grid>
-          <Button className={classes.button} color="secondary" variant="contained" onClick={() => { postRequest(URL_CLIENTS, data); }}>Add new patient</Button>
-          <Button className={classes.button} color="secondary" variant="contained" onClick={() => { changeData(URL_CLIENTS, dataChange); }}>Change patient</Button>
+          <NavLink activeClassName={classes.active} to="/test">
+            <Button className={classes.button} color="secondary" variant="contained">Add new patient</Button>
+          </NavLink>
+        </Grid>
+        <Grid container direction="row" justify="space-between" className={classes.root}>
+          <CreateGrid props={props} searchValue={`${values.name}`} />
         </Grid>
       </Grid>
-      <CreateGrid props={props} searchValue={changeSearchValue} />
     </Grid>
   );
 }; // { props: ..., searchValue: ..., a: 1, ... }
@@ -106,12 +100,12 @@ class Clients extends Component {
   }
 
   render() {
-    const { hasErrored, isLoading } = this.props;
+    const { isLoading } = this.props;
+    console.log(this.props);
     return (
       <Paper>
-        <ClientsHeader props={this.props} />
         {isLoading && <Loading />}
-        {hasErrored && <Error />}
+        <ClientsHeader props={this.props} />
       </Paper>
     );
   }
@@ -133,7 +127,7 @@ const mapDispatchToProps = dispatch => ({
   fetchData: url => dispatch(clientsFetchData(url)),
   postRequest: url => dispatch(getClientsData(url, data)),
   deleteData: (url, deleted) => dispatch(deleteClientData(url, deleted)),
-  changeData: url => dispatch(changeClientData(url, dataChange))
+  changeData: url => dispatch(changeClientData(url))
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Clients);
