@@ -46,7 +46,7 @@ const createClassesByPriorityId = (
   return { backgroundColor: priorityColor };
 };
 
-const styles = theme => ({
+const styles = ({
   toolbarRoot: {
     position: 'relative',
   },
@@ -227,7 +227,8 @@ class SchedulerPage extends Component {
     const nextItems = items.map(item => ({
       ...item,
       id: item._id,
-      title: `${item.name} ${item.lastname} ${item.note}`,
+      title: `${item.name} ${item.lastname} `,
+      notes: item.note
     }));
     return (
       <Grid item xs={12} style={{ marginBottom: '25px', paddingLeft: '25px' }}>
