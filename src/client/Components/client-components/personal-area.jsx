@@ -22,7 +22,7 @@ export default (props) => {
   let birthday = new Date(data.birthday);
   birthday = `${birthday.getMonth()}/${birthday.getDate()}/${birthday.getFullYear()}`;
   return (
-    <Grid item xs={3} className={classes.root}>
+    <Grid item className={classes.root}>
       <Grid container direction="column">
         <Paper>
           <Grid className={classes.dateArea}>

@@ -7,8 +7,8 @@ import TreatmentContainer from './client-components/treatment-container';
 import { clientsFetchDataById } from '../actions/item-request-by-id';
 import { treatmentFetchData } from '../actions/item-treatment';
 import { URL_CLIENTS, URL_TREATMENT } from './const';
-import Loading from './loading-indicator';
-import Error from './error-indicator';
+// import Loading from './loading-indicator';
+// import Error from './error-indicator';
 import Header from './header';
 import PersonalData from './client-components/personal-area';
 import Complaints from './client-components/complaints';
@@ -17,8 +17,6 @@ import HistoryTreatments from './client-components/history-treatments';
 class ClientArea extends Component {
   constructor(props) {
     super(props);
-
-    this.props = props;
 
     this.state = {
       value: 0,
@@ -39,8 +37,8 @@ class ClientArea extends Component {
 
   render() {
     const {
-      hasErroredClient, isLoadingClient,
-      hasErroredTreatment, isLoadingTreatment,
+      // hasErroredClient, isLoadingClient,
+      // hasErroredTreatment, isLoadingTreatment,
       itemClients, itemTreatment,
       classes
     } = this.props;
@@ -65,17 +63,17 @@ class ClientArea extends Component {
       <Grid container direction="column">
         <Header title="Patient Card" />
         <Grid container className={classes.root}>
-          {(hasErroredClient || hasErroredTreatment) && <Loading />}
-          {(isLoadingClient || isLoadingTreatment) && <Error />}
-          <PersonalData data={personalData} />
-          <Grid xs={9}>
+          <Grid item xs={3}>
+            <PersonalData data={personalData} />
+          </Grid>
+          <Grid item xs={9}>
             <Grid container direction="column" justify="flex-start">
               <Tabs value={value} onChange={this.handleChange}>
                 <Tab label="Treatment" />
                 <Tab label="Treatment history" />
                 <Tab label="Complaints" />
               </Tabs>
-              {value === 0 && <TreatmentContainer />}
+              {value === 0 && <TreatmentContainer treatments={itemTreatment} />}
               {value === 1 && (
                 <HistoryTreatments
                   schedules={itemClients.historyTreatment}
@@ -85,7 +83,6 @@ class ClientArea extends Component {
               {value === 2 && <Complaints data={itemClients.complaints} />}
             </Grid>
           </Grid>
-
         </Grid>
       </Grid>
     );
