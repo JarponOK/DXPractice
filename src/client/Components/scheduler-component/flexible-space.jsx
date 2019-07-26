@@ -1,22 +1,39 @@
 import React from 'react';
-import { withStyles } from '@material-ui/core/styles';
+import { withStyles, makeStyles } from '@material-ui/core/styles';
 import { Toolbar } from '@devexpress/dx-react-scheduler-material-ui';
 import {
-  Grid, Typography, Popover, FormControl, Paper, Button, Select, MenuItem
+  Typography, Popover, FormControl, Paper, Button, Select, MenuItem
 } from '@material-ui/core';
 
 import Header from '../header';
 
-const styles = {
-  flexibleSpace: {
-    margin: '0 auto 0 0',
+const styles = makeStyles(theme => ({
+  container: {
+    width: theme.spacing(35),
+    padding: 0,
+    paddingBottom: theme.spacing(2),
   },
-};
+  wrapper: {
+    display: 'flex',
+    justifyContent: 'space-between',
+    padding: theme.spacing(1, 0),
+  },
+  content: {
+    padding: theme.spacing(2),
+    paddingTop: 0,
+  },
+}));
 
 function SimplePopover({
-  startDayHour, endDayHour, endDayHourChange, startDayHourChange, currentRoom, roomChange
+  startDayHour,
+  endDayHour,
+  endDayHourChange,
+  startDayHourChange,
+  currentRoom,
+  roomChange
 }) {
   const [anchorEl, setAnchorEl] = React.useState(null);
+  const classes = styles();
 
   function handleClick(event) {
     setAnchorEl(event.currentTarget);
@@ -29,11 +46,13 @@ function SimplePopover({
   const open = Boolean(anchorEl);
   const id = open ? 'simple-popover' : undefined;
 
+
   return (
-    <div>
+    <Paper>
       <Button aria-describedby={id} variant="contained" onClick={handleClick}>
         Settings
       </Button>
+
       <Popover
         id={id}
         open={open}
@@ -48,10 +67,10 @@ function SimplePopover({
           horizontal: 'center',
         }}
       >
-        <Paper>
+        <Paper className={classes.container}>
           <Header title="Scheduler Params" />
-          <Grid container wrap="nowrap" spacing={2}>
-            <Grid item>
+          <div className={classes.content}>
+            <div className={classes.wrapper}>
               <Typography>Operation hours.</Typography>
               <FormControl>
                 <Select
@@ -79,6 +98,8 @@ function SimplePopover({
                   <MenuItem value={19}>19</MenuItem>
                 </Select>
               </FormControl>
+            </div>
+            <div className={classes.wrapper}>
               <Typography>Current Room.</Typography>
               <FormControl>
                 <Select
@@ -93,23 +114,36 @@ function SimplePopover({
                   <MenuItem value="Room 25">Room 25</MenuItem>
                 </Select>
               </FormControl>
-
-            </Grid>
-          </Grid>
+            </div>
+          </div>
         </Paper>
       </Popover>
-    </div>
+    </Paper>
   );
 }
 
 export default withStyles(styles, { name: 'FlexibleSpace' })(
   ({
-    classes, roomChange, currentRoom, startDayHour, endDayHour, startDayHourChange, endDayHourChange, ...restProps
+    classes,
+    roomChange,
+    currentRoom,
+    startDayHour,
+    endDayHour,
+    startDayHourChange,
+    endDayHourChange,
+    ...restProps
   }) => (
     <Toolbar.FlexibleSpace {...restProps} className={classes.flexibleSpace}>
-        <FormControl>
-          <SimplePopover currentRoom={currentRoom} startDayHour={startDayHour} endDayHour={endDayHour} startDayHourChange={startDayHourChange} endDayHourChange={endDayHourChange} roomChange={roomChange} />
-        </FormControl>
-      </Toolbar.FlexibleSpace>
+
+      <SimplePopover
+        currentRoom={currentRoom}
+        startDayHour={startDayHour}
+        endDayHour={endDayHour}
+        startDayHourChange={startDayHourChange}
+        endDayHourChange={endDayHourChange}
+        roomChange={roomChange}
+      />
+
+    </Toolbar.FlexibleSpace>
   ),
 );

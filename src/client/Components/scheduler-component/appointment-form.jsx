@@ -1,12 +1,11 @@
 import React, { Component } from 'react';
-import PropTypes from 'prop-types';
 import { AppointmentForm } from '@devexpress/dx-react-scheduler-material-ui';
 import { KeyboardDateTimePicker, MuiPickersUtilsProvider } from '@material-ui/pickers';
 import MomentUtils from '@date-io/moment';
 import { withStyles } from '@material-ui/core/styles';
 import { Button, IconButton, TextField } from '@material-ui/core';
 import {
-  LocationOn, Notes, Close, Create, CalendarToday
+  LocationOn, Notes, Close, Create, CalendarToday, Phone, EventSeat
 } from '@material-ui/icons';
 
 const containerStyles = theme => ({
@@ -160,6 +159,18 @@ class AppointmentFormContainer extends Component {
               />
             </div>
             <div className={classes.wrapper}>
+              <Phone className={classes.icon} color="action" />
+              <TextField
+                {...textEditorProps('phone')}
+              />
+            </div>
+            <div className={classes.wrapper}>
+              <EventSeat className={classes.icon} color="action" />
+              <TextField
+                {...textEditorProps('operation')}
+              />
+            </div>
+            <div className={classes.wrapper}>
               <CalendarToday className={classes.icon} color="action" />
               <MuiPickersUtilsProvider utils={MomentUtils}>
                 <KeyboardDateTimePicker
@@ -183,9 +194,10 @@ class AppointmentFormContainer extends Component {
               <TextField
                 {...textEditorProps('notes')}
                 multiline
-                rows="6"
+                rows="3"
               />
             </div>
+
           </div>
           <div className={classes.buttonGroup}>
             {!isNewAppointment && (
