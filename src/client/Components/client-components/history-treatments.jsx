@@ -95,7 +95,7 @@ export default (props) => {
         </Grid>
 
         <Grid item xs={7}>
-          <Scheduler schedules={sortSchedules} day="2019-07-03" />
+          <Scheduler schedules={sortSchedules} day="2019-07-02" />
         </Grid>
 
       </Grid>

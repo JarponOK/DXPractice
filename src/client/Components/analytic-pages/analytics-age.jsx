@@ -42,7 +42,7 @@ class AnalyticsAge extends Component {
     fetchData(URL_ANALYTICS_AGE);
 
     const heightChart = (this.rootElement.current.clientHeight) / 4;
-    this.setState({ heightChart });
+    this.state.heightChart = heightChart;
   }
 
   componentDidUpdate() {
