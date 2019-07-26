@@ -5,6 +5,7 @@ import Tab from '@material-ui/core/Tab';
 import Grid from '@material-ui/core/Grid';
 import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
+import ListTreatments from './list-treatments';
 
 const wayToImage = '../../../../docs/tooth.png';
 const pathSVG = '../../../../docs/icons/dental/';
@@ -31,30 +32,6 @@ const SVG = (props) => {
     <img src={src} alt="svg" style={{ width: '30px', height: '30px' }} />
   );
 }
-
-const ListTreatments = (props) => {
-  const { treatments, value } = props;
-
-  return (
-    <Paper>
-      {treatments.length > 0
-        ? treatments[value].listProcedure.map(procedure => (
-          <Grid container justify="space-between">
-            <Typography>
-              {procedure.name}
-            </Typography>
-            <Typography style={{ backgroundColor: '#DCDCDC' }}>
-              {procedure.cost}
-              {'$'}
-            </Typography>
-          </Grid>
-        ))
-        : <Typography>ASD</Typography>
-      }
-
-    </Paper>
-  );
-};
 
 class Treatments extends Component {
   constructor(props) {
