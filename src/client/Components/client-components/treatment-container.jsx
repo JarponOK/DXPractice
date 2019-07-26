@@ -5,9 +5,9 @@ import Tab from '@material-ui/core/Tab';
 import Grid from '@material-ui/core/Grid';
 import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
-import SvgIcon from '@material-ui/core/SvgIcon';
 
 const wayToImage = '../../../../docs/tooth.png';
+const pathSVG = '../../../../docs/icons/dental/';
 
 const useStyle = theme => ({
 });
@@ -24,6 +24,13 @@ function TabPanel(props) {
   );
 }
 
+const SVG = (props) => {
+  const { src } = props;
+
+  return (
+    <img src={src} alt="svg" style={{ width: '30px', height: '30px' }} />
+  );
+}
 
 const ListTreatments = (props) => {
   const { treatments, value } = props;
@@ -96,21 +103,57 @@ class Treatments extends Component {
           value={value}
           onChange={this.handleChange}
         >
-          <Tab label="Diagnosis" style={{ minWidth: `${widthTab}px`, paddingLeft: '0px', paddingRight: '0px' }} />
-          <Tab label="Restoration" style={{ minWidth: `${widthTab}px`, paddingLeft: '0px', paddingRight: '0px' }} />
-          <Tab label="Root canal" style={{ minWidth: `${widthTab}px`, paddingLeft: '0px', paddingRight: '0px' }} />
-          <Tab label="Hygiene" style={{ minWidth: `${widthTab}px`, paddingLeft: '0px', paddingRight: '0px' }} />
-          <Tab label="Whitening" style={{ minWidth: `${widthTab}px`, paddingLeft: '0px', paddingRight: '0px' }} />
-          <Tab label="Prosthetics" style={{ minWidth: `${widthTab}px`, paddingLeft: '0px', paddingRight: '0px' }} />
-          <Tab label="Implantation" style={{ minWidth: `${widthTab}px`, paddingLeft: '0px', paddingRight: '0px' }} />
-          <Tab label="Orthodontics" style={{ minWidth: `${widthTab}px`, paddingLeft: '0px', paddingRight: '0px' }} />
-          <Tab label="Surgery" style={{ minWidth: `${widthTab}px`, paddingLeft: '0px', paddingRight: '0px' }} />
+          <Tab
+            icon={<SVG src={`${pathSVG}dentalCare.svg`} />}
+            label="Diagnosis"
+            style={{ minWidth: `${widthTab}px`, paddingLeft: '0px', paddingRight: '0px' }}
+          />
+          <Tab
+            icon={<SVG src={`${pathSVG}dentalRestoration.svg`} />}
+            label="Restoration"
+            style={{ minWidth: `${widthTab}px`, paddingLeft: '0px', paddingRight: '0px' }}
+          />
+          <Tab
+            icon={<SVG src={`${pathSVG}dentalRoot.svg`} />}
+            label="Root canal"
+            style={{ minWidth: `${widthTab}px`, paddingLeft: '0px', paddingRight: '0px' }}
+          />
+          <Tab
+            icon={<SVG src={`${pathSVG}dentalHygiene.svg`} />}
+            label="Hygiene"
+            style={{ minWidth: `${widthTab}px`, paddingLeft: '0px', paddingRight: '0px' }}
+          />
+          <Tab
+            icon={<SVG src={`${pathSVG}dentalWhitening.svg`} />}
+            label="Whitening"
+            style={{ minWidth: `${widthTab}px`, paddingLeft: '0px', paddingRight: '0px' }}
+          />
+          <Tab
+            icon={<SVG src={`${pathSVG}dentalProsthetics.svg`} />}
+            label="Prosthetics"
+            style={{ minWidth: `${widthTab}px`, paddingLeft: '0px', paddingRight: '0px' }}
+          />
+          <Tab
+            icon={<SVG src={`${pathSVG}dentalImplant.svg`} />}
+            label="Implantation"
+            style={{ minWidth: `${widthTab}px`, paddingLeft: '0px', paddingRight: '0px' }}
+          />
+          <Tab
+            icon={<SVG src={`${pathSVG}dentalOrthodontics.svg`} />}
+            label="Orthodontics"
+            style={{ minWidth: `${widthTab}px`, paddingLeft: '0px', paddingRight: '0px' }}
+          />
+          <Tab
+            icon={<SVG src={`${pathSVG}dentalSurgery.svg`} />}
+            label="Surgery"
+            style={{ minWidth: `${widthTab}px`, paddingLeft: '0px', paddingRight: '0px' }}
+          />
         </Tabs>
 
         <Grid container direction="row">
           <Grid item xs={7}>
             <Paper ref={this.imageElement}>
-              <img src={wayToImage} alt="fancy unicorn" style={{ width: `${widthImage}px` }} />
+              <img src={wayToImage} alt="tooth" style={{ width: `${widthImage}px` }} />
             </Paper>
           </Grid>
 
